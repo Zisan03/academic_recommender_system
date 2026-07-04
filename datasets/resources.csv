@@ -1,0 +1,13 @@
+resource_id,title,topic,difficulty,type
+R1,Algebra Fundamentals Guide,Algebra,Beginner,PDF
+R2,Intermediate Algebra Video Course,Algebra,Intermediate,Video
+R3,Advanced Algebra Practice Set,Algebra,Advanced,Practice
+R4,Statistics Basics Handbook,Statistics,Beginner,PDF
+R5,Statistics Video Tutorials,Statistics,Intermediate,Video
+R6,Advanced Statistics Practice Questions,Statistics,Advanced,Practice
+R7,Python Programming Fundamentals,Programming,Beginner,Tutorial
+R8,Object-Oriented Programming Video Series,Programming,Intermediate,Video
+R9,Programming Capstone Project,Programming,Advanced,Project
+R10,Calculus Fundamentals PDF,Calculus,Beginner,PDF
+R11,Calculus Video Lectures,Calculus,Intermediate,Video
+R12,Advanced Calculus Practice Workbook,Calculus,Advanced,Practice

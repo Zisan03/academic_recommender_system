@@ -1,0 +1,731 @@
+/* ==========================================
+   AI Academic Recommender
+   Global Design System
+========================================== */
+
+:root{
+
+    --primary:#7B3FF2;
+    --secondary:#5B8CFF;
+
+    --background:#F6F8FC;
+
+    --card:#FFFFFF;
+
+    --text:#1E1F2F;
+
+    --muted:#6B7280;
+
+    --success:#19C37D;
+
+    --warning:#FF9800;
+
+    --danger:#EF4444;
+
+    --border:#E8EAF2;
+
+    --shadow:0 10px 30px rgba(0,0,0,.08);
+
+    --radius:22px;
+
+    --transition:.3s ease;
+
+}
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+
+    background:var(--background);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+    overflow-x:hidden;
+
+}
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+ul{
+
+    list-style:none;
+
+}
+
+/* ==========================================
+        MAIN LAYOUT
+========================================== */
+
+.app-container{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+/* ==========================================
+            SIDEBAR
+========================================== */
+
+.sidebar{
+
+    width:285px;
+
+    min-height:100vh;
+
+    background:#111827;
+
+    color:white;
+
+    display:flex;
+
+    flex-direction:column;
+
+    flex-shrink:0;
+
+    padding:28px 22px;
+
+    position:sticky;
+
+    top:0;
+
+}
+
+.logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:14px;
+
+    padding-bottom:28px;
+
+    border-bottom:1px solid rgba(255,255,255,.1);
+
+    margin-bottom:24px;
+
+}
+
+.logo-icon{
+
+    width:50px;
+
+    height:50px;
+
+    border-radius:16px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    font-size:22px;
+
+    flex-shrink:0;
+
+}
+
+.logo h2{
+
+    font-size:19px;
+
+    line-height:1.25;
+
+    font-weight:700;
+
+}
+
+.logo h2 span{
+
+    display:block;
+
+    color:#AFC6FF;
+
+    font-size:15px;
+
+    font-weight:600;
+
+}
+
+.sidebar-menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:8px;
+
+}
+
+.sidebar-menu a,
+.sidebar-bottom a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:13px;
+
+    padding:14px 16px;
+
+    border-radius:14px;
+
+    color:#D1D5DB;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:var(--transition);
+
+}
+
+.sidebar-menu a i,
+.sidebar-bottom a i{
+
+    width:20px;
+
+    text-align:center;
+
+    font-size:16px;
+
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active{
+
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+    color:white;
+
+    box-shadow:0 12px 24px rgba(91,140,255,.22);
+
+}
+
+.sidebar-bottom{
+
+    margin-top:auto;
+
+    padding-top:20px;
+
+    border-top:1px solid rgba(255,255,255,.1);
+
+}
+
+.sidebar-bottom a:hover{
+
+    background:rgba(239,68,68,.14);
+
+    color:#FCA5A5;
+
+}
+
+/* ==========================================
+        MAIN CONTENT
+========================================== */
+
+.main-section{
+
+    flex:1;
+
+    display:flex;
+
+    flex-direction:column;
+
+    min-width:0;
+
+}
+
+.page-content{
+
+    flex:1;
+
+    padding:35px;
+
+}
+
+/* ==========================================
+        CARDS
+========================================== */
+
+.card{
+
+    background:white;
+
+    border-radius:var(--radius);
+
+    box-shadow:var(--shadow);
+
+    padding:25px;
+
+}
+
+/* ==========================================
+        BUTTONS
+========================================== */
+
+.btn{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:14px 28px;
+
+    border-radius:50px;
+
+    border:none;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+    font-weight:600;
+
+}
+
+.btn-primary{
+
+    color:white;
+
+    background:linear-gradient(
+        90deg,
+        var(--primary),
+        var(--secondary)
+    );
+
+}
+
+.btn-primary:hover{
+
+    transform:translateY(-3px);
+
+}
+
+/* ==========================================
+        BADGES
+========================================== */
+
+.badge{
+
+    display:inline-block;
+
+    padding:5px 12px;
+
+    border-radius:30px;
+
+    font-size:13px;
+
+    font-weight:600;
+
+}
+
+.badge-blue{
+
+    background:#E8F1FF;
+
+    color:#2563EB;
+
+}
+
+.badge-green{
+
+    background:#EAFBF3;
+
+    color:#16A34A;
+
+}
+
+.badge-orange{
+
+    background:#FFF5E6;
+
+    color:#D97706;
+
+}
+
+/* ==========================================
+        TITLES
+========================================== */
+
+.page-title{
+
+    font-size:36px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+}
+
+.page-subtitle{
+
+    color:var(--muted);
+
+    margin-bottom:30px;
+
+}
+
+/* ==========================================
+        RESPONSIVE
+========================================== */
+
+@media(max-width:992px){
+
+.app-container{
+
+    flex-direction:column;
+
+}
+
+.page-content{
+
+    padding:20px;
+
+}
+
+}
+
+
+/* ==========================================
+            NAVBAR
+========================================== */
+
+.top-navbar{
+
+    background:white;
+
+    padding:25px 35px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    border-bottom:1px solid var(--border);
+
+    gap:24px;
+
+}
+
+.navbar-left h2{
+
+    font-size:30px;
+
+    font-weight:700;
+
+    line-height:1.2;
+
+}
+
+.navbar-left p{
+
+    color:var(--muted);
+
+    margin-top:6px;
+
+}
+
+.navbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    flex-shrink:0;
+
+}
+
+.search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    background:#F6F8FC;
+
+    padding:14px 18px;
+
+    border-radius:50px;
+
+    width:330px;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    border:none;
+
+    outline:none;
+
+    background:transparent;
+
+    font-size:15px;
+
+    font-family:'Poppins',sans-serif;
+
+}
+
+.search-box i{
+
+    color:gray;
+
+}
+
+.nav-icons{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.nav-icons button{
+
+    width:48px;
+
+    height:48px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:white;
+
+    cursor:pointer;
+
+    box-shadow:var(--shadow);
+
+    transition:.3s;
+
+    font-size:18px;
+
+}
+
+.nav-icons button:hover{
+
+    background:var(--primary);
+
+    color:white;
+
+}
+
+
+/* ==========================================
+                FOOTER
+========================================== */
+
+.app-footer{
+
+    background:white;
+
+    border-top:1px solid var(--border);
+
+    padding:18px 35px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.footer-left h3{
+
+    color:var(--primary);
+
+    margin-bottom:3px;
+
+    font-size:20px;
+
+    line-height:1.25;
+
+}
+
+.footer-left p{
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    line-height:1.5;
+
+}
+
+.footer-right{
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    text-align:right;
+
+}
+
+@media(max-width:768px){
+
+.app-footer{
+
+    flex-direction:column;
+
+    gap:8px;
+
+    text-align:center;
+
+}
+
+.footer-right{
+
+    text-align:center;
+
+}
+
+}
+
+@media(max-width:1100px){
+
+.top-navbar{
+
+    align-items:flex-start;
+
+    flex-direction:column;
+
+}
+
+.navbar-right{
+
+    width:100%;
+
+}
+
+.search-box{
+
+    width:100%;
+
+}
+
+}
+
+@media(max-width:992px){
+
+.sidebar{
+
+    width:100%;
+
+    min-height:auto;
+
+    position:static;
+
+    padding:22px 20px;
+
+}
+
+.logo{
+
+    margin-bottom:18px;
+
+}
+
+.sidebar-menu{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,minmax(0,1fr));
+
+}
+
+.sidebar-bottom{
+
+    margin-top:18px;
+
+}
+
+}
+
+@media(max-width:640px){
+
+.top-navbar{
+
+    padding:22px 20px;
+
+}
+
+.navbar-left h2{
+
+    font-size:24px;
+
+}
+
+.navbar-right{
+
+    align-items:stretch;
+
+    flex-direction:column;
+
+}
+
+.nav-icons{
+
+    justify-content:flex-end;
+
+}
+
+.sidebar-menu{
+
+    grid-template-columns:1fr;
+
+}
+
+.sidebar-menu a,
+.sidebar-bottom a{
+
+    padding:13px 14px;
+
+}
+
+}

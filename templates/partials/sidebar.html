@@ -1,0 +1,90 @@
+<aside class="sidebar">
+
+    <div class="logo">
+
+        <div class="logo-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+
+        <h2>
+            AI Academic
+            <span>Recommender</span>
+        </h2>
+
+    </div>
+
+
+    <nav class="sidebar-menu">
+
+        <a href="{% url 'home' %}"
+           class="{% if request.path == '/' %}active{% endif %}">
+
+            <i class="fas fa-house"></i>
+
+            <span>Home</span>
+
+        </a>
+
+
+        <a href="{% url 'recommendations' %}"
+           class="{% if '/recommendations' in request.path %}active{% endif %}">
+
+            <i class="fas fa-robot"></i>
+
+            <span>AI Recommendations</span>
+
+        </a>
+
+
+        <a href="{% url 'resource_list' %}"
+           class="{% if '/resources' in request.path %}active{% endif %}">
+
+            <i class="fas fa-book-open"></i>
+
+            <span>Learning Resources</span>
+
+        </a>
+
+
+        <a href="#">
+
+            <i class="fas fa-chart-line"></i>
+
+            <span>Learning Activity</span>
+
+        </a>
+
+
+        <a href="#">
+
+            <i class="fas fa-user"></i>
+
+            <span>My Profile</span>
+
+        </a>
+
+
+        <a href="#">
+
+            <i class="fas fa-gear"></i>
+
+            <span>Settings</span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="{% url 'logout' %}">
+
+            <i class="fas fa-right-from-bracket"></i>
+
+            <span>Logout</span>
+
+        </a>
+
+    </div>
+
+</aside>

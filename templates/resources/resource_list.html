@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+
+{% block title %}
+Learning Resources
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .resources-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-end;
+        gap:24px;
+        margin-bottom:26px;
+    }
+
+    .resources-header h1{
+        font-size:32px;
+        line-height:1.2;
+        font-weight:700;
+        margin-bottom:8px;
+    }
+
+    .resources-header p{
+        max-width:680px;
+        color:var(--muted);
+        line-height:1.7;
+    }
+
+    .resource-count{
+        min-width:150px;
+        padding:18px 20px;
+        border:1px solid var(--border);
+        border-radius:18px;
+        background:white;
+        box-shadow:var(--shadow);
+        text-align:center;
+    }
+
+    .resource-count strong{
+        display:block;
+        color:var(--primary);
+        font-size:30px;
+        line-height:1;
+        margin-bottom:6px;
+    }
+
+    .resource-count span{
+        color:var(--muted);
+        font-size:13px;
+        font-weight:700;
+    }
+
+    .resources-grid{
+        display:grid;
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:24px;
+    }
+
+    .resource-card{
+        min-height:100%;
+        padding:24px;
+        border:1px solid var(--border);
+        border-radius:18px;
+        background:white;
+        box-shadow:var(--shadow);
+        display:flex;
+        flex-direction:column;
+        transition:var(--transition);
+    }
+
+    .resource-card:hover{
+        transform:translateY(-4px);
+        box-shadow:0 14px 34px rgba(31,41,55,.12);
+    }
+
+    .resource-icon{
+        width:48px;
+        height:48px;
+        border-radius:16px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        background:linear-gradient(135deg,var(--primary),var(--secondary));
+        margin-bottom:18px;
+        font-size:20px;
+    }
+
+    .resource-title{
+        color:var(--text);
+        font-size:20px;
+        line-height:1.35;
+        font-weight:700;
+        margin-bottom:14px;
+    }
+
+    .resource-meta{
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+        margin-bottom:16px;
+    }
+
+    .resource-badge{
+        display:inline-flex;
+        align-items:center;
+        min-height:30px;
+        padding:6px 12px;
+        border-radius:999px;
+        font-size:13px;
+        font-weight:700;
+    }
+
+    .badge-topic{
+        color:#2563EB;
+        background:#E8F1FF;
+    }
+
+    .badge-difficulty{
+        color:#16A34A;
+        background:#EAFBF3;
+    }
+
+    .badge-type{
+        color:#D97706;
+        background:#FFF5E6;
+    }
+
+    .resource-description{
+        color:var(--muted);
+        line-height:1.7;
+        margin-bottom:22px;
+    }
+
+    .resource-actions{
+        margin-top:auto;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+    }
+
+    .btn-open{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        min-height:44px;
+        padding:12px 18px;
+        border-radius:999px;
+        background:linear-gradient(90deg,var(--primary),var(--secondary));
+        color:white;
+        font-weight:700;
+        transition:var(--transition);
+    }
+
+    .btn-open:hover{
+        transform:translateY(-2px);
+        box-shadow:0 10px 24px rgba(91,140,255,.28);
+    }
+
+    .resource-type-note{
+        color:var(--muted);
+        font-size:13px;
+        font-weight:700;
+    }
+
+    .empty-state{
+        padding:36px;
+        border:1px solid var(--border);
+        border-radius:18px;
+        background:white;
+        box-shadow:var(--shadow);
+        color:var(--muted);
+    }
+
+    @media(max-width:1180px){
+        .resources-grid{
+            grid-template-columns:repeat(2,minmax(0,1fr));
+        }
+    }
+
+    @media(max-width:760px){
+        .resources-header{
+            flex-direction:column;
+            align-items:stretch;
+        }
+
+        .resources-grid{
+            grid-template-columns:1fr;
+        }
+
+        .resource-count{
+            text-align:left;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="resources-header">
+
+    <div>
+
+        <h1>
+            Learning Resources
+        </h1>
+
+        <p>
+            Explore academic materials connected to your recommendation results and learning needs.
+        </p>
+
+    </div>
+
+    <div class="resource-count">
+
+        <strong>{{ resources|length }}</strong>
+
+        <span>Available Resources</span>
+
+    </div>
+
+</section>
+
+{% if resources %}
+
+<section class="resources-grid">
+
+    {% for resource in resources %}
+
+    <article class="resource-card">
+
+        <div class="resource-icon">
+
+            {% if resource.resource_type == "Video" %}
+            <i class="fas fa-play"></i>
+            {% elif resource.resource_type == "PDF" %}
+            <i class="fas fa-file-pdf"></i>
+            {% else %}
+            <i class="fas fa-pen-to-square"></i>
+            {% endif %}
+
+        </div>
+
+        <h2 class="resource-title">
+            {{ resource.title }}
+        </h2>
+
+        <div class="resource-meta">
+
+            <span class="resource-badge badge-topic">
+                {{ resource.topic }}
+            </span>
+
+            <span class="resource-badge badge-difficulty">
+                {{ resource.difficulty }}
+            </span>
+
+            <span class="resource-badge badge-type">
+                {{ resource.resource_type }}
+            </span>
+
+        </div>
+
+        <p class="resource-description">
+            {{ resource.description|truncatewords:24 }}
+        </p>
+
+        <div class="resource-actions">
+
+            <a href="{% url 'resource_detail' resource.id %}"
+               class="btn-open">
+                View Resource
+            </a>
+
+            <span class="resource-type-note">
+                {{ resource.resource_type }}
+            </span>
+
+        </div>
+
+    </article>
+
+    {% endfor %}
+
+</section>
+
+{% else %}
+
+<div class="empty-state">
+    No learning resources are available yet.
+</div>
+
+{% endif %}
+
+{% endblock %}

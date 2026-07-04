@@ -1,0 +1,268 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+SmartLearn AI Dashboard
+{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-wrapper">
+
+    <div class="dashboard-main">
+
+        <!-- Welcome Card -->
+
+        <div class="welcome-card">
+
+            <h1>
+                Welcome Back, {{ username }} 👋
+            </h1>
+
+            <p>
+                Personalized AI-powered academic recommendations generated using Hybrid Machine Learning and Explainable AI.
+            </p>
+
+        </div>
+
+        <!-- Statistics -->
+
+        <div class="row g-4">
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="stats-card gradient1">
+
+                    <div class="stats-title">
+                        Weak Topic
+                    </div>
+
+                    <div class="stats-value">
+                        {{ recommendations.0.topic }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="stats-card gradient2">
+
+                    <div class="stats-title">
+                        Resources
+                    </div>
+
+                    <div class="stats-value">
+                        {{ recommendations|length }}
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="stats-card gradient3">
+
+                    <div class="stats-title">
+                        AI Confidence
+                    </div>
+
+                    <div class="stats-value">
+                        92%
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+
+                <div class="stats-card gradient4">
+
+                    <div class="stats-title">
+                        Dataset ID
+                    </div>
+
+                    <div class="stats-value">
+                        {{ student.dataset_student_id }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- AI Insight -->
+
+        <div class="ai-banner">
+
+            <h3>
+                AI Learning Insight
+            </h3>
+
+            <p>
+                Based on your academic profile, our Hybrid AI engine analysed your learning behaviour and generated personalized recommendations to improve your academic performance.
+            </p>
+
+        </div>
+
+        <h2 class="section-title">
+            Recommended Learning Resources
+        </h2>
+
+        <div class="row g-4">
+
+            {% for rec in recommendations %}
+
+<div class="col-lg-6">
+
+    <div class="recommendation-card">
+
+        <h3 class="resource-title">
+            {{ rec.title }}
+        </h3>
+
+        <div class="mb-3">
+
+            <span class="badge bg-primary">
+                {{ rec.topic }}
+            </span>
+
+            <span class="badge bg-success">
+                {{ rec.difficulty }}
+            </span>
+
+            <span class="badge bg-warning text-dark">
+                {{ rec.type }}
+            </span>
+
+        </div>
+
+        <div class="resource-description">
+
+            This recommendation was generated based on your
+            learning history, weak academic areas,
+            collaborative filtering and Hybrid Machine Learning.
+
+        </div>
+
+        <div class="score">
+
+            AI Score :
+            {{ rec.score }}
+
+        </div>
+
+        <br>
+
+        <a href="{% url 'resource_detail' rec.resource_id %}"
+           class="resource-btn">
+
+            View Resource →
+
+        </a>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="col-12">
+
+    <div class="alert alert-info">
+
+        No recommendations available.
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+    </div>
+
+    <!-- RIGHT PROFILE PANEL -->
+
+    <div class="dashboard-profile">
+
+        <div class="profile-card">
+
+            <h4>Student Profile</h4>
+
+            <div class="profile-item">
+
+                <div class="profile-label">
+                    Username
+                </div>
+
+                <div class="profile-value">
+                    {{ username }}
+                </div>
+
+            </div>
+
+            <div class="profile-item">
+
+                <div class="profile-label">
+                    Department
+                </div>
+
+                <div class="profile-value">
+                    {{ student.department|default:"Computer Science" }}
+                </div>
+
+            </div>
+
+            <div class="profile-item">
+
+                <div class="profile-label">
+                    Level
+                </div>
+
+                <div class="profile-value">
+                    {{ student.level|default:"400 Level" }}
+                </div>
+
+            </div>
+
+            <div class="profile-item">
+
+                <div class="profile-label">
+                    Dataset ID
+                </div>
+
+                <div class="profile-value">
+                    {{ student.dataset_student_id }}
+                </div>
+
+            </div>
+
+            <div class="profile-item">
+
+                <div class="profile-label">
+                    AI Recommendation Model
+                </div>
+
+                <div class="profile-value">
+                    Hybrid ML + Explainable AI
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
