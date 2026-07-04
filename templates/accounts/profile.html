@@ -17,6 +17,8 @@ Student Profile | AI Academic Recommender
         align-items: center;
         gap: 25px;
         margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
     }
 
     .profile-avatar {
@@ -30,16 +32,20 @@ Student Profile | AI Academic Recommender
         font-size: 38px;
         border: 3px solid rgba(255, 255, 255, 0.4);
         flex-shrink: 0;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     }
 
     .profile-header-info h1 {
         font-size: 28px;
         font-weight: 700;
         margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
     .profile-header-info p {
-        color: rgba(255, 255, 255, 0.85);
+        color: rgba(255, 255, 255, 0.9);
         font-size: 15px;
         display: flex;
         align-items: center;
@@ -51,6 +57,17 @@ Student Profile | AI Academic Recommender
         display: inline-flex;
         align-items: center;
         gap: 6px;
+    }
+
+    .badge-pill-header {
+        background: rgba(255, 255, 255, 0.22);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
 
     .stats-grid {
@@ -77,6 +94,7 @@ Student Profile | AI Academic Recommender
     .stat-box:hover {
         transform: translateY(-4px);
         box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+        border-color: var(--secondary);
     }
 
     .stat-label {
@@ -84,28 +102,45 @@ Student Profile | AI Academic Recommender
         font-size: 14px;
         font-weight: 600;
         margin-bottom: 10px;
+        z-index: 2;
     }
 
     .stat-number {
         font-size: 26px;
         font-weight: 700;
         color: var(--text);
+        z-index: 2;
     }
 
     .stat-icon {
         position: absolute;
         right: 20px;
         bottom: 20px;
-        font-size: 36px;
-        opacity: 0.1;
+        font-size: 38px;
+        opacity: 0.08;
         color: var(--primary);
+        z-index: 1;
+    }
+
+    .profile-grid-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
     }
 
     .profile-section-title {
-        font-size: 22px;
+        font-size: 20px;
         font-weight: 700;
         margin-bottom: 18px;
         color: var(--text);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .profile-section-title .title-left {
         display: flex;
         align-items: center;
         gap: 10px;
@@ -141,12 +176,94 @@ Student Profile | AI Academic Recommender
         color: var(--muted);
         font-weight: 600;
         font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .info-val {
         color: var(--text);
         font-weight: 700;
         font-size: 15px;
+        text-align: right;
+    }
+
+    .ai-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: linear-gradient(135deg, #EFF6FF, #E0E7FF);
+        color: var(--primary);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* Tabbed Interface for Activities & Bookmarks */
+    .tab-container {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+    }
+
+    .tab-header {
+        display: flex;
+        background: #F8FAFC;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .tab-btn {
+        flex: 1;
+        padding: 16px 20px;
+        border: none;
+        background: none;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        transition: var(--transition);
+        position: relative;
+    }
+
+    .tab-btn.active {
+        color: var(--primary);
+        background: white;
+        font-weight: 700;
+    }
+
+    .tab-btn.active::after {
+        content: "";
+        position: absolute;
+        bottom: -1px;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+    }
+
+    .tab-btn:hover:not(.active) {
+        color: var(--text);
+        background: rgba(0,0,0,0.02);
+    }
+
+    .tab-content {
+        padding: 24px;
+    }
+
+    .tab-pane {
+        display: none;
+    }
+
+    .tab-pane.active {
+        display: block;
     }
 
     .activity-list {
@@ -158,25 +275,29 @@ Student Profile | AI Academic Recommender
     .activity-item {
         background: white;
         border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 18px 22px;
+        border-radius: 14px;
+        padding: 16px 20px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        box-shadow: var(--shadow);
+        gap: 15px;
         transition: var(--transition);
     }
 
     .activity-item:hover {
         border-color: var(--secondary);
-        transform: translateX(4px);
+        transform: translateX(3px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
 
     .activity-left h4 {
-        font-size: 16px;
+        font-size: 15px;
         font-weight: 700;
         color: var(--text);
         margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .activity-meta {
@@ -185,132 +306,432 @@ Student Profile | AI Academic Recommender
         display: flex;
         align-items: center;
         gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .activity-actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-shrink: 0;
+    }
+
+    .btn-icon-action {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: #F8FAFC;
+        color: var(--muted);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .btn-icon-action:hover {
+        background: #EBF4FF;
+        color: var(--primary);
+        border-color: var(--primary);
+    }
+
+    .btn-icon-action.bookmarked {
+        background: #FEF3C7;
+        color: #D97706;
+        border-color: #F59E0B;
+    }
+
+    .btn-view-sm {
+        padding: 8px 16px;
+        background: var(--background);
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 999px;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: var(--transition);
+        border: 1px solid var(--border);
+    }
+
+    .btn-view-sm:hover {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
     }
 
     .empty-state {
-        background: white;
-        border: 1px dashed var(--border);
-        border-radius: var(--radius);
-        padding: 40px;
+        padding: 45px 20px;
         text-align: center;
         color: var(--muted);
     }
 
     .empty-state i {
-        font-size: 40px;
+        font-size: 44px;
         color: var(--secondary);
-        margin-bottom: 12px;
+        margin-bottom: 14px;
+        opacity: 0.8;
+    }
+
+    .empty-state h4 {
+        color: var(--text);
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 6px;
+    }
+
+    .empty-state p {
+        font-size: 14px;
+        max-width: 350px;
+        margin: 0 auto;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 992px) {
+        .profile-grid-layout {
+            grid-template-columns: 1fr !important;
+        }
     }
 </style>
 {% endblock %}
 
 {% block content %}
+<!-- Academic Profile Banner -->
 <div class="profile-header">
     <div class="profile-avatar">
         <i class="fa-solid fa-user-graduate"></i>
     </div>
     <div class="profile-header-info">
-        <h1>{{ profile.user.username }}</h1>
+        <h1>
+            {{ profile.user.username }}
+            <span class="badge-pill-header"><i class="fa-solid fa-check-circle"></i> Student ID #{{ profile.dataset_student_id }}</span>
+        </h1>
         <p>
-            <span><i class="fa-solid fa-building-columns"></i> {{ profile.department|default:"Computer Science" }}</span>
+            <span><i class="fa-solid fa-building-columns"></i> {{ department }}</span>
             <span>•</span>
-            <span><i class="fa-solid fa-layer-group"></i> {{ profile.level|default:"400 Level" }}</span>
+            <span><i class="fa-solid fa-layer-group"></i> {{ level }}</span>
             <span>•</span>
-            <span><i class="fa-solid fa-id-badge"></i> ID: #{{ profile.dataset_student_id }}</span>
+            <span><i class="fa-solid fa-envelope"></i> {{ profile.user.email|default:"No email registered" }}</span>
         </p>
     </div>
 </div>
 
-<!-- Statistics Grid -->
+<!-- AI Diagnostics & Overview Statistics Grid -->
 <div class="stats-grid">
     <div class="stat-box">
-        <div class="stat-label">AI Recommendations</div>
+        <div class="stat-label">AI Recommendations Available</div>
         <div class="stat-number">{{ recommendation_count }}</div>
         <i class="fa-solid fa-wand-magic-sparkles stat-icon"></i>
     </div>
     <div class="stat-box">
-        <div class="stat-label">Identified Weak Topic</div>
+        <div class="stat-label">Primary Weak Topic</div>
         <div class="stat-number" style="color: var(--danger); font-size: 22px;">{{ weak_topic }}</div>
         <i class="fa-solid fa-triangle-exclamation stat-icon"></i>
     </div>
     <div class="stat-box">
-        <div class="stat-label">Recent Activities</div>
+        <div class="stat-label">Recent Activity Count</div>
         <div class="stat-number">{{ recent_interactions|length }}</div>
         <i class="fa-solid fa-chart-line stat-icon"></i>
     </div>
     <div class="stat-box">
-        <div class="stat-label">Account Status</div>
-        <div class="stat-number" style="color: var(--success); font-size: 22px;">Active</div>
-        <i class="fa-solid fa-circle-check stat-icon"></i>
+        <div class="stat-label">ML Recommendation Engine</div>
+        <div class="stat-number" style="color: var(--primary); font-size: 18px;">Active Hybrid</div>
+        <i class="fa-solid fa-robot stat-icon"></i>
     </div>
 </div>
 
-<div class="row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
-    <!-- Left Column: Student Details -->
+<div class="profile-grid-layout">
+    <!-- Left Column: Student Details & AI Model Diagnostics -->
     <div>
         <h2 class="profile-section-title">
-            <i class="fa-solid fa-user-check" style="color: var(--primary);"></i> Academic Profile
+            <span class="title-left"><i class="fa-solid fa-user-check" style="color: var(--primary);"></i> Academic Overview</span>
         </h2>
         <div class="info-card">
             <div class="info-row">
-                <span class="info-key">Username</span>
+                <span class="info-key"><i class="fa-regular fa-user"></i> Username</span>
                 <span class="info-val">{{ profile.user.username }}</span>
             </div>
             <div class="info-row">
-                <span class="info-key">Email Address</span>
+                <span class="info-key"><i class="fa-regular fa-envelope"></i> Email Address</span>
                 <span class="info-val">{{ profile.user.email|default:"Not provided" }}</span>
             </div>
             <div class="info-row">
-                <span class="info-key">Department</span>
-                <span class="info-val">{{ profile.department|default:"Computer Science" }}</span>
+                <span class="info-key"><i class="fa-solid fa-building-columns"></i> Department</span>
+                <span class="info-val">{{ department }}</span>
             </div>
             <div class="info-row">
-                <span class="info-key">Academic Level</span>
-                <span class="info-val">{{ profile.level|default:"400 Level" }}</span>
+                <span class="info-key"><i class="fa-solid fa-graduation-cap"></i> Academic Level</span>
+                <span class="info-val">{{ level }}</span>
             </div>
             <div class="info-row">
-                <span class="info-key">Dataset Mapping ID</span>
-                <span class="info-val">#{{ profile.dataset_student_id }}</span>
+                <span class="info-key"><i class="fa-solid fa-id-badge"></i> Dataset Mapping ID</span>
+                <span class="info-val" style="color: var(--primary); font-weight: 800;">#{{ profile.dataset_student_id }}</span>
+            </div>
+        </div>
+
+        <h2 class="profile-section-title">
+            <span class="title-left"><i class="fa-solid fa-microchip" style="color: var(--secondary);"></i> AI Recommendation Diagnostics</span>
+        </h2>
+        <div class="info-card">
+            <div class="info-row">
+                <span class="info-key">Model Type</span>
+                <span class="info-val">
+                    <span class="ai-badge"><i class="fa-solid fa-layer-group"></i> {{ model_badge }}</span>
+                </span>
+            </div>
+            <div class="info-row">
+                <span class="info-key">Target Diagnostics Area</span>
+                <span class="info-val" style="color: var(--danger);">{{ weak_topic }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-key">Tailored Resources Found</span>
+                <span class="info-val">{{ recommendation_count }} Study Materials</span>
+            </div>
+            <div class="info-row">
+                <span class="info-key">Recommendation Pipeline</span>
+                <span class="info-val" style="color: var(--success);"><i class="fa-solid fa-circle-check"></i> Synchronized</span>
             </div>
         </div>
     </div>
 
-    <!-- Right Column: Recent Activities -->
+    <!-- Right Column: Tabbed Activity & Saved Bookmarks -->
     <div>
         <h2 class="profile-section-title">
-            <i class="fa-solid fa-clock-rotate-left" style="color: var(--secondary);"></i> Recently Viewed Resources
+            <span class="title-left"><i class="fa-solid fa-book-bookmark" style="color: var(--secondary);"></i> Learning Materials & Activity</span>
         </h2>
-        {% if recent_interactions %}
-            <div class="activity-list">
-                {% for item in recent_interactions %}
-                <div class="activity-item">
-                    <div class="activity-left">
-                        <h4>{{ item.resource.title }}</h4>
-                        <div class="activity-meta">
-                            <span class="badge badge-blue">{{ item.resource.topic }}</span>
-                            <span><i class="fa-regular fa-clock"></i> {{ item.viewed_at|date:"M d, Y - H:i" }}</span>
+        
+        <div class="tab-container">
+            <div class="tab-header">
+                <button class="tab-btn active" onclick="switchTab('recent-tab', this)">
+                    <i class="fa-solid fa-clock-rotate-left"></i> Recent Activity (<span id="recent-count">{{ recent_interactions|length }}</span>)
+                </button>
+                <button class="tab-btn" onclick="switchTab('bookmarks-tab', this)">
+                    <i class="fa-solid fa-bookmark"></i> Saved Bookmarks (<span id="bookmark-count">0</span>)
+                </button>
+            </div>
+
+            <div class="tab-content">
+                <!-- Tab 1: Recent Activity -->
+                <div id="recent-tab" class="tab-pane active">
+                    {% if recent_interactions %}
+                        <div class="activity-list">
+                            {% for item in recent_interactions %}
+                            <div class="activity-item">
+                                <div class="activity-left">
+                                    <h4>
+                                        {{ item.resource.title }}
+                                    </h4>
+                                    <div class="activity-meta">
+                                        <span class="badge badge-blue">{{ item.resource.topic }}</span>
+                                        <span><i class="fa-regular fa-clock"></i> {{ item.viewed_at|date:"M d, Y - H:i" }}</span>
+                                    </div>
+                                </div>
+                                <div class="activity-actions">
+                                    <button type="button" 
+                                            class="btn-icon-action bookmark-toggle-btn" 
+                                            data-id="{{ item.resource.id }}" 
+                                            data-title="{{ item.resource.title|escapejs }}" 
+                                            data-topic="{{ item.resource.topic|escapejs }}" 
+                                            data-url="{% url 'resource_detail' item.resource.id %}" 
+                                            onclick="toggleBookmarkFromBtn(this)"
+                                            title="Bookmark study material">
+                                        <i class="fa-regular fa-bookmark"></i>
+                                    </button>
+                                    <a href="{% url 'resource_detail' item.resource.id %}" class="btn-view-sm">
+                                        View <i class="fa-solid fa-arrow-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
                         </div>
-                    </div>
-                    <a href="{% url 'resource_detail' item.resource.id %}" class="btn" style="padding: 8px 16px; background: var(--background); color: var(--primary); font-size: 13px;">
-                        View <i class="fa-solid fa-arrow-right" style="margin-left: 6px;"></i>
-                    </a>
+                    {% else %}
+                        <div class="empty-state">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <h4>No Recent Activity Recorded</h4>
+                            <p>Explore your personalized AI recommendations to start tracking your learning progress!</p>
+                            <a href="{% url 'recommendations' %}" class="btn" style="margin-top: 15px; display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: white; padding: 10px 20px; border-radius: 999px; text-decoration: none;">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> View AI Recommendations
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
-                {% endfor %}
+
+                <!-- Tab 2: Saved Bookmarks (LocalStorage) -->
+                <div id="bookmarks-tab" class="tab-pane">
+                    <div id="bookmarks-list" class="activity-list">
+                        <!-- Dynamically populated via JS -->
+                    </div>
+                    <div id="bookmarks-empty" class="empty-state" style="display: none;">
+                        <i class="fa-regular fa-bookmark"></i>
+                        <h4>No Saved Study Materials Yet</h4>
+                        <p>Click the bookmark icon (<i class="fa-regular fa-bookmark"></i>) on any recently viewed resource to save it here for instant access!</p>
+                    </div>
+                </div>
             </div>
-        {% else %}
-            <div class="empty-state">
-                <i class="fa-solid fa-folder-open"></i>
-                <p>No resource learning activity recorded yet.<br>Explore recommendations to start tracking your progress!</p>
-            </div>
-        {% endif %}
+        </div>
     </div>
 </div>
 
-<style>
-    @media (max-width: 992px) {
-        .row[style*="grid-template-columns"] {
-            grid-template-columns: 1fr !important;
+<script>
+    // Tab switching logic
+    function switchTab(tabId, btnElement) {
+        document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        
+        document.getElementById(tabId).classList.add('active');
+        btnElement.classList.add('active');
+        
+        if (tabId === 'bookmarks-tab') {
+            renderBookmarks();
         }
     }
-</style>
+
+    // LocalStorage Bookmark Manager
+    const STORAGE_KEY = 'smartlearn_bookmarks';
+
+    function getBookmarks() {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        } catch (e) {
+            console.error("Error accessing localStorage", e);
+            return [];
+        }
+    }
+
+    function saveBookmarks(bookmarks) {
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(bookmarks));
+            updateBookmarkCount();
+            syncBookmarkButtons();
+        } catch (e) {
+            console.error("Error saving to localStorage", e);
+        }
+    }
+
+    function toggleBookmarkFromBtn(btn) {
+        const id = btn.getAttribute('data-id');
+        const title = btn.getAttribute('data-title');
+        const topic = btn.getAttribute('data-topic');
+        const url = btn.getAttribute('data-url');
+        
+        toggleBookmark(id, title, topic, url);
+    }
+
+    function toggleBookmark(id, title, topic, url) {
+        let bookmarks = getBookmarks();
+        const existingIndex = bookmarks.findIndex(item => String(item.id) === String(id));
+        
+        if (existingIndex > -1) {
+            bookmarks.splice(existingIndex, 1);
+        } else {
+            bookmarks.push({
+                id: String(id),
+                title: title,
+                topic: topic,
+                url: url,
+                savedAt: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+            });
+        }
+        
+        saveBookmarks(bookmarks);
+        
+        // If we are currently viewing bookmarks tab, re-render
+        if (document.getElementById('bookmarks-tab').classList.contains('active')) {
+            renderBookmarks();
+        }
+    }
+
+    function removeBookmark(id) {
+        let bookmarks = getBookmarks();
+        bookmarks = bookmarks.filter(item => String(item.id) !== String(id));
+        saveBookmarks(bookmarks);
+        renderBookmarks();
+    }
+
+    function renderBookmarks() {
+        const bookmarks = getBookmarks();
+        const listEl = document.getElementById('bookmarks-list');
+        const emptyEl = document.getElementById('bookmarks-empty');
+        
+        if (!listEl || !emptyEl) return;
+
+        listEl.innerHTML = '';
+
+        if (bookmarks.length === 0) {
+            listEl.style.display = 'none';
+            emptyEl.style.display = 'block';
+        } else {
+            listEl.style.display = 'flex';
+            emptyEl.style.display = 'none';
+            
+            bookmarks.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'activity-item';
+                itemEl.innerHTML = `
+                    <div class="activity-left">
+                        <h4>${item.title}</h4>
+                        <div class="activity-meta">
+                            <span class="badge badge-blue">${item.topic}</span>
+                            <span><i class="fa-regular fa-calendar-check"></i> Saved on ${item.savedAt || 'Today'}</span>
+                        </div>
+                    </div>
+                    <div class="activity-actions">
+                        <button type="button" 
+                                class="btn-icon-action bookmarked" 
+                                onclick="removeBookmark('${item.id}')"
+                                title="Remove bookmark">
+                            <i class="fa-solid fa-bookmark"></i>
+                        </button>
+                        <a href="${item.url}" class="btn-view-sm">
+                            View <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                    </div>
+                `;
+                listEl.appendChild(itemEl);
+            });
+        }
+    }
+
+    function updateBookmarkCount() {
+        const bookmarks = getBookmarks();
+        const countEl = document.getElementById('bookmark-count');
+        if (countEl) {
+            countEl.textContent = bookmarks.length;
+        }
+    }
+
+    function syncBookmarkButtons() {
+        const bookmarks = getBookmarks();
+        const bookmarkedIds = new Set(bookmarks.map(item => String(item.id)));
+        
+        document.querySelectorAll('.bookmark-toggle-btn').forEach(btn => {
+            const id = String(btn.getAttribute('data-id'));
+            const icon = btn.querySelector('i');
+            
+            if (bookmarkedIds.has(id)) {
+                btn.classList.add('bookmarked');
+                btn.title = 'Remove bookmark';
+                if (icon) {
+                    icon.className = 'fa-solid fa-bookmark';
+                }
+            } else {
+                btn.classList.remove('bookmarked');
+                btn.title = 'Bookmark study material';
+                if (icon) {
+                    icon.className = 'fa-regular fa-bookmark';
+                }
+            }
+        });
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateBookmarkCount();
+        syncBookmarkButtons();
+    });
+</script>
 {% endblock %}

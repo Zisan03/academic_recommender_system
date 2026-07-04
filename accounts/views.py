@@ -119,15 +119,28 @@ def profile_view(request):
         .order_by("-viewed_at")[:5]
     )
 
-    recommendations = generate_recommendations(
-        profile.dataset_student_id
-    )
+    try:
+        recommendations = generate_recommendations(
+            profile.dataset_student_id
+        )
+        recommendation_count = len(recommendations)
+        weak_topic = recommendations[0]["topic"] if recommendations else "Not available"
+    except Exception:
+        recommendations = []
+        recommendation_count = 0
+        weak_topic = "Not available"
+
+    department_display = profile.department if profile.department else "Computer Science"
+    level_display = profile.level if profile.level else "400 Level"
 
     context = {
         "profile": profile,
+        "department": department_display,
+        "level": level_display,
         "recent_interactions": recent_interactions,
-        "recommendation_count": len(recommendations),
-        "weak_topic": recommendations[0]["topic"] if recommendations else "Not available",
+        "recommendation_count": recommendation_count,
+        "weak_topic": weak_topic,
+        "model_badge": "Hybrid Collaborative + Content-Based ML",
     }
 
     return render(
