@@ -37,7 +37,7 @@
 
 
         <a href="{% url 'resource_list' %}"
-           class="{% if '/resources' in request.path %}active{% endif %}">
+           class="{% if '/resources' in request.path and '/activity' not in request.path %}active{% endif %}">
 
             <i class="fas fa-book-open"></i>
 
@@ -46,7 +46,8 @@
         </a>
 
 
-        <a href="#">
+        <a href="{% url 'activity' %}"
+           class="{% if '/activity' in request.path %}active{% endif %}">
 
             <i class="fas fa-chart-line"></i>
 

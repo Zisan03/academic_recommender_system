@@ -1,0 +1,474 @@
+{% extends "base.html" %}
+
+{% block title %}
+Learning Activity
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .activity-header {
+        margin-bottom: 32px;
+    }
+
+    .activity-header h1 {
+        font-size: 32px;
+        line-height: 1.2;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 8px;
+    }
+
+    .activity-header p {
+        color: var(--muted);
+        line-height: 1.7;
+        max-width: 680px;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+
+    .stat-card {
+        padding: 26px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: white;
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 36px rgba(31, 41, 55, 0.12);
+    }
+
+    .stat-card::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        opacity: 0;
+        transition: var(--transition);
+    }
+
+    .stat-card:hover::after {
+        opacity: 1;
+    }
+
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        flex-shrink: 0;
+    }
+
+    .stat-icon.blue {
+        color: #2563EB;
+        background: #E8F1FF;
+    }
+
+    .stat-icon.green {
+        color: #16A34A;
+        background: #EAFBF3;
+    }
+
+    .stat-icon.purple {
+        color: #9333EA;
+        background: #F3E8FF;
+    }
+
+    .stat-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stat-value {
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--text);
+        line-height: 1.1;
+        margin-bottom: 6px;
+    }
+
+    .stat-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--muted);
+    }
+
+    /* Timeline Section */
+    .timeline-container {
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .timeline-title {
+        font-size: 22px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 24px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .timeline-list {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .timeline-list::before {
+        content: "";
+        position: absolute;
+        top: 20px;
+        bottom: 20px;
+        left: 23px;
+        width: 2px;
+        background: #E5E7EB;
+        z-index: 0;
+    }
+
+    .timeline-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .timeline-dot {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: white;
+        border: 2px solid var(--border);
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        color: var(--primary);
+        flex-shrink: 0;
+        transition: var(--transition);
+    }
+
+    .timeline-item:hover .timeline-dot {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border-color: transparent;
+        transform: scale(1.1);
+    }
+
+    .timeline-card {
+        flex: 1;
+        padding: 24px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: white;
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        transition: var(--transition);
+    }
+
+    .timeline-item:hover .timeline-card {
+        transform: translateX(6px);
+        box-shadow: 0 12px 28px rgba(31, 41, 55, 0.1);
+        border-color: #BFDBFE;
+    }
+
+    .timeline-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .timeline-header {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .resource-title {
+        font-size: 19px;
+        font-weight: 700;
+        color: var(--text);
+        margin: 0;
+    }
+
+    .resource-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .badge-topic {
+        color: #2563EB;
+        background: #E8F1FF;
+    }
+
+    .badge-difficulty {
+        color: #16A34A;
+        background: #EAFBF3;
+    }
+
+    .badge-type {
+        color: #D97706;
+        background: #FFF5E6;
+    }
+
+    .timeline-timestamp {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted);
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .btn-reopen {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 20px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        font-weight: 700;
+        font-size: 14px;
+        white-space: nowrap;
+        transition: var(--transition);
+        text-decoration: none;
+    }
+
+    .btn-reopen:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(91, 140, 255, 0.3);
+        color: white;
+    }
+
+    /* Empty State */
+    .empty-state-card {
+        padding: 60px 30px;
+        border: 1px solid var(--border);
+        border-radius: 24px;
+        background: white;
+        box-shadow: var(--shadow);
+        text-align: center;
+        max-width: 600px;
+        margin: 40px auto;
+    }
+
+    .empty-icon {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        background: #F3F4F6;
+        color: var(--primary);
+        font-size: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+    }
+
+    .empty-state-card h3 {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 12px;
+    }
+
+    .empty-state-card p {
+        color: var(--muted);
+        line-height: 1.7;
+        font-size: 16px;
+        margin-bottom: 28px;
+    }
+
+    .btn-explore {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 28px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        font-weight: 700;
+        font-size: 16px;
+        transition: var(--transition);
+        text-decoration: none;
+    }
+
+    .btn-explore:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(91, 140, 255, 0.3);
+        color: white;
+    }
+
+    /* Responsive Breakpoints */
+    @media (max-width: 992px) {
+        .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .timeline-card {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .btn-reopen {
+            width: 100%;
+        }
+
+        .timeline-list::before {
+            left: 19px;
+        }
+
+        .timeline-dot {
+            width: 40px;
+            height: 40px;
+            font-size: 15px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<section class="activity-header">
+    <h1>Learning Activity</h1>
+    <p>Review your chronological academic study history and track your learning engagement across recommended study materials.</p>
+</section>
+
+<!-- Engagement Statistics Header -->
+<section class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-icon blue">
+            <i class="fas fa-layer-group"></i>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ total_views }}</span>
+            <span class="stat-label">Total Interactions</span>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon purple">
+            <i class="fas fa-bookmark"></i>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value">{{ top_topic }}</span>
+            <span class="stat-label">Top Subject</span>
+        </div>
+    </div>
+
+    <div class="stat-card">
+        <div class="stat-icon green">
+            <i class="fas fa-fire"></i>
+        </div>
+        <div class="stat-info">
+            <span class="stat-value" style="font-size: 22px;">{{ active_status }}</span>
+            <span class="stat-label">Learning Status</span>
+        </div>
+    </div>
+</section>
+
+<!-- Activity Timeline Section -->
+{% if interactions %}
+<section class="timeline-container">
+    <h2 class="timeline-title">
+        <i class="fas fa-clock-rotate-left"></i>
+        Interaction History
+    </h2>
+
+    <div class="timeline-list">
+        {% for interaction in interactions %}
+        <div class="timeline-item">
+            <div class="timeline-dot">
+                {% if interaction.resource.resource_type == "Video" %}
+                <i class="fas fa-play"></i>
+                {% elif interaction.resource.resource_type == "PDF" %}
+                <i class="fas fa-file-pdf"></i>
+                {% else %}
+                <i class="fas fa-pen-to-square"></i>
+                {% endif %}
+            </div>
+
+            <article class="timeline-card">
+                <div class="timeline-content">
+                    <div class="timeline-header">
+                        <h3 class="resource-title">{{ interaction.resource.title }}</h3>
+                        <div class="resource-badges">
+                            <span class="badge badge-topic">{{ interaction.resource.topic }}</span>
+                            <span class="badge badge-difficulty">{{ interaction.resource.difficulty }}</span>
+                            <span class="badge badge-type">{{ interaction.resource.resource_type }}</span>
+                        </div>
+                    </div>
+
+                    <div class="timeline-timestamp">
+                        <i class="far fa-calendar-alt"></i>
+                        <span>{{ interaction.viewed_at|date:"F j, Y - H:i" }}</span>
+                    </div>
+                </div>
+
+                <a href="{% url 'resource_detail' interaction.resource.id %}" class="btn-reopen">
+                    Re-open Resource &rarr;
+                </a>
+            </article>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% else %}
+<!-- Empty State -->
+<div class="empty-state-card">
+    <div class="empty-icon">
+        <i class="fas fa-book-reader"></i>
+    </div>
+    <h3>No Learning Activity Recorded Yet</h3>
+    <p>You haven't interacted with any learning materials yet. Explore your AI recommendations to start building your study streak!</p>
+    <a href="{% url 'recommendations' %}" class="btn-explore">
+        <i class="fas fa-robot"></i>
+        Explore Recommendations &rarr;
+    </a>
+</div>
+{% endif %}
+
+{% endblock %}
