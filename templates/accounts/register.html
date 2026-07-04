@@ -9,7 +9,7 @@
           content="width=device-width, initial-scale=1.0">
 
     <title>
-        Student Registration
+        Student Registration - SmartLearn AI
     </title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
@@ -17,6 +17,9 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
           rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
     <style>
 
@@ -31,23 +34,120 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 40px 20px;
         }
 
         .register-card{
-            width: 500px;
-            background: rgba(255,255,255,0.05);
+            width: 520px;
+            background: #172033;
             padding: 40px;
             border-radius: 20px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        h2{
-            text-align: center;
-            margin-bottom: 30px;
+        .form-label{
+            color: #d1d5db;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 6px;
         }
 
-        button{
+        .form-control{
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .form-control:focus{
+            background-color: rgba(255, 255, 255, 0.08);
+            border-color: #7B3FF2;
+            color: white;
+            box-shadow: 0 0 0 4px rgba(123, 63, 242, 0.25);
+            outline: none;
+        }
+
+        .form-control::placeholder{
+            color: #6b7280;
+        }
+
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus{
+            -webkit-text-fill-color: white;
+            -webkit-box-shadow: 0 0 0px 1000px #172033 inset;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+
+        .form-text{
+            color: #9ca3af !important;
+            font-size: 12px;
+            margin-top: 6px;
+            line-height: 1.4;
+        }
+
+        .form-text ul{
+            padding-left: 18px;
+            margin-top: 4px;
+            margin-bottom: 0;
+        }
+
+        .form-text li{
+            margin-bottom: 2px;
+        }
+
+        ul.errorlist{
+            color: #ef4444;
+            list-style: none;
+            padding-left: 0;
+            font-size: 13px;
+            margin-top: 6px;
+            margin-bottom: 0;
+        }
+
+        .btn-primary{
+            background: linear-gradient(90deg, #7B3FF2, #5B8CFF);
+            border: none;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 15px;
             width: 100%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .btn-primary:hover{
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(123, 63, 242, 0.4);
+            background: linear-gradient(90deg, #6a33d8, #4a7ae6);
+        }
+
+        hr{
+            border-color: rgba(255, 255, 255, 0.1);
+            margin: 25px 0;
+        }
+
+        .auth-footer{
+            text-align: center;
+            color: #d1d5db;
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+
+        .auth-footer a{
+            color: #5B8CFF;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            margin-left: 5px;
+        }
+
+        .auth-footer a:hover{
+            color: #7B3FF2;
         }
 
     </style>
@@ -58,25 +158,69 @@
 
     <div class="register-card">
 
-        <h2>
-            Create Student Account
-        </h2>
+        <div class="text-center mb-4">
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3" style="width: 60px; height: 60px; background: linear-gradient(135deg, rgba(123, 63, 242, 0.2), rgba(91, 140, 255, 0.2)); color: #AFC6FF;">
+                <i class="fa-solid fa-user-graduate fs-3"></i>
+            </div>
+            <h2 class="fw-bold mb-1">Create Student Account</h2>
+            <p class="text-secondary small mb-0">Join SmartLearn AI Academic Recommender</p>
+        </div>
 
-        <form method="POST">
+        <form method="POST" novalidate>
 
             {% csrf_token %}
 
-            {{ form.as_p }}
+            {% if form.non_field_errors %}
+                <div class="alert alert-danger py-2 px-3 small border-0 bg-danger bg-opacity-10 text-danger rounded-3 mb-3">
+                    {% for error in form.non_field_errors %}
+                        <div><i class="fa-solid fa-triangle-exclamation me-1"></i>{{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="mb-3">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                    <input type="{{ field.field.widget.input_type }}"
+                           name="{{ field.name }}"
+                           id="{{ field.id_for_label }}"
+                           class="form-control {% if field.errors %}is-invalid{% endif %}"
+                           placeholder="{% if field.name == 'username' %}Choose a username{% elif field.name == 'email' %}Enter your email address{% elif field.name == 'password1' %}Create a strong password{% elif field.name == 'password2' %}Confirm your password{% else %}Enter {{ field.label|lower }}{% endif %}"
+                           value="{{ field.value|default:'' }}"
+                           {% if field.field.required %}required{% endif %}>
+
+                    {% if field.help_text %}
+                        <div class="form-text">{{ field.help_text|safe }}</div>
+                    {% endif %}
+
+                    {% if field.errors %}
+                        <ul class="errorlist">
+                            {% for error in field.errors %}
+                                <li><i class="fa-solid fa-circle-exclamation me-1"></i>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            {% endfor %}
 
             <button
                 type="submit"
                 class="btn btn-primary">
 
-                Register
+                Register Account
 
             </button>
 
         </form>
+
+        <hr>
+
+        <p class="auth-footer">
+            Already have an account?
+            <a href="/accounts/login/">
+                Login
+            </a>
+        </p>
 
     </div>
 
