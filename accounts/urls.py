@@ -4,7 +4,8 @@ from .views import (
     register,
     user_login,
     user_logout,
-    profile_view
+    profile_view,
+    settings_view
 )
 
 urlpatterns = [
@@ -33,4 +34,10 @@ urlpatterns = [
         name="profile"
     ),
 
-]
+    path(
+        "settings/",
+        settings_view,
+        name="settings"
+    ),
+
+]

@@ -4,8 +4,13 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
-from .forms import StudentRegistrationForm
+from .forms import (
+    StudentRegistrationForm,
+    StudentProfileUpdateForm,
+    UserUpdateForm
+)
 from .models import StudentProfile
 from ML_engine.predict import generate_recommendations
 from resources_app.models import ResourceInteraction
@@ -146,5 +151,66 @@ def profile_view(request):
     return render(
         request,
         "accounts/profile.html",
+        context
+    )
+
+
+# =========================
+# USER SETTINGS
+# =========================
+
+@login_required(login_url="/accounts/login/")
+def settings_view(request):
+
+    profile, created = StudentProfile.objects.get_or_create(
+        user=request.user
+    )
+
+    if request.method == "POST":
+
+        user_form = UserUpdateForm(
+            request.POST,
+            instance=request.user
+        )
+
+        profile_form = StudentProfileUpdateForm(
+            request.POST,
+            instance=profile
+        )
+
+        if user_form.is_valid() and profile_form.is_valid():
+
+            user_form.save()
+
+            profile_form.save()
+
+            messages.success(
+                request,
+                "Your academic profile has been successfully updated!"
+            )
+
+            return redirect(
+                "settings"
+            )
+
+    else:
+
+        user_form = UserUpdateForm(
+            instance=request.user
+        )
+
+        profile_form = StudentProfileUpdateForm(
+            instance=profile
+        )
+
+    context = {
+        "user_form": user_form,
+        "profile_form": profile_form,
+        "profile": profile,
+    }
+
+    return render(
+        request,
+        "accounts/settings.html",
         context
     )

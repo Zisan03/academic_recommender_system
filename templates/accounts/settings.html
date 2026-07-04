@@ -1,0 +1,563 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Account Settings | AI Academic Recommender
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .settings-header {
+        background: linear-gradient(135deg, rgba(123, 63, 242, 0.95), rgba(91, 140, 255, 0.92)), var(--primary);
+        color: white;
+        padding: 35px;
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        margin-bottom: 30px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .settings-avatar {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 34px;
+        border: 3px solid rgba(255, 255, 255, 0.4);
+        flex-shrink: 0;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .settings-header-info h1 {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .settings-header-info p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 15px;
+    }
+
+    .alert-success-banner {
+        background: #EAFBF3;
+        border: 1px solid #34D399;
+        color: #065F46;
+        padding: 16px 24px;
+        border-radius: 14px;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(16, 185, 129, 0.1);
+        animation: slideDown 0.4s ease;
+    }
+
+    .alert-success-banner i {
+        font-size: 22px;
+        color: #10B981;
+    }
+
+    @keyframes slideDown {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .settings-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        align-items: start;
+    }
+
+    @media (max-width: 992px) {
+        .settings-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .settings-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 30px;
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+        transition: var(--transition);
+    }
+
+    .settings-card:hover {
+        border-color: rgba(91, 140, 255, 0.4);
+        box-shadow: 0 14px 35px rgba(0,0,0,0.1);
+    }
+
+    .card-title-header {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 24px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .card-title-header i {
+        font-size: 22px;
+    }
+
+    .form-group {
+        margin-bottom: 22px;
+    }
+
+    .form-group:last-child {
+        margin-bottom: 0;
+    }
+
+    .form-label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text);
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .form-control, .form-select {
+        width: 100%;
+        padding: 13px 18px;
+        font-size: 15px;
+        font-family: 'Poppins', sans-serif;
+        color: var(--text);
+        background-color: #F8FAFC;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        transition: var(--transition);
+        outline: none;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background-color: white;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(123, 63, 242, 0.12);
+    }
+
+    .form-control[readonly] {
+        background-color: #F1F5F9;
+        color: var(--muted);
+        cursor: not-allowed;
+    }
+
+    .form-hint {
+        font-size: 12px;
+        color: var(--muted);
+        margin-top: 6px;
+    }
+
+    .btn-submit-container {
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btn-save {
+        padding: 14px 32px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 50px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 6px 16px rgba(123, 63, 242, 0.25);
+        transition: var(--transition);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .btn-save:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(123, 63, 242, 0.35);
+    }
+
+    /* Toggle Switches for Preferences */
+    .preference-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px 0;
+        border-bottom: 1px solid var(--border);
+        gap: 20px;
+    }
+
+    .preference-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .preference-item:first-child {
+        padding-top: 0;
+    }
+
+    .pref-info h4 {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .pref-info p {
+        font-size: 13px;
+        color: var(--muted);
+        line-height: 1.4;
+    }
+
+    /* Modern CSS Toggle Switch */
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 52px;
+        height: 28px;
+        flex-shrink: 0;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #E2E8F0;
+        transition: .3s;
+        border-radius: 34px;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: .3s;
+        border-radius: 50%;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+
+    input:checked + .slider {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+    }
+
+    input:checked + .slider:before {
+        transform: translateX(24px);
+    }
+
+    .btn-pwd-action {
+        background: #F8FAFC;
+        border: 1px solid var(--border);
+        color: var(--text);
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: var(--transition);
+        width: 100%;
+        justify-content: center;
+    }
+
+    .btn-pwd-action:hover {
+        background: #EFF6FF;
+        border-color: var(--secondary);
+        color: var(--primary);
+    }
+
+    /* Modal / Alert for Password Guidance */
+    .pwd-guidance-box {
+        display: none;
+        background: #EFF6FF;
+        border: 1px solid #BFDBFE;
+        border-radius: 12px;
+        padding: 15px;
+        margin-top: 15px;
+        font-size: 13px;
+        color: #1E3A8A;
+        line-height: 1.5;
+    }
+
+    .pref-badge {
+        font-size: 11px;
+        font-weight: 700;
+        text-transform: uppercase;
+        padding: 3px 8px;
+        border-radius: 20px;
+        background: #EBF4FF;
+        color: var(--primary);
+        margin-left: 6px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Settings Banner Header -->
+<div class="settings-header">
+    <div class="settings-avatar">
+        <i class="fa-solid fa-user-gear"></i>
+    </div>
+    <div class="settings-header-info">
+        <h1>Account Settings & Preferences</h1>
+        <p>Manage your academic profile context, security credentials, and interface customization.</p>
+    </div>
+</div>
+
+<!-- Django Success Messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert-success-banner">
+            <i class="fa-solid fa-circle-check"></i>
+            <span>{{ message }}</span>
+        </div>
+    {% endfor %}
+{% endif %}
+
+<form method="POST" action="{% url 'settings' %}">
+    {% csrf_token %}
+    <div class="settings-grid">
+        <!-- Left Column: Academic Profile Settings Card -->
+        <div>
+            <div class="settings-card">
+                <div class="card-title-header">
+                    <i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i>
+                    <span>Academic Profile Context</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="id_department">
+                        <i class="fa-solid fa-building-columns" style="color: var(--muted);"></i> Department / Major
+                    </label>
+                    {{ profile_form.department }}
+                    <div class="form-hint">Your department helps tailor subject-specific AI study recommendations.</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="id_level">
+                        <i class="fa-solid fa-layer-group" style="color: var(--muted);"></i> Academic Level
+                    </label>
+                    {{ profile_form.level }}
+                    <div class="form-hint">Select your current undergraduate or postgraduate standing.</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="id_age">
+                        <i class="fa-solid fa-calendar-day" style="color: var(--muted);"></i> Student Age (Optional)
+                    </label>
+                    {{ profile_form.age }}
+                    <div class="form-hint">Used for demographic analysis in hybrid recommendation models.</div>
+                </div>
+
+                <div class="btn-submit-container">
+                    <button type="submit" class="btn-save">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Save Academic Updates
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Security & Preferences -->
+        <div>
+            <!-- Security Card -->
+            <div class="settings-card">
+                <div class="card-title-header">
+                    <i class="fa-solid fa-shield-halved" style="color: var(--secondary);"></i>
+                    <span>Account Security & Credentials</span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        <i class="fa-solid fa-id-card" style="color: var(--muted);"></i> Username (Read-Only)
+                    </label>
+                    <input type="text" class="form-control" value="{{ request.user.username }}" readonly>
+                    <div class="form-hint">Your unique student identifier cannot be changed.</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="id_email">
+                        <i class="fa-solid fa-envelope" style="color: var(--muted);"></i> Registered Email Address
+                    </label>
+                    {{ user_form.email }}
+                    <div class="form-hint">We send weekly AI learning digests and alert notifications here.</div>
+                </div>
+
+                <div class="form-group" style="margin-top: 25px;">
+                    <button type="button" class="btn-pwd-action" onclick="togglePwdGuidance()">
+                        <i class="fa-solid fa-key"></i> Modify Account Password...
+                    </button>
+                    <div id="pwd-guidance" class="pwd-guidance-box">
+                        <i class="fa-solid fa-circle-info"></i> <strong>Password Security Notice:</strong><br>
+                        To update your password, please contact the campus IT administrator or use the institutional portal verification link sent to your registered email address.
+                    </div>
+                </div>
+
+                <div class="btn-submit-container">
+                    <button type="submit" class="btn-save">
+                        <i class="fa-solid fa-check-double"></i> Save Security Changes
+                    </button>
+                </div>
+            </div>
+
+            <!-- UI Preferences Card (LocalStorage toggles) -->
+            <div class="settings-card">
+                <div class="card-title-header">
+                    <i class="fa-solid fa-sliders" style="color: var(--warning);"></i>
+                    <span>Application Preferences</span>
+                </div>
+
+                <div class="preference-item">
+                    <div class="pref-info">
+                        <h4>Email Notifications <span class="pref-badge" id="badge-email">Enabled</span></h4>
+                        <p>Receive automated weekly digests of your AI study recommendations.</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-email" checked onchange="savePreference('email', this.checked)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="preference-item">
+                    <div class="pref-info">
+                        <h4>Study Reminders <span class="pref-badge" id="badge-reminders">Enabled</span></h4>
+                        <p>Receive browser activity reminder alerts when inactive for 3+ days.</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-reminders" checked onchange="savePreference('reminders', this.checked)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+
+                <div class="preference-item">
+                    <div class="pref-info">
+                        <h4>Dark Theme <span class="pref-badge" id="badge-theme">Light Mode</span></h4>
+                        <p>Switch interface styling between light mode and dark contrast mode.</p>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle-theme" onchange="savePreference('theme', this.checked)">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function togglePwdGuidance() {
+        const box = document.getElementById('pwd-guidance');
+        if (box.style.display === 'block') {
+            box.style.display = 'none';
+        } else {
+            box.style.display = 'block';
+        }
+    }
+
+    // LocalStorage UI Preferences Handler
+    const PREFS_KEY = 'smartlearn_ui_preferences';
+
+    function getPreferences() {
+        try {
+            const stored = localStorage.getItem(PREFS_KEY);
+            return stored ? JSON.parse(stored) : {
+                email: true,
+                reminders: true,
+                theme: false
+            };
+        } catch (e) {
+            return { email: true, reminders: true, theme: false };
+        }
+    }
+
+    function savePreference(key, value) {
+        const prefs = getPreferences();
+        prefs[key] = value;
+        try {
+            localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+            updatePrefUI(prefs);
+        } catch (e) {
+            console.error("Failed to save preference", e);
+        }
+    }
+
+    function updatePrefUI(prefs) {
+        const emailToggle = document.getElementById('toggle-email');
+        const remToggle = document.getElementById('toggle-reminders');
+        const themeToggle = document.getElementById('toggle-theme');
+
+        if (emailToggle) emailToggle.checked = prefs.email;
+        if (remToggle) remToggle.checked = prefs.reminders;
+        if (themeToggle) themeToggle.checked = prefs.theme;
+
+        const badgeEmail = document.getElementById('badge-email');
+        if (badgeEmail) {
+            badgeEmail.textContent = prefs.email ? 'Enabled' : 'Disabled';
+            badgeEmail.style.background = prefs.email ? '#EBF4FF' : '#F1F5F9';
+            badgeEmail.style.color = prefs.email ? 'var(--primary)' : 'var(--muted)';
+        }
+
+        const badgeRem = document.getElementById('badge-reminders');
+        if (badgeRem) {
+            badgeRem.textContent = prefs.reminders ? 'Enabled' : 'Disabled';
+            badgeRem.style.background = prefs.reminders ? '#EBF4FF' : '#F1F5F9';
+            badgeRem.style.color = prefs.reminders ? 'var(--primary)' : 'var(--muted)';
+        }
+
+        const badgeTheme = document.getElementById('badge-theme');
+        if (badgeTheme) {
+            badgeTheme.textContent = prefs.theme ? 'Dark Mode' : 'Light Mode';
+            badgeTheme.style.background = prefs.theme ? '#312E81' : '#EBF4FF';
+            badgeTheme.style.color = prefs.theme ? '#E0E7FF' : 'var(--primary)';
+        }
+
+        // Apply temporary visual dark mode preview class if needed
+        if (prefs.theme) {
+            document.body.classList.add('dark-theme-preview');
+        } else {
+            document.body.classList.remove('dark-theme-preview');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const prefs = getPreferences();
+        updatePrefUI(prefs);
+    });
+</script>
+{% endblock %}
