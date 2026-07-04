@@ -223,7 +223,7 @@
         <div class="container">
 
             <a class="navbar-brand"
-               href="#">
+               href="{% url 'home' %}">
                 AI Academic Recommender
             </a>
 
@@ -239,35 +239,59 @@
             <div class="collapse navbar-collapse"
                  id="navbarNav">
 
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto align-items-center">
 
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="#">
+                           href="{% url 'home' %}">
                             Home
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="#">
+                           href="{% url 'profile' %}">
                             Dashboard
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="#">
+                           href="{% url 'recommendations' %}">
                             Recommendations
                         </a>
                     </li>
 
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="/admin">
-                            Admin
+                           href="{% url 'resource_list' %}">
+                            Resources
                         </a>
                     </li>
+
+                    {% if request.user.is_authenticated %}
+                    <li class="nav-item ms-lg-2">
+                        <a class="nav-link btn btn-sm btn-outline-custom"
+                           style="padding: 6px 16px; font-size: 14px;"
+                           href="{% url 'logout' %}">
+                            Logout ({{ request.user.username }})
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item ms-lg-2">
+                        <a class="nav-link"
+                           href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+                    <li class="nav-item ms-lg-1">
+                        <a class="nav-link btn btn-sm btn-primary-custom"
+                           style="color: white !important; padding: 8px 18px;"
+                           href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+                    {% endif %}
 
                 </ul>
 
@@ -308,7 +332,7 @@
 
                 <div class="mt-5">
 
-                    <a href="/admin"
+                    <a href="{% url 'recommendations' %}"
                        class="btn btn-primary-custom me-3">
 
                         Launch System

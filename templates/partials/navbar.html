@@ -37,18 +37,18 @@
 
         <div class="nav-icons">
 
-            <button>
+            <a href="{% url 'activity' %}" title="Learning Activity" style="display: inline-block;">
+                <button type="button">
+                    <i class="far fa-bell"></i>
+                </button>
+            </a>
 
-                <i class="far fa-bell"></i>
 
-            </button>
-
-
-            <button>
-
-                <i class="far fa-user-circle"></i>
-
-            </button>
+            <a href="{% url 'profile' %}" title="My Profile" style="display: inline-block;">
+                <button type="button">
+                    <i class="far fa-user-circle"></i>
+                </button>
+            </a>
 
         </div>
 
