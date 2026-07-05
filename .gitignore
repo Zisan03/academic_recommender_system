@@ -148,3 +148,5 @@ coverage.xml
 # ============================================================
 
 local_settings.py
+.agents/*
+skills-lock.json
