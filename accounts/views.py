@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect
 
 from django.contrib.auth import authenticate
@@ -135,6 +136,48 @@ def profile_view(request):
         recommendation_count = 0
         weak_topic = "Not available"
 
+    # Analytics aggregations for Phase 4 (Sprint 4.1)
+    all_interactions = (
+        ResourceInteraction.objects.filter(student=profile)
+        .select_related("resource")
+    )
+    total_interactions_count = len(all_interactions)
+
+    topic_counts = {
+        "Algebra": 0,
+        "Calculus": 0,
+        "Programming": 0,
+        "Statistics": 0,
+    }
+    difficulty_counts = {
+        "Beginner": 0,
+        "Intermediate": 0,
+        "Advanced": 0,
+    }
+
+    aligned_interactions_count = 0
+    rec_ids = [r["resource_id"] for r in recommendations if r.get("resource_id") is not None]
+
+    for interaction in all_interactions:
+        res = interaction.resource
+        if res.topic in topic_counts:
+            topic_counts[res.topic] += 1
+        else:
+            topic_counts[res.topic] = topic_counts.get(res.topic, 0) + 1
+
+        if res.difficulty in difficulty_counts:
+            difficulty_counts[res.difficulty] += 1
+        else:
+            difficulty_counts[res.difficulty] = difficulty_counts.get(res.difficulty, 0) + 1
+
+        if res.topic == weak_topic or res.id in rec_ids:
+            aligned_interactions_count += 1
+
+    if total_interactions_count > 0:
+        ai_accuracy = round((aligned_interactions_count / total_interactions_count) * 100)
+    else:
+        ai_accuracy = 0
+
     department_display = profile.department if profile.department else "Computer Science"
     level_display = profile.level if profile.level else "400 Level"
 
@@ -146,6 +189,10 @@ def profile_view(request):
         "recommendation_count": recommendation_count,
         "weak_topic": weak_topic,
         "model_badge": "Hybrid Collaborative + Content-Based ML",
+        "topic_distribution_json": json.dumps(topic_counts),
+        "difficulty_distribution_json": json.dumps(difficulty_counts),
+        "ai_accuracy": ai_accuracy,
+        "total_interactions_count": total_interactions_count,
     }
 
     return render(

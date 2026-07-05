@@ -402,30 +402,29 @@ Deliverables:
 
 # 7. Current Sprint
 
-## Sprint 4.1 — Student Learning Analytics Preparation
+## Sprint 4.2 — Resource Usage & Recommendation Performance
 
 ### Objective
 
-Develop learning progress charts, weak topic diagnostic breakdowns, and AI accuracy tracking for the student profile and analytics dashboards.
+Develop global resource usage statistics and recommendation performance tracking to finalize Phase 4 (Analytics).
 
-### Completed Tasks (Phase 3 — Explainable AI)
+### Completed Tasks (Sprint 4.1 — Student Learning Analytics)
 
-* ✅ Enriched `recommendations/views.py` with dynamic SHAP contribution factors, natural language reasoning, and AI confidence calculations without modifying core ML models.
-* ✅ Updated `templates/recommendations/dashboard.html` to display dynamic AI Confidence percentage in stats cards and interactive SHAP badges on recommendation cards.
-* ✅ Integrated dedicated Explainable AI (SHAP) Study Justification panel and contribution breakdowns into `templates/resources/resource_detail.html`.
-* ✅ Added "Peer Group Match" tracking information to the Student Profile panel.
+* ✅ Enriched `accounts/views.py` to calculate dynamic topic distribution, difficulty progression counts, and AI recommendation alignment rate without modifying core models.
+* ✅ Integrated dedicated "Learning Analytics" tab into `templates/accounts/profile.html` featuring responsive Chart.js Doughnut and Bar charts.
+* ✅ Added interactive KPI banner displaying real-time AI Recommendation Alignment Rate percentage.
 
-### Current Tasks (Sprint 4.1)
+### Current Tasks (Sprint 4.2)
 
-* Prepare analytics tracking structures for learning progress and weak topic analysis
-* Design visual performance graphs for student learning activities
+* Prepare usage statistics tracking for study materials across the system
+* Design performance evaluation views for recommendation efficiency
 
 ### Investigation Focus
 
 Potential touchpoints:
 
-* `accounts/views.py`
-* `templates/accounts/profile.html`
+* `recommendations/views.py`
+* `resources_app/views.py`
 
 ---
 
@@ -467,7 +466,7 @@ A feature is considered complete only when:
 | Backend Development  | ✅ Complete     | 100%     |
 | Frontend Integration | ✅ Complete     | 100%     |
 | Explainable AI       | ✅ Complete     | 100%     |
-| Analytics            | 🔄 In Progress | ~10%     |
+| Analytics            | 🔄 In Progress | ~60%     |
 | Administration       | ⏳ Pending      | 0%       |
 | UI Polish            | 🔄 In Progress | ~50%     |
 | Documentation        | ⏳ Pending      | 0%       |
@@ -476,8 +475,8 @@ A feature is considered complete only when:
 
 # 11. Immediate Next Action
 
-**Current Sprint:** Student Learning Analytics Preparation (Sprint 4.1)
+**Current Sprint:** Resource Usage & Recommendation Performance (Sprint 4.2)
 
-**Next File:** `accounts/views.py`
+**Next File:** `recommendations/views.py`
 
-With Phase 3 (Explainable AI) officially **100% Complete** across both the main recommendation dashboard and individual resource detail views, the development team is now transitioning to **Phase 4 (Analytics)**. The immediate objective is to build data aggregation structures for learning progress charts and weak topic diagnostics following the strict one-file-at-a-time methodology.
+With Sprint 4.1 (Student Learning Analytics) officially **Complete** across `accounts/views.py` and `templates/accounts/profile.html`, the development team has implemented real-time Chart.js visual analytics for weak topic breakdowns and difficulty progression. The immediate next objective is to transition to **Sprint 4.2**, focusing on global resource usage statistics and recommendation performance metrics across the broader system following the strict one-file-at-a-time methodology.

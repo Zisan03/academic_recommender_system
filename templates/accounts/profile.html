@@ -511,6 +511,9 @@ Student Profile | AI Academic Recommender
                 <button class="tab-btn" onclick="switchTab('bookmarks-tab', this)">
                     <i class="fa-solid fa-bookmark"></i> Saved Bookmarks (<span id="bookmark-count">0</span>)
                 </button>
+                <button class="tab-btn" onclick="switchTab('analytics-tab', this)">
+                    <i class="fa-solid fa-chart-pie"></i> Learning Analytics
+                </button>
             </div>
 
             <div class="tab-content">
@@ -569,6 +572,59 @@ Student Profile | AI Academic Recommender
                         <h4>No Saved Study Materials Yet</h4>
                         <p>Click the bookmark icon (<i class="fa-regular fa-bookmark"></i>) on any recently viewed resource to save it here for instant access!</p>
                     </div>
+                </div>
+
+                <!-- Tab 3: Learning Analytics & AI Performance -->
+                <div id="analytics-tab" class="tab-pane">
+                    {% if total_interactions_count > 0 %}
+                        <!-- AI Alignment KPI Banner -->
+                        <div style="background: linear-gradient(135deg, #EEF2FF, #E0E7FF); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 14px; padding: 20px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
+                            <div>
+                                <h4 style="font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">
+                                    <i class="fa-solid fa-bullseye"></i> AI Recommendation Alignment Rate
+                                </h4>
+                                <p style="font-size: 13px; color: var(--text); margin: 0;">
+                                    Measures how frequently your learning activity targets your AI-diagnosed weak topic (<strong>{{ weak_topic }}</strong>) or recommended materials.
+                                </p>
+                            </div>
+                            <div style="text-align: right; background: white; padding: 10px 18px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--border);">
+                                <span style="font-size: 24px; font-weight: 800; color: {% if ai_accuracy >= 70 %}var(--success){% elif ai_accuracy >= 40 %}#D97706{% else %}var(--danger){% endif %};">{{ ai_accuracy }}%</span>
+                                <span style="font-size: 12px; color: var(--muted); display: block; font-weight: 600;">Accuracy Score</span>
+                            </div>
+                        </div>
+
+                        <!-- Charts Grid -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
+                            <!-- Doughnut Chart: Weak Topic Diagnostic Breakdown -->
+                            <div style="background: white; border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                                <h4 style="font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-chart-pie" style="color: var(--primary);"></i> Weak Topic Breakdown
+                                </h4>
+                                <div style="position: relative; height: 240px; display: flex; align-items: center; justify-content: center;">
+                                    <canvas id="topicChart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Bar Chart: Learning Difficulty Progression -->
+                            <div style="background: white; border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+                                <h4 style="font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
+                                    <i class="fa-solid fa-chart-column" style="color: var(--secondary);"></i> Difficulty Progression
+                                </h4>
+                                <div style="position: relative; height: 240px; display: flex; align-items: center; justify-content: center;">
+                                    <canvas id="difficultyChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="empty-state">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <h4>No Analytics Data Available Yet</h4>
+                            <p>We need more learning interaction data to generate your custom progress charts and weak topic diagnostic breakdowns. Start interacting with study materials!</p>
+                            <a href="{% url 'recommendations' %}" class="btn" style="margin-top: 15px; display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: white; padding: 10px 20px; border-radius: 999px; text-decoration: none;">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> View AI Recommendations
+                            </a>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
@@ -732,6 +788,92 @@ Student Profile | AI Academic Recommender
     document.addEventListener('DOMContentLoaded', function() {
         updateBookmarkCount();
         syncBookmarkButtons();
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        try {
+            const topicData = JSON.parse('{{ topic_distribution_json|escapejs }}' || '{}');
+            const diffData = JSON.parse('{{ difficulty_distribution_json|escapejs }}' || '{}');
+
+            const topicCtx = document.getElementById('topicChart');
+            if (topicCtx && Object.keys(topicData).length > 0) {
+                new Chart(topicCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(topicData),
+                        datasets: [{
+                            data: Object.values(topicData),
+                            backgroundColor: ['#6366F1', '#EC4899', '#10B981', '#F59E0B'],
+                            borderWidth: 2,
+                            borderColor: '#ffffff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    font: { family: 'Poppins', size: 12 },
+                                    padding: 15
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            const diffCtx = document.getElementById('difficultyChart');
+            if (diffCtx && Object.keys(diffData).length > 0) {
+                new Chart(diffCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(diffData),
+                        datasets: [{
+                            label: 'Study Materials Viewed',
+                            data: Object.values(diffData),
+                            backgroundColor: ['#3B82F6', '#8B5CF6', '#10B981'],
+                            borderRadius: 8,
+                            barThickness: 35
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                ticks: {
+                                    precision: 0,
+                                    font: { family: 'Poppins' }
+                                },
+                                grid: {
+                                    color: 'rgba(0, 0, 0, 0.05)'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    display: false
+                                },
+                                ticks: {
+                                    font: { family: 'Poppins', weight: '600' }
+                                }
+                            }
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        }
+                    }
+                });
+            }
+        } catch(e) {
+            console.error('Error initializing charts:', e);
+        }
     });
 </script>
 {% endblock %}
