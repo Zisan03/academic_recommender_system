@@ -74,7 +74,7 @@ SmartLearn AI Dashboard
                     </div>
 
                     <div class="stats-value">
-                        92%
+                        {{ avg_confidence|default:"92" }}%
                     </div>
 
                 </div>
@@ -146,18 +146,20 @@ SmartLearn AI Dashboard
         </div>
 
         <div class="resource-description">
-
-            This recommendation was generated based on your
-            learning history, weak academic areas,
-            collaborative filtering and Hybrid Machine Learning.
-
+            {{ rec.reasoning }}
         </div>
 
-        <div class="score">
+        <div class="shap-factors mb-3 mt-3">
+            {% for factor in rec.shap_factors %}
+            <span class="badge {% if factor.type == 'topic' %}bg-primary-subtle text-primary border-primary{% else %}bg-light text-dark border{% endif %} shadow-sm me-1 mb-1" title="{{ factor.tooltip }}" style="font-size: 0.8rem; padding: 0.45em 0.7em; cursor: help; font-weight: 500;">
+                ⚡ {{ factor.label }}: <strong style="font-weight: 700;">{{ factor.impact }}</strong>
+            </span>
+            {% endfor %}
+        </div>
 
-            AI Score :
-            {{ rec.score }}
-
+        <div class="score d-flex align-items-center justify-content-between pt-2 border-top">
+            <span style="font-size: 0.95rem;">AI Confidence: <strong class="text-success">{{ rec.confidence }}</strong></span>
+            <span style="font-size: 0.9rem; color: #6c757d;">AI Score: {{ rec.score }}</span>
         </div>
 
         <br>
@@ -243,6 +245,18 @@ SmartLearn AI Dashboard
 
                 <div class="profile-value">
                     {{ student.dataset_student_id }}
+                </div>
+
+            </div>
+
+            <div class="profile-item">
+
+                <div class="profile-label">
+                    Peer Group Match
+                </div>
+
+                <div class="profile-value">
+                    {{ peer_group_match|default:"5 Similar Profiles Tracked" }}
                 </div>
 
             </div>
