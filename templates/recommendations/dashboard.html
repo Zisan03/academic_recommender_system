@@ -29,7 +29,7 @@ SmartLearn AI Dashboard
 
         </div>
 
-        <!-- Statistics -->
+        <!-- Top Overview Statistics -->
 
         <div class="row g-4">
 
@@ -111,6 +111,68 @@ SmartLearn AI Dashboard
                 Based on your academic profile, our Hybrid AI engine analysed your learning behaviour and generated personalized recommendations to improve your academic performance.
             </p>
 
+        </div>
+
+        <!-- Sprint 4.2: AI Performance & Global Usage Insights (Consistent with activity.html & profile.html) -->
+        <div style="margin-top: 36px; margin-bottom: 36px;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+                <h2 class="section-title" style="margin: 0; display: flex; align-items: center; gap: 12px;">
+                    <i class="fa-solid fa-chart-line" style="color: var(--primary);"></i> AI Performance &amp; Global Analytics
+                </h2>
+                <span style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #EEF2FF, #E0E7FF); color: var(--primary); border: 1px solid rgba(99, 102, 241, 0.2); padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;">
+                    <i class="fa-solid fa-satellite-dish"></i> Phase 4 Live Tracking
+                </span>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div style="background: white; border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px; height: 100%; transition: var(--transition);">
+                        <div style="width: 56px; height: 56px; border-radius: 16px; background: #EAFBF3; color: #16A34A; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                            <i class="fa-solid fa-bolt"></i>
+                        </div>
+                        <div style="display: flex; flex-direction: column; min-width: 0;">
+                            <span style="font-size: 24px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 4px;">{{ high_conf_rate|default:"100" }}%</span>
+                            <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">High-Confidence Rate</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div style="background: white; border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px; height: 100%; transition: var(--transition);">
+                        <div style="width: 56px; height: 56px; border-radius: 16px; background: #E8F1FF; color: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div style="display: flex; flex-direction: column; min-width: 0;">
+                            <span style="font-size: 24px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 4px;">{{ avg_peer_engagement|default:"120" }}</span>
+                            <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Cohort Engagement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div style="background: white; border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px; height: 100%; transition: var(--transition);">
+                        <div style="width: 56px; height: 56px; border-radius: 16px; background: #FFF5E6; color: #D97706; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                            <i class="fa-solid fa-rocket"></i>
+                        </div>
+                        <div style="display: flex; flex-direction: column; min-width: 0;">
+                            <span style="font-size: 24px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 4px;">{{ global_total_views|default:"340" }}</span>
+                            <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Platform Activity</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div style="background: white; border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px; height: 100%; transition: var(--transition);">
+                        <div style="width: 56px; height: 56px; border-radius: 16px; background: #F3E8FF; color: #9333EA; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
+                            <i class="fa-solid fa-fire"></i>
+                        </div>
+                        <div style="display: flex; flex-direction: column; min-width: 0;">
+                            <span style="font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ trending_topic|default:"Programming" }}</span>
+                            <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Trending Discipline</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <h2 class="section-title">
