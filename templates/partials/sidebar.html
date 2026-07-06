@@ -31,7 +31,7 @@
 
     <a
       href="{% url 'resource_list' %}"
-      class="{% if '/resources' in request.path and '/activity' not in request.path %}active{% endif %}"
+      class="{% if '/resources' in request.path and '/activity' not in request.path and '/manage' not in request.path %}active{% endif %}"
     >
       <i class="fas fa-book-open"></i>
 
@@ -64,6 +64,18 @@
 
       <span>Settings</span>
     </a>
+
+    {% if request.user.is_staff or request.user.is_superuser %}
+    <a
+      href="{% url 'admin_portal' %}"
+      class="{% if '/resources/manage' in request.path %}active{% endif %}"
+      style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 8px; padding-top: 14px;"
+    >
+      <i class="fas fa-user-shield" style="color: #38BDF8;"></i>
+
+      <span>Admin Portal</span>
+    </a>
+    {% endif %}
   </nav>
 
   <div class="sidebar-bottom">

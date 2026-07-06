@@ -156,9 +156,9 @@ def generate_recommendations(student_id):
 
             db_id = db_resource.id
 
-        except LearningResource.DoesNotExist:
+        except Exception:
 
-            db_id = None
+            continue
 
         ranked.append({
             "resource_id": db_id,
