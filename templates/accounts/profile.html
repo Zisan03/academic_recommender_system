@@ -94,7 +94,7 @@ Student Profile | AI Academic Recommender
     .stat-box:hover {
         transform: translateY(-4px);
         box-shadow: 0 14px 30px rgba(0,0,0,0.12);
-        border-color: var(--secondary);
+        border-color: rgba(123, 63, 242, 0.3);
     }
 
     .stat-label {
@@ -111,6 +111,9 @@ Student Profile | AI Academic Recommender
         color: var(--text);
         z-index: 2;
     }
+
+    .stat-number-danger { color: var(--danger); font-size: 22px; }
+    .stat-number-primary { color: var(--primary); font-size: 18px; }
 
     .stat-icon {
         position: absolute;
@@ -145,6 +148,9 @@ Student Profile | AI Academic Recommender
         align-items: center;
         gap: 10px;
     }
+
+    .icon-primary { color: var(--primary); }
+    .icon-secondary { color: var(--secondary); }
 
     .info-card {
         background: white;
@@ -187,6 +193,10 @@ Student Profile | AI Academic Recommender
         font-size: 15px;
         text-align: right;
     }
+
+    .val-primary-bold { color: var(--primary); font-weight: 800; }
+    .val-danger { color: var(--danger); }
+    .val-success { color: var(--success); }
 
     .ai-badge {
         display: inline-flex;
@@ -254,16 +264,16 @@ Student Profile | AI Academic Recommender
         background: rgba(0,0,0,0.02);
     }
 
-    .tab-content {
-        padding: 24px;
-    }
-
-    .tab-pane {
-        display: none;
-    }
-
+    .tab-content { padding: 24px; }
+    .tab-pane { display: none; }
     .tab-pane.active {
         display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
     }
 
     .activity-list {
@@ -285,7 +295,7 @@ Student Profile | AI Academic Recommender
     }
 
     .activity-item:hover {
-        border-color: var(--secondary);
+        border-color: rgba(123, 63, 242, 0.3);
         transform: translateX(3px);
         box-shadow: 0 4px 12px rgba(0,0,0,0.05);
     }
@@ -390,6 +400,115 @@ Student Profile | AI Academic Recommender
         line-height: 1.5;
     }
 
+    .btn-empty-action {
+        margin-top: 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 10px 20px;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 600;
+        box-shadow: 0 4px 12px rgba(123, 63, 242, 0.25);
+        transition: var(--transition);
+    }
+
+    .btn-empty-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(123, 63, 242, 0.35);
+        color: white;
+    }
+
+    .is-hidden { display: none !important; }
+
+    /* Analytics Section Styles */
+    .alignment-banner {
+        background: linear-gradient(135deg, #EEF2FF, #E0E7FF);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: 14px;
+        padding: 20px;
+        margin-bottom: 25px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .alignment-banner-title {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 4px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .alignment-banner-desc {
+        font-size: 13px;
+        color: var(--text);
+        margin: 0;
+    }
+
+    .alignment-score-box {
+        text-align: right;
+        background: white;
+        padding: 10px 18px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        border: 1px solid var(--border);
+    }
+
+    .accuracy-val {
+        font-size: 24px;
+        font-weight: 800;
+    }
+    .accuracy-high { color: var(--success); }
+    .accuracy-med { color: #D97706; }
+    .accuracy-low { color: var(--danger); }
+
+    .accuracy-label {
+        font-size: 12px;
+        color: var(--muted);
+        display: block;
+        font-weight: 600;
+    }
+
+    .charts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 25px;
+    }
+
+    .chart-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    }
+
+    .chart-card-title {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--text);
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .chart-canvas-wrapper {
+        position: relative;
+        height: 240px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     @media (max-width: 992px) {
         .profile-grid-layout {
             grid-template-columns: 1fr !important;
@@ -399,232 +518,235 @@ Student Profile | AI Academic Recommender
 {% endblock %}
 
 {% block content %}
-<!-- Academic Profile Banner -->
-<div class="profile-header">
-    <div class="profile-avatar">
-        <i class="fa-solid fa-user-graduate"></i>
-    </div>
-    <div class="profile-header-info">
-        <h1>
-            {{ profile.user.username }}
-            <span class="badge-pill-header"><i class="fa-solid fa-check-circle"></i> Student ID #{{ profile.dataset_student_id }}</span>
-        </h1>
-        <p>
-            <span><i class="fa-solid fa-building-columns"></i> {{ department }}</span>
-            <span>•</span>
-            <span><i class="fa-solid fa-layer-group"></i> {{ level }}</span>
-            <span>•</span>
-            <span><i class="fa-solid fa-envelope"></i> {{ profile.user.email|default:"No email registered" }}</span>
-        </p>
-    </div>
-</div>
+<div class="animate-fade-in">
+    <!-- Academic Profile Banner -->
+    <section class="profile-header" role="region" aria-label="Student profile banner">
+        <div class="profile-avatar" aria-hidden="true">
+            <i class="fa-solid fa-user-graduate"></i>
+        </div>
+        <div class="profile-header-info">
+            <h1>
+                {{ profile.user.username }}
+                <span class="badge-pill-header"><i class="fa-solid fa-check-circle" aria-hidden="true"></i> Student ID #{{ profile.dataset_student_id }}</span>
+            </h1>
+            <p>
+                <span><i class="fa-solid fa-building-columns" aria-hidden="true"></i> {{ department }}</span>
+                <span aria-hidden="true">•</span>
+                <span><i class="fa-solid fa-layer-group" aria-hidden="true"></i> {{ level }}</span>
+                <span aria-hidden="true">•</span>
+                <span><i class="fa-solid fa-envelope" aria-hidden="true"></i> {{ profile.user.email|default:"No email registered" }}</span>
+            </p>
+        </div>
+    </section>
 
-<!-- AI Diagnostics & Overview Statistics Grid -->
-<div class="stats-grid">
-    <div class="stat-box">
-        <div class="stat-label">AI Recommendations Available</div>
-        <div class="stat-number">{{ recommendation_count }}</div>
-        <i class="fa-solid fa-wand-magic-sparkles stat-icon"></i>
-    </div>
-    <div class="stat-box">
-        <div class="stat-label">Primary Weak Topic</div>
-        <div class="stat-number" style="color: var(--danger); font-size: 22px;">{{ weak_topic }}</div>
-        <i class="fa-solid fa-triangle-exclamation stat-icon"></i>
-    </div>
-    <div class="stat-box">
-        <div class="stat-label">Recent Activity Count</div>
-        <div class="stat-number">{{ recent_interactions|length }}</div>
-        <i class="fa-solid fa-chart-line stat-icon"></i>
-    </div>
-    <div class="stat-box">
-        <div class="stat-label">ML Recommendation Engine</div>
-        <div class="stat-number" style="color: var(--primary); font-size: 18px;">Active Hybrid</div>
-        <i class="fa-solid fa-robot stat-icon"></i>
-    </div>
-</div>
+    <!-- AI Diagnostics & Overview Statistics Grid -->
+    <section class="stats-grid" role="region" aria-label="Profile key statistics">
+        <div class="stat-box">
+            <div class="stat-label">AI Recommendations Available</div>
+            <div class="stat-number">{{ recommendation_count }}</div>
+            <i class="fa-solid fa-wand-magic-sparkles stat-icon" aria-hidden="true"></i>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">Primary Weak Topic</div>
+            <div class="stat-number stat-number-danger">{{ weak_topic }}</div>
+            <i class="fa-solid fa-triangle-exclamation stat-icon" aria-hidden="true"></i>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">Recent Activity Count</div>
+            <div class="stat-number">{{ recent_interactions|length }}</div>
+            <i class="fa-solid fa-chart-line stat-icon" aria-hidden="true"></i>
+        </div>
+        <div class="stat-box">
+            <div class="stat-label">ML Recommendation Engine</div>
+            <div class="stat-number stat-number-primary">Active Hybrid</div>
+            <i class="fa-solid fa-robot stat-icon" aria-hidden="true"></i>
+        </div>
+    </section>
 
-<div class="profile-grid-layout">
-    <!-- Left Column: Student Details & AI Model Diagnostics -->
-    <div>
-        <h2 class="profile-section-title">
-            <span class="title-left"><i class="fa-solid fa-user-check" style="color: var(--primary);"></i> Academic Overview</span>
-        </h2>
-        <div class="info-card">
-            <div class="info-row">
-                <span class="info-key"><i class="fa-regular fa-user"></i> Username</span>
-                <span class="info-val">{{ profile.user.username }}</span>
+    <div class="profile-grid-layout">
+        <!-- Left Column: Student Details & AI Model Diagnostics -->
+        <div>
+            <h2 class="profile-section-title">
+                <span class="title-left"><i class="fa-solid fa-user-check icon-primary" aria-hidden="true"></i> Academic Overview</span>
+            </h2>
+            <div class="info-card">
+                <div class="info-row">
+                    <span class="info-key"><i class="fa-regular fa-user" aria-hidden="true"></i> Username</span>
+                    <span class="info-val">{{ profile.user.username }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key"><i class="fa-regular fa-envelope" aria-hidden="true"></i> Email Address</span>
+                    <span class="info-val">{{ profile.user.email|default:"Not provided" }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key"><i class="fa-solid fa-building-columns" aria-hidden="true"></i> Department</span>
+                    <span class="info-val">{{ department }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Academic Level</span>
+                    <span class="info-val">{{ level }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key"><i class="fa-solid fa-id-badge" aria-hidden="true"></i> Dataset Mapping ID</span>
+                    <span class="info-val val-primary-bold">#{{ profile.dataset_student_id }}</span>
+                </div>
             </div>
-            <div class="info-row">
-                <span class="info-key"><i class="fa-regular fa-envelope"></i> Email Address</span>
-                <span class="info-val">{{ profile.user.email|default:"Not provided" }}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-key"><i class="fa-solid fa-building-columns"></i> Department</span>
-                <span class="info-val">{{ department }}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-key"><i class="fa-solid fa-graduation-cap"></i> Academic Level</span>
-                <span class="info-val">{{ level }}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-key"><i class="fa-solid fa-id-badge"></i> Dataset Mapping ID</span>
-                <span class="info-val" style="color: var(--primary); font-weight: 800;">#{{ profile.dataset_student_id }}</span>
+
+            <h2 class="profile-section-title">
+                <span class="title-left"><i class="fa-solid fa-microchip icon-secondary" aria-hidden="true"></i> AI Recommendation Diagnostics</span>
+            </h2>
+            <div class="info-card">
+                <div class="info-row">
+                    <span class="info-key">Model Type</span>
+                    <span class="info-val">
+                        <span class="ai-badge"><i class="fa-solid fa-layer-group" aria-hidden="true"></i> {{ model_badge }}</span>
+                    </span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key">Target Diagnostics Area</span>
+                    <span class="info-val val-danger">{{ weak_topic }}</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key">Tailored Resources Found</span>
+                    <span class="info-val">{{ recommendation_count }} Study Materials</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-key">Recommendation Pipeline</span>
+                    <span class="info-val val-success"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Synchronized</span>
+                </div>
             </div>
         </div>
 
-        <h2 class="profile-section-title">
-            <span class="title-left"><i class="fa-solid fa-microchip" style="color: var(--secondary);"></i> AI Recommendation Diagnostics</span>
-        </h2>
-        <div class="info-card">
-            <div class="info-row">
-                <span class="info-key">Model Type</span>
-                <span class="info-val">
-                    <span class="ai-badge"><i class="fa-solid fa-layer-group"></i> {{ model_badge }}</span>
-                </span>
-            </div>
-            <div class="info-row">
-                <span class="info-key">Target Diagnostics Area</span>
-                <span class="info-val" style="color: var(--danger);">{{ weak_topic }}</span>
-            </div>
-            <div class="info-row">
-                <span class="info-key">Tailored Resources Found</span>
-                <span class="info-val">{{ recommendation_count }} Study Materials</span>
-            </div>
-            <div class="info-row">
-                <span class="info-key">Recommendation Pipeline</span>
-                <span class="info-val" style="color: var(--success);"><i class="fa-solid fa-circle-check"></i> Synchronized</span>
-            </div>
-        </div>
-    </div>
+        <!-- Right Column: Tabbed Activity & Saved Bookmarks -->
+        <div>
+            <h2 class="profile-section-title">
+                <span class="title-left"><i class="fa-solid fa-book-bookmark icon-secondary" aria-hidden="true"></i> Learning Materials &amp; Activity</span>
+            </h2>
+            
+            <div class="tab-container">
+                <div class="tab-header" role="tablist" aria-label="Activity and analytics tabs">
+                    <button class="tab-btn active" onclick="switchTab('recent-tab', this)" role="tab" aria-selected="true" aria-controls="recent-tab">
+                        <i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> Recent Activity (<span id="recent-count">{{ recent_interactions|length }}</span>)
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('bookmarks-tab', this)" role="tab" aria-selected="false" aria-controls="bookmarks-tab">
+                        <i class="fa-solid fa-bookmark" aria-hidden="true"></i> Saved Bookmarks (<span id="bookmark-count">0</span>)
+                    </button>
+                    <button class="tab-btn" onclick="switchTab('analytics-tab', this)" role="tab" aria-selected="false" aria-controls="analytics-tab">
+                        <i class="fa-solid fa-chart-pie" aria-hidden="true"></i> Learning Analytics
+                    </button>
+                </div>
 
-    <!-- Right Column: Tabbed Activity & Saved Bookmarks -->
-    <div>
-        <h2 class="profile-section-title">
-            <span class="title-left"><i class="fa-solid fa-book-bookmark" style="color: var(--secondary);"></i> Learning Materials & Activity</span>
-        </h2>
-        
-        <div class="tab-container">
-            <div class="tab-header">
-                <button class="tab-btn active" onclick="switchTab('recent-tab', this)">
-                    <i class="fa-solid fa-clock-rotate-left"></i> Recent Activity (<span id="recent-count">{{ recent_interactions|length }}</span>)
-                </button>
-                <button class="tab-btn" onclick="switchTab('bookmarks-tab', this)">
-                    <i class="fa-solid fa-bookmark"></i> Saved Bookmarks (<span id="bookmark-count">0</span>)
-                </button>
-                <button class="tab-btn" onclick="switchTab('analytics-tab', this)">
-                    <i class="fa-solid fa-chart-pie"></i> Learning Analytics
-                </button>
-            </div>
-
-            <div class="tab-content">
-                <!-- Tab 1: Recent Activity -->
-                <div id="recent-tab" class="tab-pane active">
-                    {% if recent_interactions %}
-                        <div class="activity-list">
-                            {% for item in recent_interactions %}
-                            <div class="activity-item">
-                                <div class="activity-left">
-                                    <h4>
-                                        {{ item.resource.title }}
-                                    </h4>
-                                    <div class="activity-meta">
-                                        <span class="badge badge-blue">{{ item.resource.topic }}</span>
-                                        <span><i class="fa-regular fa-clock"></i> {{ item.viewed_at|date:"M d, Y - H:i" }}</span>
+                <div class="tab-content">
+                    <!-- Tab 1: Recent Activity -->
+                    <div id="recent-tab" class="tab-pane active" role="tabpanel">
+                        {% if recent_interactions %}
+                            <div class="activity-list" role="list">
+                                {% for item in recent_interactions %}
+                                <div class="activity-item" role="listitem">
+                                    <div class="activity-left">
+                                        <h4>
+                                            {{ item.resource.title }}
+                                        </h4>
+                                        <div class="activity-meta">
+                                            <span class="badge badge-blue">{{ item.resource.topic }}</span>
+                                            <span><i class="fa-regular fa-clock" aria-hidden="true"></i> {{ item.viewed_at|date:"M d, Y - H:i" }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="activity-actions">
+                                        <button type="button" 
+                                                class="btn-icon-action bookmark-toggle-btn" 
+                                                data-id="{{ item.resource.id }}" 
+                                                data-title="{{ item.resource.title|escapejs }}" 
+                                                data-topic="{{ item.resource.topic|escapejs }}" 
+                                                data-url="{% url 'resource_detail' item.resource.id %}" 
+                                                onclick="toggleBookmarkFromBtn(this)"
+                                                title="Bookmark study material"
+                                                aria-label="Bookmark {{ item.resource.title }}">
+                                            <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
+                                        </button>
+                                        <a href="{% url 'resource_detail' item.resource.id %}" class="btn-view-sm" aria-label="View {{ item.resource.title }}">
+                                            View <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                 </div>
-                                <div class="activity-actions">
-                                    <button type="button" 
-                                            class="btn-icon-action bookmark-toggle-btn" 
-                                            data-id="{{ item.resource.id }}" 
-                                            data-title="{{ item.resource.title|escapejs }}" 
-                                            data-topic="{{ item.resource.topic|escapejs }}" 
-                                            data-url="{% url 'resource_detail' item.resource.id %}" 
-                                            onclick="toggleBookmarkFromBtn(this)"
-                                            title="Bookmark study material">
-                                        <i class="fa-regular fa-bookmark"></i>
-                                    </button>
-                                    <a href="{% url 'resource_detail' item.resource.id %}" class="btn-view-sm">
-                                        View <i class="fa-solid fa-arrow-right"></i>
-                                    </a>
-                                </div>
+                                {% endfor %}
                             </div>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <div class="empty-state">
-                            <i class="fa-solid fa-folder-open"></i>
-                            <h4>No Recent Activity Recorded</h4>
-                            <p>Explore your personalized AI recommendations to start tracking your learning progress!</p>
-                            <a href="{% url 'recommendations' %}" class="btn" style="margin-top: 15px; display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: white; padding: 10px 20px; border-radius: 999px; text-decoration: none;">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> View AI Recommendations
-                            </a>
-                        </div>
-                    {% endif %}
-                </div>
-
-                <!-- Tab 2: Saved Bookmarks (LocalStorage) -->
-                <div id="bookmarks-tab" class="tab-pane">
-                    <div id="bookmarks-list" class="activity-list">
-                        <!-- Dynamically populated via JS -->
+                        {% else %}
+                            <div class="empty-state" role="status">
+                                <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
+                                <h4>No Recent Activity Recorded</h4>
+                                <p>Explore your personalized AI recommendations to start tracking your learning progress!</p>
+                                <a href="{% url 'recommendations' %}" class="btn-empty-action">
+                                    <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> View AI Recommendations
+                                </a>
+                            </div>
+                        {% endif %}
                     </div>
-                    <div id="bookmarks-empty" class="empty-state" style="display: none;">
-                        <i class="fa-regular fa-bookmark"></i>
-                        <h4>No Saved Study Materials Yet</h4>
-                        <p>Click the bookmark icon (<i class="fa-regular fa-bookmark"></i>) on any recently viewed resource to save it here for instant access!</p>
+
+                    <!-- Tab 2: Saved Bookmarks (LocalStorage) -->
+                    <div id="bookmarks-tab" class="tab-pane" role="tabpanel">
+                        <div id="bookmarks-list" class="activity-list" role="list">
+                            <!-- Dynamically populated via JS -->
+                        </div>
+                        <div id="bookmarks-empty" class="empty-state is-hidden" role="status">
+                            <i class="fa-regular fa-bookmark" aria-hidden="true"></i>
+                            <h4>No Saved Study Materials Yet</h4>
+                            <p>Click the bookmark icon (<i class="fa-regular fa-bookmark" aria-hidden="true"></i>) on any recently viewed resource to save it here for instant access!</p>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Tab 3: Learning Analytics & AI Performance -->
-                <div id="analytics-tab" class="tab-pane">
-                    {% if total_interactions_count > 0 %}
-                        <!-- AI Alignment KPI Banner -->
-                        <div style="background: linear-gradient(135deg, #EEF2FF, #E0E7FF); border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 14px; padding: 20px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px;">
-                            <div>
-                                <h4 style="font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">
-                                    <i class="fa-solid fa-bullseye"></i> AI Recommendation Alignment Rate
-                                </h4>
-                                <p style="font-size: 13px; color: var(--text); margin: 0;">
-                                    Measures how frequently your learning activity targets your AI-diagnosed weak topic (<strong>{{ weak_topic }}</strong>) or recommended materials.
-                                </p>
-                            </div>
-                            <div style="text-align: right; background: white; padding: 10px 18px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid var(--border);">
-                                <span style="font-size: 24px; font-weight: 800; color: {% if ai_accuracy >= 70 %}var(--success){% elif ai_accuracy >= 40 %}#D97706{% else %}var(--danger){% endif %};">{{ ai_accuracy }}%</span>
-                                <span style="font-size: 12px; color: var(--muted); display: block; font-weight: 600;">Accuracy Score</span>
-                            </div>
-                        </div>
-
-                        <!-- Charts Grid -->
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px;">
-                            <!-- Doughnut Chart: Weak Topic Diagnostic Breakdown -->
-                            <div style="background: white; border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                                <h4 style="font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                                    <i class="fa-solid fa-chart-pie" style="color: var(--primary);"></i> Weak Topic Breakdown
-                                </h4>
-                                <div style="position: relative; height: 240px; display: flex; align-items: center; justify-content: center;">
-                                    <canvas id="topicChart"></canvas>
+                    <!-- Tab 3: Learning Analytics & AI Performance -->
+                    <div id="analytics-tab" class="tab-pane" role="tabpanel">
+                        {% if total_interactions_count > 0 %}
+                            <!-- AI Alignment KPI Banner -->
+                            <div class="alignment-banner">
+                                <div>
+                                    <h4 class="alignment-banner-title">
+                                        <i class="fa-solid fa-bullseye" aria-hidden="true"></i> AI Recommendation Alignment Rate
+                                    </h4>
+                                    <p class="alignment-banner-desc">
+                                        Measures how frequently your learning activity targets your AI-diagnosed weak topic (<strong>{{ weak_topic }}</strong>) or recommended materials.
+                                    </p>
+                                </div>
+                                <div class="alignment-score-box">
+                                    <span class="accuracy-val {% if ai_accuracy >= 70 %}accuracy-high{% elif ai_accuracy >= 40 %}accuracy-med{% else %}accuracy-low{% endif %}">{{ ai_accuracy }}%</span>
+                                    <span class="accuracy-label">Accuracy Score</span>
                                 </div>
                             </div>
 
-                            <!-- Bar Chart: Learning Difficulty Progression -->
-                            <div style="background: white; border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
-                                <h4 style="font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                                    <i class="fa-solid fa-chart-column" style="color: var(--secondary);"></i> Difficulty Progression
-                                </h4>
-                                <div style="position: relative; height: 240px; display: flex; align-items: center; justify-content: center;">
-                                    <canvas id="difficultyChart"></canvas>
+                            <!-- Charts Grid -->
+                            <div class="charts-grid">
+                                <!-- Doughnut Chart: Weak Topic Diagnostic Breakdown -->
+                                <div class="chart-card">
+                                    <h4 class="chart-card-title">
+                                        <i class="fa-solid fa-chart-pie icon-primary" aria-hidden="true"></i> Weak Topic Breakdown
+                                    </h4>
+                                    <div class="chart-canvas-wrapper">
+                                        <canvas id="topicChart" aria-label="Weak topic breakdown chart" role="img"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Bar Chart: Learning Difficulty Progression -->
+                                <div class="chart-card">
+                                    <h4 class="chart-card-title">
+                                        <i class="fa-solid fa-chart-column icon-secondary" aria-hidden="true"></i> Difficulty Progression
+                                    </h4>
+                                    <div class="chart-canvas-wrapper">
+                                        <canvas id="difficultyChart" aria-label="Difficulty progression chart" role="img"></canvas>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    {% else %}
-                        <div class="empty-state">
-                            <i class="fa-solid fa-chart-pie"></i>
-                            <h4>No Analytics Data Available Yet</h4>
-                            <p>We need more learning interaction data to generate your custom progress charts and weak topic diagnostic breakdowns. Start interacting with study materials!</p>
-                            <a href="{% url 'recommendations' %}" class="btn" style="margin-top: 15px; display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: white; padding: 10px 20px; border-radius: 999px; text-decoration: none;">
-                                <i class="fa-solid fa-wand-magic-sparkles"></i> View AI Recommendations
-                            </a>
-                        </div>
-                    {% endif %}
+                        {% else %}
+                            <div class="empty-state" role="status">
+                                <i class="fa-solid fa-chart-pie" aria-hidden="true"></i>
+                                <h4>No Analytics Data Available Yet</h4>
+                                <p>We need more learning interaction data to generate your custom progress charts and weak topic diagnostic breakdowns. Start interacting with study materials!</p>
+                                <a href="{% url 'recommendations' %}" class="btn-empty-action">
+                                    <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i> View AI Recommendations
+                                </a>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -635,10 +757,14 @@ Student Profile | AI Academic Recommender
     // Tab switching logic
     function switchTab(tabId, btnElement) {
         document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => {
+            el.classList.remove('active');
+            el.setAttribute('aria-selected', 'false');
+        });
         
         document.getElementById(tabId).classList.add('active');
         btnElement.classList.add('active');
+        btnElement.setAttribute('aria-selected', 'true');
         
         if (tabId === 'bookmarks-tab') {
             renderBookmarks();
@@ -695,7 +821,6 @@ Student Profile | AI Academic Recommender
         
         saveBookmarks(bookmarks);
         
-        // If we are currently viewing bookmarks tab, re-render
         if (document.getElementById('bookmarks-tab').classList.contains('active')) {
             renderBookmarks();
         }
@@ -718,32 +843,34 @@ Student Profile | AI Academic Recommender
         listEl.innerHTML = '';
 
         if (bookmarks.length === 0) {
-            listEl.style.display = 'none';
-            emptyEl.style.display = 'block';
+            listEl.classList.add('is-hidden');
+            emptyEl.classList.remove('is-hidden');
         } else {
-            listEl.style.display = 'flex';
-            emptyEl.style.display = 'none';
+            listEl.classList.remove('is-hidden');
+            emptyEl.classList.add('is-hidden');
             
             bookmarks.forEach(item => {
                 const itemEl = document.createElement('div');
                 itemEl.className = 'activity-item';
+                itemEl.setAttribute('role', 'listitem');
                 itemEl.innerHTML = `
                     <div class="activity-left">
                         <h4>${item.title}</h4>
                         <div class="activity-meta">
                             <span class="badge badge-blue">${item.topic}</span>
-                            <span><i class="fa-regular fa-calendar-check"></i> Saved on ${item.savedAt || 'Today'}</span>
+                            <span><i class="fa-regular fa-calendar-check" aria-hidden="true"></i> Saved on ${item.savedAt || 'Today'}</span>
                         </div>
                     </div>
                     <div class="activity-actions">
                         <button type="button" 
                                 class="btn-icon-action bookmarked" 
                                 onclick="removeBookmark('${item.id}')"
-                                title="Remove bookmark">
-                            <i class="fa-solid fa-bookmark"></i>
+                                title="Remove bookmark"
+                                aria-label="Remove bookmark for ${item.title}">
+                            <i class="fa-solid fa-bookmark" aria-hidden="true"></i>
                         </button>
-                        <a href="${item.url}" class="btn-view-sm">
-                            View <i class="fa-solid fa-arrow-right"></i>
+                        <a href="${item.url}" class="btn-view-sm" aria-label="View ${item.title}">
+                            View <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                         </a>
                     </div>
                 `;
@@ -784,7 +911,6 @@ Student Profile | AI Academic Recommender
         });
     }
 
-    // Initialize on page load
     document.addEventListener('DOMContentLoaded', function() {
         updateBookmarkCount();
         syncBookmarkButtons();
@@ -814,17 +940,17 @@ Student Profile | AI Academic Recommender
                         responsive: true,
                         maintainAspectRatio: false,
                         plugins: {
-                            legend: {
-                                position: 'bottom',
-                                labels: {
-                                    font: { family: 'Poppins', size: 12 },
-                                    padding: 15
-                                }
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: { family: 'Poppins', size: 12 },
+                                padding: 15
                             }
                         }
                     }
-                });
-            }
+                }
+            });
+        }
 
             const diffCtx = document.getElementById('difficultyChart');
             if (diffCtx && Object.keys(diffData).length > 0) {

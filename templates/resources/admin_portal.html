@@ -71,6 +71,9 @@ System Administration | SmartLearn AI
         color: #F8FAFC;
     }
 
+    .icon-chief { color: #FBBF24; }
+    .icon-staff { color: #38BDF8; }
+
     .alert-banner {
         padding: 16px 24px;
         border-radius: 14px;
@@ -83,17 +86,8 @@ System Administration | SmartLearn AI
         animation: slideDown 0.3s ease;
     }
 
-    .alert-success {
-        background: #EAFBF3;
-        border: 1px solid #34D399;
-        color: #065F46;
-    }
-
-    .alert-error {
-        background: #FEF2F2;
-        border: 1px solid #F87171;
-        color: #991B1B;
-    }
+    .alert-success { background: #EAFBF3; border: 1px solid #34D399; color: #065F46; }
+    .alert-error { background: #FEF2F2; border: 1px solid #F87171; color: #991B1B; }
 
     @keyframes slideDown {
         from { opacity: 0; transform: translateY(-10px); }
@@ -130,6 +124,7 @@ System Administration | SmartLearn AI
     .kpi-card:hover {
         transform: translateY(-3px);
         box-shadow: 0 12px 28px rgba(0,0,0,0.08);
+        border-color: rgba(123, 63, 242, 0.3);
     }
 
     .kpi-icon {
@@ -141,6 +136,7 @@ System Administration | SmartLearn AI
         justify-content: center;
         font-size: 24px;
         flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
     }
 
     .kpi-icon-purple { background: #F3E8FF; color: #9333EA; }
@@ -148,12 +144,25 @@ System Administration | SmartLearn AI
     .kpi-icon-green { background: #DCFCE7; color: #16A34A; }
     .kpi-icon-orange { background: #FFEDD5; color: #EA580C; }
 
+    .kpi-info {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
     .kpi-info h3 {
         font-size: 26px;
         font-weight: 700;
         color: var(--text);
         line-height: 1.1;
         margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .kpi-title-sm {
+        font-size: 20px !important;
     }
 
     .kpi-info span {
@@ -197,10 +206,7 @@ System Administration | SmartLearn AI
         box-shadow: 0 4px 14px rgba(123, 63, 242, 0.25);
     }
 
-    .tab-pane {
-        display: none;
-    }
-
+    .tab-pane { display: none; }
     .tab-pane.active {
         display: block;
         animation: fadeIn 0.3s ease;
@@ -240,6 +246,15 @@ System Administration | SmartLearn AI
         gap: 12px;
     }
 
+    .icon-primary { color: var(--primary); }
+    .icon-secondary { color: var(--secondary); }
+
+    .student-count-badge {
+        font-size: 13px;
+        color: var(--muted);
+        font-weight: 600;
+    }
+
     .btn-add {
         padding: 12px 22px;
         border-radius: 999px;
@@ -253,17 +268,16 @@ System Administration | SmartLearn AI
         gap: 8px;
         box-shadow: 0 4px 14px rgba(16, 185, 129, 0.25);
         transition: var(--transition);
+        font-size: 14px;
     }
 
     .btn-add:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+        color: white;
     }
 
-    .admin-table-container {
-        overflow-x: auto;
-    }
-
+    .admin-table-container { overflow-x: auto; }
     .admin-table {
         width: 100%;
         border-collapse: separate;
@@ -282,6 +296,8 @@ System Administration | SmartLearn AI
         text-align: left;
     }
 
+    .text-right { text-align: right !important; }
+
     .admin-table td {
         padding: 16px 18px;
         border-bottom: 1px solid var(--border);
@@ -290,9 +306,11 @@ System Administration | SmartLearn AI
         vertical-align: middle;
     }
 
-    .admin-table tr:hover td {
-        background: #F8FAFC;
-    }
+    .admin-table tr:hover td { background: #F8FAFC; }
+
+    .td-title { font-weight: 600; }
+    .td-user { font-weight: 700; color: var(--text); }
+    .icon-user { color: var(--muted); margin-right: 6px; }
 
     .badge-pill {
         display: inline-flex;
@@ -311,10 +329,15 @@ System Administration | SmartLearn AI
     .badge-role-staff { background: #E0F2FE; color: #0369A1; border: 1px solid #BAE6FD; }
     .badge-role-student { background: #F1F5F9; color: #475569; }
 
-    .action-group {
-        display: flex;
-        gap: 8px;
+    .role-icon { margin-right: 4px; }
+
+    .link-open {
+        color: var(--primary);
+        text-decoration: underline;
+        font-weight: 500;
     }
+
+    .action-group { display: flex; gap: 8px; justify-content: flex-end; }
 
     .btn-icon-action {
         width: 36px;
@@ -335,7 +358,35 @@ System Administration | SmartLearn AI
     .btn-icon-delete:hover { background: #FEF2F2; border-color: #EF4444; color: #DC2626; }
     .btn-icon-promote:hover { background: #F3E8FF; border-color: #9333EA; color: #7E22CE; }
 
-    /* Modal Styling Fallback */
+    .form-inline { display: inline; }
+
+    .dataset-id-tag {
+        font-family: monospace;
+        background: #F1F5F9;
+        padding: 3px 8px;
+        border-radius: 6px;
+    }
+
+    .role-note {
+        font-size: 12px;
+        color: var(--muted);
+        font-style: italic;
+    }
+
+    .empty-table-state {
+        text-align: center;
+        padding: 40px;
+        color: var(--muted);
+    }
+
+    .empty-table-icon {
+        font-size: 40px;
+        margin-bottom: 12px;
+        opacity: 0.5;
+        color: var(--primary);
+    }
+
+    /* Modal Styling */
     .custom-modal-overlay {
         display: none;
         position: fixed;
@@ -366,6 +417,8 @@ System Administration | SmartLearn AI
         position: relative;
     }
 
+    .custom-modal-card-sm { max-width: 450px; }
+
     .modal-header-box {
         display: flex;
         justify-content: space-between;
@@ -384,6 +437,10 @@ System Administration | SmartLearn AI
         gap: 10px;
     }
 
+    .modal-icon-success { color: #10B981; }
+    .modal-icon-edit { color: #3B82F6; }
+    .modal-icon-danger { color: #EF4444; }
+
     .btn-close-modal {
         background: none;
         border: none;
@@ -391,6 +448,7 @@ System Administration | SmartLearn AI
         color: var(--muted);
         cursor: pointer;
         padding: 4px;
+        transition: var(--transition);
     }
 
     .btn-close-modal:hover { color: var(--text); }
@@ -404,6 +462,12 @@ System Administration | SmartLearn AI
         margin-bottom: 6px;
     }
 
+    .form-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+    }
+
     .form-control-modal, .form-select-modal {
         width: 100%;
         padding: 12px 16px;
@@ -414,6 +478,7 @@ System Administration | SmartLearn AI
         background: #F8FAFC;
         outline: none;
         transition: var(--transition);
+        color: var(--text);
     }
 
     .form-control-modal:focus, .form-select-modal:focus {
@@ -439,7 +504,10 @@ System Administration | SmartLearn AI
         font-weight: 600;
         border: none;
         cursor: pointer;
+        transition: var(--transition);
     }
+
+    .btn-cancel:hover { background: #E2E8F0; }
 
     .btn-save-modal {
         padding: 10px 24px;
@@ -450,6 +518,12 @@ System Administration | SmartLearn AI
         border: none;
         cursor: pointer;
         box-shadow: 0 4px 12px rgba(123, 63, 242, 0.25);
+        transition: var(--transition);
+    }
+
+    .btn-save-modal:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(123, 63, 242, 0.35);
     }
 
     .btn-danger-modal {
@@ -460,243 +534,265 @@ System Administration | SmartLearn AI
         font-weight: 600;
         border: none;
         cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .btn-danger-modal:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+    }
+
+    .delete-confirm-text {
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .admin-header { flex-direction: column; align-items: flex-start; }
+        .form-grid-3 { grid-template-columns: 1fr; }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<!-- Admin Banner Header -->
-<div class="admin-header">
-    <div class="admin-header-left">
-        <div class="admin-avatar">
-            <i class="fa-solid fa-user-shield"></i>
-        </div>
-        <div class="admin-header-info">
-            <h1>SmartLearn AI Administration Portal</h1>
-            <p>Manage learning resources, oversee student cohorts, and monitor platform-wide learning engagement metrics.</p>
-        </div>
-    </div>
-    <div>
-        {% if request.user.is_superuser %}
-        <div class="admin-role-badge" title="Chief Administrator Authority">
-            <i class="fa-solid fa-crown" style="color: #FBBF24;"></i> Chief Admin
-        </div>
-        {% elif request.user.is_staff %}
-        <div class="admin-role-badge" title="Delegated Administrator">
-            <i class="fa-solid fa-user-check" style="color: #38BDF8;"></i> Delegated Admin
-        </div>
-        {% endif %}
-    </div>
-</div>
+<div class="animate-fade-in">
 
-<!-- Django Success/Error Messages -->
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert-banner {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
-            <i class="fa-solid {% if message.tags == 'error' %}fa-circle-exclamation{% else %}fa-circle-check{% endif %}"></i>
-            <span>{{ message }}</span>
-        </div>
-    {% endfor %}
-{% endif %}
-
-<!-- KPI Ribbon -->
-<div class="kpi-grid">
-    <div class="kpi-card">
-        <div class="kpi-icon kpi-icon-purple">
-            <i class="fa-solid fa-book-bookmark"></i>
-        </div>
-        <div class="kpi-info">
-            <h3>{{ total_resources }}</h3>
-            <span>Total Resources</span>
-        </div>
-    </div>
-
-    <div class="kpi-card">
-        <div class="kpi-icon kpi-icon-blue">
-            <i class="fa-solid fa-chart-line"></i>
-        </div>
-        <div class="kpi-info">
-            <h3>{{ total_interactions }}</h3>
-            <span>Total Views Recorded</span>
-        </div>
-    </div>
-
-    <div class="kpi-card">
-        <div class="kpi-icon kpi-icon-green">
-            <i class="fa-solid fa-users"></i>
-        </div>
-        <div class="kpi-info">
-            <h3>{{ active_students_count }}</h3>
-            <span>Active Learners</span>
-        </div>
-    </div>
-
-    <div class="kpi-card">
-        <div class="kpi-icon kpi-icon-orange">
-            <i class="fa-solid fa-fire"></i>
-        </div>
-        <div class="kpi-info">
-            <h3 style="font-size: 20px;">{{ top_topic }}</h3>
-            <span>Top Discipline</span>
-        </div>
-    </div>
-</div>
-
-<!-- Navigation Tabs -->
-<div class="admin-tabs">
-    <button type="button" class="tab-btn active" onclick="switchTab('resources', this)">
-        <i class="fa-solid fa-layer-group"></i> Learning Resources Catalog
-    </button>
-    <button type="button" class="tab-btn" onclick="switchTab('students', this)">
-        <i class="fa-solid fa-user-graduate"></i> Student Oversight & Roles
-    </button>
-</div>
-
-<!-- TAB 1: RESOURCES MANAGEMENT -->
-<div id="tab-resources" class="tab-pane active">
-    <div class="admin-section-card">
-        <div class="section-header">
-            <div class="section-title">
-                <i class="fa-solid fa-folder-open" style="color: var(--primary);"></i>
-                <span>Learning Resources Repository</span>
+    <!-- Admin Banner Header -->
+    <section class="admin-header" role="region" aria-label="System administration header">
+        <div class="admin-header-left">
+            <div class="admin-avatar" aria-hidden="true">
+                <i class="fa-solid fa-user-shield"></i>
             </div>
-            <button type="button" class="btn-add" onclick="openModal('addResourceModal')">
-                <i class="fa-solid fa-plus"></i> Add New Resource
-            </button>
+            <div class="admin-header-info">
+                <h1>SmartLearn AI Administration Portal</h1>
+                <p>Manage learning resources, oversee student cohorts, and monitor platform-wide learning engagement metrics.</p>
+            </div>
         </div>
-
-        <div class="admin-table-container">
-            {% if resources %}
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Topic</th>
-                        <th>Difficulty</th>
-                        <th>Type</th>
-                        <th>Link</th>
-                        <th style="text-align: right;">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for resource in resources %}
-                    <tr>
-                        <td style="font-weight: 600;">{{ resource.title }}</td>
-                        <td><span class="badge-pill badge-topic">{{ resource.topic }}</span></td>
-                        <td><span class="badge-pill badge-diff">{{ resource.difficulty }}</span></td>
-                        <td><span class="badge-pill badge-type">{{ resource.resource_type }}</span></td>
-                        <td>
-                            <a href="{{ resource.link }}" target="_blank" style="color: var(--primary); text-decoration: underline; font-weight: 500;">
-                                <i class="fa-solid fa-arrow-up-right-from-square"></i> Open
-                            </a>
-                        </td>
-                        <td style="text-align: right;">
-                            <div class="action-group" style="justify-content: flex-end;">
-                                <button type="button" class="btn-icon-action btn-icon-edit" title="Edit Resource" onclick="openModal('editModal_{{ resource.id }}')">
-                                    <i class="fa-solid fa-pen"></i>
-                                </button>
-                                <button type="button" class="btn-icon-action btn-icon-delete" title="Delete Resource" onclick="openModal('deleteModal_{{ resource.id }}')">
-                                    <i class="fa-solid fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-            <div style="text-align: center; padding: 40px; color: var(--muted);">
-                <i class="fa-solid fa-folder-blank" style="font-size: 40px; margin-bottom: 12px; opacity: 0.5;"></i>
-                <p>No learning resources found in the repository. Click "Add New Resource" above to create one.</p>
+        <div>
+            {% if request.user.is_superuser %}
+            <div class="admin-role-badge" title="Chief Administrator Authority">
+                <i class="fa-solid fa-crown icon-chief" aria-hidden="true"></i> Chief Admin
+            </div>
+            {% elif request.user.is_staff %}
+            <div class="admin-role-badge" title="Delegated Administrator">
+                <i class="fa-solid fa-user-check icon-staff" aria-hidden="true"></i> Delegated Admin
             </div>
             {% endif %}
         </div>
-    </div>
-</div>
+    </section>
 
-<!-- TAB 2: STUDENT OVERSIGHT -->
-<div id="tab-students" class="tab-pane">
-    <div class="admin-section-card">
-        <div class="section-header">
-            <div class="section-title">
-                <i class="fa-solid fa-users-gear" style="color: var(--secondary);"></i>
-                <span>Registered Student Directory & Role Delegation</span>
+    <!-- Django Success/Error Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert-banner {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}" role="alert">
+                <i class="fa-solid {% if message.tags == 'error' %}fa-circle-exclamation{% else %}fa-circle-check{% endif %}" aria-hidden="true"></i>
+                <span>{{ message }}</span>
             </div>
-            <span style="font-size: 13px; color: var(--muted); font-weight: 600;">
-                Total Students: {{ students|length }}
-            </span>
+        {% endfor %}
+    {% endif %}
+
+    <!-- KPI Ribbon -->
+    <section class="kpi-grid" role="region" aria-label="Key performance indicators">
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon-purple" aria-hidden="true">
+                <i class="fa-solid fa-book-bookmark"></i>
+            </div>
+            <div class="kpi-info">
+                <h3>{{ total_resources }}</h3>
+                <span>Total Resources</span>
+            </div>
         </div>
 
-        <div class="admin-table-container">
-            <table class="admin-table">
-                <thead>
-                    <tr>
-                        <th>Username</th>
-                        <th>Department</th>
-                        <th>Level</th>
-                        <th>Dataset ID</th>
-                        <th>Role Tier</th>
-                        {% if request.user.is_superuser %}
-                        <th style="text-align: right;">Delegation Authority</th>
-                        {% endif %}
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for student in students %}
-                    <tr>
-                        <td style="font-weight: 700; color: var(--text);">
-                            <i class="fa-solid fa-user-circle" style="color: var(--muted); margin-right: 6px;"></i>
-                            {{ student.user.username }}
-                        </td>
-                        <td>{{ student.department|default:"Not Specified" }}</td>
-                        <td>{{ student.level|default:"Not Specified" }}</td>
-                        <td><span style="font-family: monospace; background: #F1F5F9; padding: 3px 8px; border-radius: 6px;">#{{ student.dataset_student_id }}</span></td>
-                        <td>
-                            {% if student.user.is_superuser %}
-                            <span class="badge-pill badge-role-chief"><i class="fa-solid fa-crown" style="margin-right: 4px;"></i> Chief Admin</span>
-                            {% elif student.user.is_staff %}
-                            <span class="badge-pill badge-role-staff"><i class="fa-solid fa-user-check" style="margin-right: 4px;"></i> Delegated Admin</span>
-                            {% else %}
-                            <span class="badge-pill badge-role-student"><i class="fa-solid fa-user" style="margin-right: 4px;"></i> Regular Student</span>
-                            {% endif %}
-                        </td>
-                        {% if request.user.is_superuser %}
-                        <td style="text-align: right;">
-                            {% if student.user == request.user %}
-                            <span style="font-size: 12px; color: var(--muted); font-style: italic;">Chief Account</span>
-                            {% elif student.user.is_superuser %}
-                            <span style="font-size: 12px; color: var(--muted); font-style: italic;">Protected Role</span>
-                            {% else %}
-                            <form method="POST" action="{% url 'admin_user_promote' student.user.id %}" style="display: inline;">
-                                {% csrf_token %}
-                                {% if student.user.is_staff %}
-                                <button type="submit" class="btn-icon-action btn-icon-delete" title="Revoke Delegated Admin Role" onclick="return confirm('Revoke admin access for {{ student.user.username }}?');">
-                                    <i class="fa-solid fa-user-xmark"></i>
-                                </button>
-                                {% else %}
-                                <button type="submit" class="btn-icon-action btn-icon-promote" title="Promote to Delegated Admin" onclick="return confirm('Grant Delegated Admin access to {{ student.user.username }}? Only do this if genuinely necessary.');">
-                                    <i class="fa-solid fa-user-shield"></i>
-                                </button>
-                                {% endif %}
-                            </form>
-                            {% endif %}
-                        </td>
-                        {% endif %}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon-blue" aria-hidden="true">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+            <div class="kpi-info">
+                <h3>{{ total_interactions }}</h3>
+                <span>Total Views Recorded</span>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon-green" aria-hidden="true">
+                <i class="fa-solid fa-users"></i>
+            </div>
+            <div class="kpi-info">
+                <h3>{{ active_students_count }}</h3>
+                <span>Active Learners</span>
+            </div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-icon kpi-icon-orange" aria-hidden="true">
+                <i class="fa-solid fa-fire"></i>
+            </div>
+            <div class="kpi-info">
+                <h3 class="kpi-title-sm">{{ top_topic }}</h3>
+                <span>Top Discipline</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <div class="admin-tabs" role="tablist" aria-label="Admin navigation tabs">
+        <button type="button" class="tab-btn active" onclick="switchTab('resources', this)" role="tab" aria-selected="true" aria-controls="tab-resources">
+            <i class="fa-solid fa-layer-group" aria-hidden="true"></i> Learning Resources Catalog
+        </button>
+        <button type="button" class="tab-btn" onclick="switchTab('students', this)" role="tab" aria-selected="false" aria-controls="tab-students">
+            <i class="fa-solid fa-user-graduate" aria-hidden="true"></i> Student Oversight &amp; Roles
+        </button>
+    </div>
+
+    <!-- TAB 1: RESOURCES MANAGEMENT -->
+    <div id="tab-resources" class="tab-pane active" role="tabpanel">
+        <div class="admin-section-card">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-folder-open icon-primary" aria-hidden="true"></i>
+                    <span>Learning Resources Repository</span>
+                </div>
+                <button type="button" class="btn-add" onclick="openModal('addResourceModal')" aria-label="Add new resource">
+                    <i class="fa-solid fa-plus" aria-hidden="true"></i> Add New Resource
+                </button>
+            </div>
+
+            <div class="admin-table-container">
+                {% if resources %}
+                <table class="admin-table" aria-label="Learning resources table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Topic</th>
+                            <th>Difficulty</th>
+                            <th>Type</th>
+                            <th>Link</th>
+                            <th class="text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for resource in resources %}
+                        <tr>
+                            <td class="td-title">{{ resource.title }}</td>
+                            <td><span class="badge-pill badge-topic">{{ resource.topic }}</span></td>
+                            <td><span class="badge-pill badge-diff">{{ resource.difficulty }}</span></td>
+                            <td><span class="badge-pill badge-type">{{ resource.resource_type }}</span></td>
+                            <td>
+                                <a href="{{ resource.link }}" target="_blank" rel="noopener noreferrer" class="link-open" aria-label="Open {{ resource.title }}">
+                                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Open
+                                </a>
+                            </td>
+                            <td class="text-right">
+                                <div class="action-group">
+                                    <button type="button" class="btn-icon-action btn-icon-edit" title="Edit Resource" onclick="openModal('editModal_{{ resource.id }}')" aria-label="Edit {{ resource.title }}">
+                                        <i class="fa-solid fa-pen" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="btn-icon-action btn-icon-delete" title="Delete Resource" onclick="openModal('deleteModal_{{ resource.id }}')" aria-label="Delete {{ resource.title }}">
+                                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-table-state" role="status">
+                    <i class="fa-solid fa-folder-blank empty-table-icon" aria-hidden="true"></i>
+                    <p>No learning resources found in the repository. Click "Add New Resource" above to create one.</p>
+                </div>
+                {% endif %}
+            </div>
         </div>
     </div>
+
+    <!-- TAB 2: STUDENT OVERSIGHT -->
+    <div id="tab-students" class="tab-pane" role="tabpanel">
+        <div class="admin-section-card">
+            <div class="section-header">
+                <div class="section-title">
+                    <i class="fa-solid fa-users-gear icon-secondary" aria-hidden="true"></i>
+                    <span>Registered Student Directory &amp; Role Delegation</span>
+                </div>
+                <span class="student-count-badge">
+                    Total Students: {{ students|length }}
+                </span>
+            </div>
+
+            <div class="admin-table-container">
+                <table class="admin-table" aria-label="Registered students table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Department</th>
+                            <th>Level</th>
+                            <th>Dataset ID</th>
+                            <th>Role Tier</th>
+                            {% if request.user.is_superuser %}
+                            <th class="text-right">Delegation Authority</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td class="td-user">
+                                <i class="fa-solid fa-user-circle icon-user" aria-hidden="true"></i>
+                                {{ student.user.username }}
+                            </td>
+                            <td>{{ student.department|default:"Not Specified" }}</td>
+                            <td>{{ student.level|default:"Not Specified" }}</td>
+                            <td><span class="dataset-id-tag">#{{ student.dataset_student_id }}</span></td>
+                            <td>
+                                {% if student.user.is_superuser %}
+                                <span class="badge-pill badge-role-chief"><i class="fa-solid fa-crown role-icon" aria-hidden="true"></i> Chief Admin</span>
+                                {% elif student.user.is_staff %}
+                                <span class="badge-pill badge-role-staff"><i class="fa-solid fa-user-check role-icon" aria-hidden="true"></i> Delegated Admin</span>
+                                {% else %}
+                                <span class="badge-pill badge-role-student"><i class="fa-solid fa-user role-icon" aria-hidden="true"></i> Regular Student</span>
+                                {% endif %}
+                            </td>
+                            {% if request.user.is_superuser %}
+                            <td class="text-right">
+                                {% if student.user == request.user %}
+                                <span class="role-note">Chief Account</span>
+                                {% elif student.user.is_superuser %}
+                                <span class="role-note">Protected Role</span>
+                                {% else %}
+                                <form method="POST" action="{% url 'admin_user_promote' student.user.id %}" class="form-inline">
+                                    {% csrf_token %}
+                                    {% if student.user.is_staff %}
+                                    <button type="submit" class="btn-icon-action btn-icon-delete" title="Revoke Delegated Admin Role" onclick="return confirm('Revoke admin access for {{ student.user.username }}?');" aria-label="Revoke admin access for {{ student.user.username }}">
+                                        <i class="fa-solid fa-user-xmark" aria-hidden="true"></i>
+                                    </button>
+                                    {% else %}
+                                    <button type="submit" class="btn-icon-action btn-icon-promote" title="Promote to Delegated Admin" onclick="return confirm('Grant Delegated Admin access to {{ student.user.username }}? Only do this if genuinely necessary.');" aria-label="Promote {{ student.user.username }} to Delegated Admin">
+                                        <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                                    </button>
+                                    {% endif %}
+                                </form>
+                                {% endif %}
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <!-- MODAL 1: ADD NEW RESOURCE -->
-<div id="addResourceModal" class="custom-modal-overlay">
+<div id="addResourceModal" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitleAdd">
     <div class="custom-modal-card">
         <div class="modal-header-box">
-            <h3><i class="fa-solid fa-circle-plus" style="color: #10B981;"></i> Add Learning Resource</h3>
-            <button type="button" class="btn-close-modal" onclick="closeModal('addResourceModal')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modalTitleAdd"><i class="fa-solid fa-circle-plus modal-icon-success" aria-hidden="true"></i> Add Learning Resource</h3>
+            <button type="button" class="btn-close-modal" onclick="closeModal('addResourceModal')" aria-label="Close modal"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
         <form method="POST" action="{% url 'admin_resource_create' %}">
             {% csrf_token %}
@@ -704,7 +800,7 @@ System Administration | SmartLearn AI
                 <label class="form-label-modal">Resource Title *</label>
                 <input type="text" name="title" class="form-control-modal" placeholder="e.g. Advanced Calculus Lecture 1" required>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+            <div class="form-grid-3">
                 <div class="form-group-modal">
                     <label class="form-label-modal">Topic</label>
                     <select name="topic" class="form-select-modal">
@@ -750,11 +846,11 @@ System Administration | SmartLearn AI
 <!-- MODALS FOR EDIT AND DELETE -->
 {% for resource in resources %}
 <!-- EDIT MODAL -->
-<div id="editModal_{{ resource.id }}" class="custom-modal-overlay">
+<div id="editModal_{{ resource.id }}" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitleEdit_{{ resource.id }}">
     <div class="custom-modal-card">
         <div class="modal-header-box">
-            <h3><i class="fa-solid fa-pen-to-square" style="color: #3B82F6;"></i> Edit Learning Resource</h3>
-            <button type="button" class="btn-close-modal" onclick="closeModal('editModal_{{ resource.id }}')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modalTitleEdit_{{ resource.id }}"><i class="fa-solid fa-pen-to-square modal-icon-edit" aria-hidden="true"></i> Edit Learning Resource</h3>
+            <button type="button" class="btn-close-modal" onclick="closeModal('editModal_{{ resource.id }}')" aria-label="Close modal"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
         <form method="POST" action="{% url 'admin_resource_update' resource.id %}">
             {% csrf_token %}
@@ -762,7 +858,7 @@ System Administration | SmartLearn AI
                 <label class="form-label-modal">Resource Title *</label>
                 <input type="text" name="title" class="form-control-modal" value="{{ resource.title }}" required>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+            <div class="form-grid-3">
                 <div class="form-group-modal">
                     <label class="form-label-modal">Topic</label>
                     <select name="topic" class="form-select-modal">
@@ -806,13 +902,13 @@ System Administration | SmartLearn AI
 </div>
 
 <!-- DELETE MODAL -->
-<div id="deleteModal_{{ resource.id }}" class="custom-modal-overlay">
-    <div class="custom-modal-card" style="max-width: 450px;">
+<div id="deleteModal_{{ resource.id }}" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitleDelete_{{ resource.id }}">
+    <div class="custom-modal-card custom-modal-card-sm">
         <div class="modal-header-box">
-            <h3><i class="fa-solid fa-triangle-exclamation" style="color: #EF4444;"></i> Confirm Deletion</h3>
-            <button type="button" class="btn-close-modal" onclick="closeModal('deleteModal_{{ resource.id }}')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modalTitleDelete_{{ resource.id }}"><i class="fa-solid fa-triangle-exclamation modal-icon-danger" aria-hidden="true"></i> Confirm Deletion</h3>
+            <button type="button" class="btn-close-modal" onclick="closeModal('deleteModal_{{ resource.id }}')" aria-label="Close modal"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
-        <p style="color: var(--text); font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
+        <p class="delete-confirm-text">
             Are you sure you want to permanently delete <strong>"{{ resource.title }}"</strong> from the catalog? This action cannot be undone.
         </p>
         <form method="POST" action="{% url 'admin_resource_delete' resource.id %}">
@@ -829,10 +925,14 @@ System Administration | SmartLearn AI
 <script>
     function switchTab(tabName, btnElement) {
         document.querySelectorAll('.tab-pane').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(el => {
+            el.classList.remove('active');
+            el.setAttribute('aria-selected', 'false');
+        });
         
         document.getElementById('tab-' + tabName).classList.add('active');
         btnElement.classList.add('active');
+        btnElement.setAttribute('aria-selected', 'true');
     }
 
     function openModal(modalId) {
@@ -851,7 +951,6 @@ System Administration | SmartLearn AI
         }
     }
 
-    // Close modal if user clicks outside the card
     window.addEventListener('click', function(event) {
         if (event.target.classList.contains('custom-modal-overlay')) {
             event.target.classList.remove('open');

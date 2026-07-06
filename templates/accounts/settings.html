@@ -114,9 +114,11 @@ Account Settings | AI Academic Recommender
         gap: 12px;
     }
 
-    .card-title-header i {
-        font-size: 22px;
-    }
+    .card-title-header i { font-size: 22px; }
+    .icon-primary { color: var(--primary); }
+    .icon-secondary { color: var(--secondary); }
+    .icon-warning { color: var(--warning); }
+    .icon-muted { color: var(--muted); }
 
     .form-group {
         margin-bottom: 22px;
@@ -124,6 +126,10 @@ Account Settings | AI Academic Recommender
 
     .form-group:last-child {
         margin-bottom: 0;
+    }
+
+    .form-group-spaced {
+        margin-top: 25px;
     }
 
     .form-label {
@@ -216,7 +222,7 @@ Account Settings | AI Academic Recommender
         padding-top: 0;
     }
 
-    .pref-info h4 {
+    .pref-info h3 {
         font-size: 15px;
         font-weight: 700;
         color: var(--text);
@@ -316,177 +322,212 @@ Account Settings | AI Academic Recommender
         line-height: 1.5;
     }
 
+    .pwd-guidance-box.is-visible {
+        display: block;
+        animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
     .pref-badge {
         font-size: 11px;
         font-weight: 700;
         text-transform: uppercase;
         padding: 3px 8px;
         border-radius: 20px;
+        margin-left: 6px;
+        transition: var(--transition);
+    }
+
+    .badge-enabled {
         background: #EBF4FF;
         color: var(--primary);
-        margin-left: 6px;
+    }
+
+    .badge-disabled {
+        background: #F1F5F9;
+        color: var(--muted);
+    }
+
+    .badge-dark {
+        background: #312E81;
+        color: #E0E7FF;
+    }
+
+    .badge-light {
+        background: #EBF4FF;
+        color: var(--primary);
     }
 </style>
 {% endblock %}
 
 {% block content %}
-<!-- Settings Banner Header -->
-<div class="settings-header">
-    <div class="settings-avatar">
-        <i class="fa-solid fa-user-gear"></i>
-    </div>
-    <div class="settings-header-info">
-        <h1>Account Settings & Preferences</h1>
-        <p>Manage your academic profile context, security credentials, and interface customization.</p>
-    </div>
+<div class="animate-fade-in">
+    <!-- Settings Banner Header -->
+    <section class="settings-header" role="region" aria-label="Account settings banner">
+        <div class="settings-avatar" aria-hidden="true">
+            <i class="fa-solid fa-user-gear"></i>
+        </div>
+        <div class="settings-header-info">
+            <h1>Account Settings &amp; Preferences</h1>
+            <p>Manage your academic profile context, security credentials, and interface customization.</p>
+        </div>
+    </section>
+
+    <!-- Django Success Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert-success-banner" role="alert">
+                <i class="fa-solid fa-circle-check" aria-hidden="true"></i>
+                <span>{{ message }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="POST" action="{% url 'settings' %}" aria-label="Account settings form">
+        {% csrf_token %}
+        <div class="settings-grid">
+            <!-- Left Column: Academic Profile Settings Card -->
+            <div>
+                <section class="settings-card" aria-labelledby="cardTitleAcademic">
+                    <h2 id="cardTitleAcademic" class="card-title-header">
+                        <i class="fa-solid fa-graduation-cap icon-primary" aria-hidden="true"></i>
+                        <span>Academic Profile Context</span>
+                    </h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="id_department">
+                            <i class="fa-solid fa-building-columns icon-muted" aria-hidden="true"></i> Department / Major
+                        </label>
+                        {{ profile_form.department }}
+                        <div class="form-hint">Your department helps tailor subject-specific AI study recommendations.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="id_level">
+                            <i class="fa-solid fa-layer-group icon-muted" aria-hidden="true"></i> Academic Level
+                        </label>
+                        {{ profile_form.level }}
+                        <div class="form-hint">Select your current undergraduate or postgraduate standing.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="id_age">
+                            <i class="fa-solid fa-calendar-day icon-muted" aria-hidden="true"></i> Student Age (Optional)
+                        </label>
+                        {{ profile_form.age }}
+                        <div class="form-hint">Used for demographic analysis in hybrid recommendation models.</div>
+                    </div>
+
+                    <div class="btn-submit-container">
+                        <button type="submit" class="btn-save" aria-label="Save academic updates">
+                            <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i> Save Academic Updates
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Right Column: Security & Preferences -->
+            <div>
+                <!-- Security Card -->
+                <section class="settings-card" aria-labelledby="cardTitleSecurity">
+                    <h2 id="cardTitleSecurity" class="card-title-header">
+                        <i class="fa-solid fa-shield-halved icon-secondary" aria-hidden="true"></i>
+                        <span>Account Security &amp; Credentials</span>
+                    </h2>
+
+                    <div class="form-group">
+                        <label class="form-label" for="username-readonly">
+                            <i class="fa-solid fa-id-card icon-muted" aria-hidden="true"></i> Username (Read-Only)
+                        </label>
+                        <input id="username-readonly" type="text" class="form-control" value="{{ request.user.username }}" readonly aria-readonly="true">
+                        <div class="form-hint">Your unique student identifier cannot be changed.</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="id_email">
+                            <i class="fa-solid fa-envelope icon-muted" aria-hidden="true"></i> Registered Email Address
+                        </label>
+                        {{ user_form.email }}
+                        <div class="form-hint">We send weekly AI learning digests and alert notifications here.</div>
+                    </div>
+
+                    <div class="form-group form-group-spaced">
+                        <button type="button" class="btn-pwd-action" onclick="togglePwdGuidance()" aria-expanded="false" aria-controls="pwd-guidance">
+                            <i class="fa-solid fa-key" aria-hidden="true"></i> Modify Account Password...
+                        </button>
+                        <div id="pwd-guidance" class="pwd-guidance-box" role="region" aria-label="Password modification guidance">
+                            <i class="fa-solid fa-circle-info" aria-hidden="true"></i> <strong>Password Security Notice:</strong><br>
+                            To update your password, please contact the campus IT administrator or use the institutional portal verification link sent to your registered email address.
+                        </div>
+                    </div>
+
+                    <div class="btn-submit-container">
+                        <button type="submit" class="btn-save" aria-label="Save security changes">
+                            <i class="fa-solid fa-check-double" aria-hidden="true"></i> Save Security Changes
+                        </button>
+                    </div>
+                </section>
+
+                <!-- UI Preferences Card (LocalStorage toggles) -->
+                <section class="settings-card" aria-labelledby="cardTitlePreferences">
+                    <h2 id="cardTitlePreferences" class="card-title-header">
+                        <i class="fa-solid fa-sliders icon-warning" aria-hidden="true"></i>
+                        <span>Application Preferences</span>
+                    </h2>
+
+                    <div class="preference-item">
+                        <div class="pref-info">
+                            <h3>Email Notifications <span class="pref-badge badge-enabled" id="badge-email">Enabled</span></h3>
+                            <p>Receive automated weekly digests of your AI study recommendations.</p>
+                        </div>
+                        <label class="switch" aria-label="Toggle email notifications">
+                            <input type="checkbox" id="toggle-email" checked onchange="savePreference('email', this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="preference-item">
+                        <div class="pref-info">
+                            <h3>Study Reminders <span class="pref-badge badge-enabled" id="badge-reminders">Enabled</span></h3>
+                            <p>Receive browser activity reminder alerts when inactive for 3+ days.</p>
+                        </div>
+                        <label class="switch" aria-label="Toggle study reminders">
+                            <input type="checkbox" id="toggle-reminders" checked onchange="savePreference('reminders', this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="preference-item">
+                        <div class="pref-info">
+                            <h3>Dark Theme <span class="pref-badge badge-light" id="badge-theme">Light Mode</span></h3>
+                            <p>Switch interface styling between light mode and dark contrast mode.</p>
+                        </div>
+                        <label class="switch" aria-label="Toggle dark theme">
+                            <input type="checkbox" id="toggle-theme" onchange="savePreference('theme', this.checked)">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </form>
 </div>
-
-<!-- Django Success Messages -->
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert-success-banner">
-            <i class="fa-solid fa-circle-check"></i>
-            <span>{{ message }}</span>
-        </div>
-    {% endfor %}
-{% endif %}
-
-<form method="POST" action="{% url 'settings' %}">
-    {% csrf_token %}
-    <div class="settings-grid">
-        <!-- Left Column: Academic Profile Settings Card -->
-        <div>
-            <div class="settings-card">
-                <div class="card-title-header">
-                    <i class="fa-solid fa-graduation-cap" style="color: var(--primary);"></i>
-                    <span>Academic Profile Context</span>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="id_department">
-                        <i class="fa-solid fa-building-columns" style="color: var(--muted);"></i> Department / Major
-                    </label>
-                    {{ profile_form.department }}
-                    <div class="form-hint">Your department helps tailor subject-specific AI study recommendations.</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="id_level">
-                        <i class="fa-solid fa-layer-group" style="color: var(--muted);"></i> Academic Level
-                    </label>
-                    {{ profile_form.level }}
-                    <div class="form-hint">Select your current undergraduate or postgraduate standing.</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="id_age">
-                        <i class="fa-solid fa-calendar-day" style="color: var(--muted);"></i> Student Age (Optional)
-                    </label>
-                    {{ profile_form.age }}
-                    <div class="form-hint">Used for demographic analysis in hybrid recommendation models.</div>
-                </div>
-
-                <div class="btn-submit-container">
-                    <button type="submit" class="btn-save">
-                        <i class="fa-solid fa-cloud-arrow-up"></i> Save Academic Updates
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Right Column: Security & Preferences -->
-        <div>
-            <!-- Security Card -->
-            <div class="settings-card">
-                <div class="card-title-header">
-                    <i class="fa-solid fa-shield-halved" style="color: var(--secondary);"></i>
-                    <span>Account Security & Credentials</span>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label">
-                        <i class="fa-solid fa-id-card" style="color: var(--muted);"></i> Username (Read-Only)
-                    </label>
-                    <input type="text" class="form-control" value="{{ request.user.username }}" readonly>
-                    <div class="form-hint">Your unique student identifier cannot be changed.</div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="id_email">
-                        <i class="fa-solid fa-envelope" style="color: var(--muted);"></i> Registered Email Address
-                    </label>
-                    {{ user_form.email }}
-                    <div class="form-hint">We send weekly AI learning digests and alert notifications here.</div>
-                </div>
-
-                <div class="form-group" style="margin-top: 25px;">
-                    <button type="button" class="btn-pwd-action" onclick="togglePwdGuidance()">
-                        <i class="fa-solid fa-key"></i> Modify Account Password...
-                    </button>
-                    <div id="pwd-guidance" class="pwd-guidance-box">
-                        <i class="fa-solid fa-circle-info"></i> <strong>Password Security Notice:</strong><br>
-                        To update your password, please contact the campus IT administrator or use the institutional portal verification link sent to your registered email address.
-                    </div>
-                </div>
-
-                <div class="btn-submit-container">
-                    <button type="submit" class="btn-save">
-                        <i class="fa-solid fa-check-double"></i> Save Security Changes
-                    </button>
-                </div>
-            </div>
-
-            <!-- UI Preferences Card (LocalStorage toggles) -->
-            <div class="settings-card">
-                <div class="card-title-header">
-                    <i class="fa-solid fa-sliders" style="color: var(--warning);"></i>
-                    <span>Application Preferences</span>
-                </div>
-
-                <div class="preference-item">
-                    <div class="pref-info">
-                        <h4>Email Notifications <span class="pref-badge" id="badge-email">Enabled</span></h4>
-                        <p>Receive automated weekly digests of your AI study recommendations.</p>
-                    </div>
-                    <label class="switch">
-                        <input type="checkbox" id="toggle-email" checked onchange="savePreference('email', this.checked)">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-
-                <div class="preference-item">
-                    <div class="pref-info">
-                        <h4>Study Reminders <span class="pref-badge" id="badge-reminders">Enabled</span></h4>
-                        <p>Receive browser activity reminder alerts when inactive for 3+ days.</p>
-                    </div>
-                    <label class="switch">
-                        <input type="checkbox" id="toggle-reminders" checked onchange="savePreference('reminders', this.checked)">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-
-                <div class="preference-item">
-                    <div class="pref-info">
-                        <h4>Dark Theme <span class="pref-badge" id="badge-theme">Light Mode</span></h4>
-                        <p>Switch interface styling between light mode and dark contrast mode.</p>
-                    </div>
-                    <label class="switch">
-                        <input type="checkbox" id="toggle-theme" onchange="savePreference('theme', this.checked)">
-                        <span class="slider"></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
 
 <script>
     function togglePwdGuidance() {
         const box = document.getElementById('pwd-guidance');
-        if (box.style.display === 'block') {
-            box.style.display = 'none';
+        const btn = document.querySelector('.btn-pwd-action');
+        const isVisible = box.classList.contains('is-visible');
+        if (isVisible) {
+            box.classList.remove('is-visible');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
         } else {
-            box.style.display = 'block';
+            box.classList.add('is-visible');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
         }
     }
 
@@ -529,25 +570,21 @@ Account Settings | AI Academic Recommender
         const badgeEmail = document.getElementById('badge-email');
         if (badgeEmail) {
             badgeEmail.textContent = prefs.email ? 'Enabled' : 'Disabled';
-            badgeEmail.style.background = prefs.email ? '#EBF4FF' : '#F1F5F9';
-            badgeEmail.style.color = prefs.email ? 'var(--primary)' : 'var(--muted)';
+            badgeEmail.className = 'pref-badge ' + (prefs.email ? 'badge-enabled' : 'badge-disabled');
         }
 
         const badgeRem = document.getElementById('badge-reminders');
         if (badgeRem) {
             badgeRem.textContent = prefs.reminders ? 'Enabled' : 'Disabled';
-            badgeRem.style.background = prefs.reminders ? '#EBF4FF' : '#F1F5F9';
-            badgeRem.style.color = prefs.reminders ? 'var(--primary)' : 'var(--muted)';
+            badgeRem.className = 'pref-badge ' + (prefs.reminders ? 'badge-enabled' : 'badge-disabled');
         }
 
         const badgeTheme = document.getElementById('badge-theme');
         if (badgeTheme) {
             badgeTheme.textContent = prefs.theme ? 'Dark Mode' : 'Light Mode';
-            badgeTheme.style.background = prefs.theme ? '#312E81' : '#EBF4FF';
-            badgeTheme.style.color = prefs.theme ? '#E0E7FF' : 'var(--primary)';
+            badgeTheme.className = 'pref-badge ' + (prefs.theme ? 'badge-dark' : 'badge-light');
         }
 
-        // Apply temporary visual dark mode preview class if needed
         if (prefs.theme) {
             document.body.classList.add('dark-theme-preview');
         } else {

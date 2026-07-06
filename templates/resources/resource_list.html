@@ -6,49 +6,57 @@ Learning Resources | SmartLearn AI
 
 {% block extra_css %}
 <style>
-    .resources-header{
-        display:flex;
-        justify-content:space-between;
-        align-items:flex-end;
-        gap:24px;
-        margin-bottom:26px;
+    .resources-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 24px;
+        margin-bottom: 26px;
     }
 
-    .resources-header h1{
-        font-size:32px;
-        line-height:1.2;
-        font-weight:700;
-        margin-bottom:8px;
+    .resources-header h1 {
+        font-size: 32px;
+        line-height: 1.2;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: var(--text);
     }
 
-    .resources-header p{
-        max-width:680px;
-        color:var(--muted);
-        line-height:1.7;
+    .resources-header p {
+        max-width: 680px;
+        color: var(--muted);
+        line-height: 1.7;
     }
 
-    .resource-count{
-        min-width:150px;
-        padding:18px 20px;
-        border:1px solid var(--border);
-        border-radius:18px;
-        background:white;
-        box-shadow:var(--shadow);
-        text-align:center;
+    .header-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 14px;
     }
 
-    .resource-count strong{
-        display:block;
-        color:var(--primary);
-        font-size:30px;
-        line-height:1;
-        margin-bottom:6px;
+    .resource-count {
+        min-width: 150px;
+        padding: 18px 20px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: white;
+        box-shadow: var(--shadow);
+        text-align: center;
     }
 
-    .resource-count span{
-        color:var(--muted);
-        font-size:13px;
-        font-weight:700;
+    .resource-count strong {
+        display: block;
+        color: var(--primary);
+        font-size: 30px;
+        line-height: 1;
+        margin-bottom: 6px;
+    }
+
+    .resource-count span {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
     }
 
     .btn-contribute {
@@ -70,6 +78,7 @@ Learning Resources | SmartLearn AI
     .btn-contribute:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+        color: white;
     }
 
     .alert-banner {
@@ -101,118 +110,122 @@ Learning Resources | SmartLearn AI
         to { opacity: 1; transform: translateY(0); }
     }
 
-    .resources-grid{
-        display:grid;
-        grid-template-columns:repeat(3,minmax(0,1fr));
-        gap:24px;
+    .resources-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
     }
 
-    .resource-card{
-        min-height:100%;
-        padding:24px;
-        border:1px solid var(--border);
-        border-radius:18px;
-        background:white;
-        box-shadow:var(--shadow);
-        display:flex;
-        flex-direction:column;
-        transition:var(--transition);
+    .resource-card {
+        min-height: 100%;
+        padding: 24px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: white;
+        box-shadow: var(--shadow);
+        display: flex;
+        flex-direction: column;
+        transition: var(--transition);
     }
 
-    .resource-card:hover{
-        transform:translateY(-4px);
-        box-shadow:0 14px 34px rgba(31,41,55,.12);
+    .resource-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 34px rgba(31, 41, 55, .12);
+        border-color: rgba(123, 63, 242, 0.3);
     }
 
-    .resource-icon{
-        width:48px;
-        height:48px;
-        border-radius:16px;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        color:white;
-        background:linear-gradient(135deg,var(--primary),var(--secondary));
-        margin-bottom:18px;
-        font-size:20px;
+    .resource-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        margin-bottom: 18px;
+        font-size: 20px;
+        box-shadow: 0 6px 16px rgba(123, 63, 242, 0.2);
     }
 
-    .resource-title{
-        color:var(--text);
-        font-size:20px;
-        line-height:1.35;
-        font-weight:700;
-        margin-bottom:14px;
+    .resource-title {
+        color: var(--text);
+        font-size: 20px;
+        line-height: 1.35;
+        font-weight: 700;
+        margin-bottom: 14px;
     }
 
-    .resource-meta{
-        display:flex;
-        flex-wrap:wrap;
-        gap:8px;
-        margin-bottom:16px;
+    .resource-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
     }
 
-    .resource-badge{
-        display:inline-flex;
-        align-items:center;
-        min-height:30px;
-        padding:6px 12px;
-        border-radius:999px;
-        font-size:13px;
-        font-weight:700;
+    .resource-badge {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
     }
 
-    .badge-topic{
-        color:#2563EB;
-        background:#E8F1FF;
+    .badge-topic { color: #2563EB; background: #E8F1FF; }
+    .badge-difficulty { color: #16A34A; background: #EAFBF3; }
+    .badge-type { color: #D97706; background: #FFF5E6; }
+
+    .resource-description {
+        color: var(--muted);
+        line-height: 1.7;
+        margin-bottom: 22px;
+        flex: 1;
+        font-size: 14px;
     }
 
-    .badge-difficulty{
-        color:#16A34A;
-        background:#EAFBF3;
+    .resource-actions {
+        margin-top: auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding-top: 16px;
+        border-top: 1px solid var(--border);
     }
 
-    .badge-type{
-        color:#D97706;
-        background:#FFF5E6;
+    .btn-open {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 12px 18px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        color: white;
+        font-weight: 700;
+        transition: var(--transition);
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(123, 63, 242, 0.2);
     }
 
-    .resource-description{
-        color:var(--muted);
-        line-height:1.7;
-        margin-bottom:22px;
+    .btn-open:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 24px rgba(91, 140, 255, .28);
+        color: white;
     }
 
-    .resource-actions{
-        margin-top:auto;
-        display:flex;
-        align-items:center;
-        justify-content:space-between;
-        gap:12px;
+    .resource-type-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
     }
 
-    .btn-open{
-        display:inline-flex;
-        align-items:center;
-        justify-content:center;
-        min-height:44px;
-        padding:12px 18px;
-        border-radius:999px;
-        background:linear-gradient(90deg,var(--primary),var(--secondary));
-        color:white;
-        font-weight:700;
-        transition:var(--transition);
-    }
-
-    .btn-open:hover{
-        transform:translateY(-2px);
-        box-shadow:0 10px 24px rgba(91,140,255,.28);
-    }
-
-    .resource-type-note{
-        color:var(--muted);
-        font-size:13px;
-        font-weight:700;
+    .resource-type-note {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 700;
     }
 
     .btn-delete-card {
@@ -236,14 +249,21 @@ Learning Resources | SmartLearn AI
         transform: scale(1.08);
     }
 
-    .empty-state{
-        padding:36px;
-        border:1px solid var(--border);
-        border-radius:18px;
-        background:white;
-        box-shadow:var(--shadow);
-        color:var(--muted);
+    .empty-state {
+        padding: 48px 36px;
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        background: white;
+        box-shadow: var(--shadow);
+        color: var(--muted);
         text-align: center;
+    }
+
+    .empty-state-icon {
+        font-size: 44px;
+        margin-bottom: 16px;
+        opacity: 0.5;
+        color: var(--primary);
     }
 
     /* Modal Styling */
@@ -282,6 +302,10 @@ Learning Resources | SmartLearn AI
         position: relative;
     }
 
+    .custom-modal-card-sm {
+        max-width: 450px;
+    }
+
     .modal-header-box {
         display: flex;
         justify-content: space-between;
@@ -300,6 +324,9 @@ Learning Resources | SmartLearn AI
         gap: 10px;
     }
 
+    .modal-icon-success { color: #10B981; }
+    .modal-icon-danger { color: #EF4444; }
+
     .btn-close-modal {
         background: none;
         border: none;
@@ -307,6 +334,7 @@ Learning Resources | SmartLearn AI
         color: var(--muted);
         cursor: pointer;
         padding: 4px;
+        transition: var(--transition);
     }
 
     .btn-close-modal:hover { color: var(--text); }
@@ -320,6 +348,12 @@ Learning Resources | SmartLearn AI
         margin-bottom: 6px;
     }
 
+    .form-grid-3 {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 12px;
+    }
+
     .form-control-modal, .form-select-modal {
         width: 100%;
         padding: 12px 16px;
@@ -330,6 +364,7 @@ Learning Resources | SmartLearn AI
         background: #F8FAFC;
         outline: none;
         transition: var(--transition);
+        color: var(--text);
     }
 
     .form-control-modal:focus, .form-select-modal:focus {
@@ -355,6 +390,11 @@ Learning Resources | SmartLearn AI
         font-weight: 600;
         border: none;
         cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .btn-cancel:hover {
+        background: #E2E8F0;
     }
 
     .btn-save-modal {
@@ -366,6 +406,12 @@ Learning Resources | SmartLearn AI
         border: none;
         cursor: pointer;
         box-shadow: 0 4px 12px rgba(123, 63, 242, 0.25);
+        transition: var(--transition);
+    }
+
+    .btn-save-modal:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(123, 63, 242, 0.35);
     }
 
     .btn-danger-modal {
@@ -376,159 +422,129 @@ Learning Resources | SmartLearn AI
         font-weight: 600;
         border: none;
         cursor: pointer;
+        transition: var(--transition);
+    }
+
+    .btn-danger-modal:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(239, 68, 68, 0.35);
+    }
+
+    .delete-confirm-text {
+        color: var(--text);
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 20px;
     }
 
     @media(max-width:1180px){
-        .resources-grid{
-            grid-template-columns:repeat(2,minmax(0,1fr));
-        }
+        .resources-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media(max-width:760px){
-        .resources-header{
-            flex-direction:column;
-            align-items:stretch;
-        }
-
-        .resources-grid{
-            grid-template-columns:1fr;
-        }
-
-        .resource-count{
-            text-align:left;
-        }
+        .resources-header { flex-direction: column; align-items: stretch; }
+        .resources-grid { grid-template-columns: 1fr; }
+        .header-actions { align-items: stretch; }
+        .resource-count { text-align: left; }
+        .form-grid-3 { grid-template-columns: 1fr; }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<!-- Django Success/Error Messages -->
-{% if messages %}
-    {% for message in messages %}
-        <div class="alert-banner {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
-            <i class="fa-solid {% if message.tags == 'error' %}fa-circle-exclamation{% else %}fa-circle-check{% endif %}"></i>
-            <span>{{ message }}</span>
+<div class="animate-fade-in">
+
+    <!-- Django Success/Error Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert-banner {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}" role="alert">
+                <i class="fa-solid {% if message.tags == 'error' %}fa-circle-exclamation{% else %}fa-circle-check{% endif %}" aria-hidden="true"></i>
+                <span>{{ message }}</span>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <section class="resources-header" role="region" aria-label="Learning resources header">
+        <div>
+            <h1>Learning Resources</h1>
+            <p>
+                Explore academic materials connected to your recommendation results, or contribute new study resources to our community library.
+            </p>
         </div>
-    {% endfor %}
-{% endif %}
 
-<section class="resources-header">
-
-    <div>
-
-        <h1>
-            Learning Resources
-        </h1>
-
-        <p>
-            Explore academic materials connected to your recommendation results, or contribute new study resources to our community library.
-        </p>
-
-    </div>
-
-    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 14px;">
-        <div class="resource-count">
-
-            <strong>{{ resources|length }}</strong>
-
-            <span>Available Resources</span>
-
-        </div>
-        {% if request.user.is_authenticated %}
-        <button type="button" class="btn-contribute" onclick="openModal('addResourceModal')">
-            <i class="fa-solid fa-plus"></i> Contribute Resource
-        </button>
-        {% endif %}
-    </div>
-
-</section>
-
-{% if resources %}
-
-<section class="resources-grid">
-
-    {% for resource in resources %}
-
-    <article class="resource-card">
-
-        <div class="resource-icon">
-
-            {% if resource.resource_type == "Video" %}
-            <i class="fas fa-play"></i>
-            {% elif resource.resource_type == "PDF" %}
-            <i class="fas fa-file-pdf"></i>
-            {% else %}
-            <i class="fas fa-pen-to-square"></i>
+        <div class="header-actions">
+            <div class="resource-count">
+                <strong>{{ resources|length }}</strong>
+                <span>Available Resources</span>
+            </div>
+            {% if request.user.is_authenticated %}
+            <button type="button" class="btn-contribute" onclick="openModal('addResourceModal')" aria-label="Contribute new resource">
+                <i class="fa-solid fa-plus" aria-hidden="true"></i> Contribute Resource
+            </button>
             {% endif %}
-
         </div>
+    </section>
 
-        <h2 class="resource-title">
-            {{ resource.title }}
-        </h2>
-
-        <div class="resource-meta">
-
-            <span class="resource-badge badge-topic">
-                {{ resource.topic }}
-            </span>
-
-            <span class="resource-badge badge-difficulty">
-                {{ resource.difficulty }}
-            </span>
-
-            <span class="resource-badge badge-type">
-                {{ resource.resource_type }}
-            </span>
-
-        </div>
-
-        <p class="resource-description">
-            {{ resource.description|truncatewords:24 }}
-        </p>
-
-        <div class="resource-actions">
-
-            <a href="{% url 'resource_detail' resource.id %}"
-               class="btn-open">
-                View Resource
-            </a>
-
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span class="resource-type-note">
-                    {{ resource.resource_type }}
-                </span>
-                {% if request.user.is_authenticated %}
-                <button type="button" class="btn-delete-card" title="Remove Resource from Community Library" onclick="openModal('deleteModal_{{ resource.id }}')">
-                    <i class="fa-solid fa-trash"></i>
-                </button>
+    {% if resources %}
+    <section class="resources-grid" role="list" aria-label="Learning resources catalog">
+        {% for resource in resources %}
+        <article class="resource-card" role="listitem">
+            <div class="resource-icon" aria-hidden="true">
+                {% if resource.resource_type == "Video" %}
+                <i class="fas fa-play"></i>
+                {% elif resource.resource_type == "PDF" %}
+                <i class="fas fa-file-pdf"></i>
+                {% else %}
+                <i class="fas fa-pen-to-square"></i>
                 {% endif %}
             </div>
 
-        </div>
+            <h2 class="resource-title">{{ resource.title }}</h2>
 
-    </article>
+            <div class="resource-meta">
+                <span class="resource-badge badge-topic">{{ resource.topic }}</span>
+                <span class="resource-badge badge-difficulty">{{ resource.difficulty }}</span>
+                <span class="resource-badge badge-type">{{ resource.resource_type }}</span>
+            </div>
 
-    {% endfor %}
+            <p class="resource-description">
+                {{ resource.description|truncatewords:24 }}
+            </p>
 
-</section>
+            <div class="resource-actions">
+                <a href="{% url 'resource_detail' resource.id %}" class="btn-open" aria-label="View {{ resource.title }}">
+                    View Resource
+                </a>
 
-{% else %}
+                <div class="resource-type-wrapper">
+                    <span class="resource-type-note">{{ resource.resource_type }}</span>
+                    {% if request.user.is_authenticated %}
+                    <button type="button" class="btn-delete-card" title="Remove Resource from Community Library" onclick="openModal('deleteModal_{{ resource.id }}')" aria-label="Delete {{ resource.title }}">
+                        <i class="fa-solid fa-trash" aria-hidden="true"></i>
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </article>
+        {% endfor %}
+    </section>
+    {% else %}
+    <div class="empty-state" role="status">
+        <i class="fa-solid fa-folder-open empty-state-icon" aria-hidden="true"></i>
+        <p class="fs-md fw-semibold mb-1">No learning resources are available yet.</p>
+        <p class="fs-sm">Be the first to contribute a helpful study resource above!</p>
+    </div>
+    {% endif %}
 
-<div class="empty-state">
-    <i class="fa-solid fa-folder-open" style="font-size: 40px; margin-bottom: 12px; opacity: 0.5;"></i>
-    <p>No learning resources are available yet. Be the first to contribute one above!</p>
 </div>
 
-{% endif %}
-
 <!-- MODAL 1: CONTRIBUTE / ADD NEW RESOURCE -->
-<div id="addResourceModal" class="custom-modal-overlay">
+<div id="addResourceModal" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitleAdd">
     <div class="custom-modal-card">
         <div class="modal-header-box">
-            <h3><i class="fa-solid fa-circle-plus" style="color: #10B981;"></i> Contribute Learning Resource</h3>
-            <button type="button" class="btn-close-modal" onclick="closeModal('addResourceModal')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modalTitleAdd"><i class="fa-solid fa-circle-plus modal-icon-success" aria-hidden="true"></i> Contribute Learning Resource</h3>
+            <button type="button" class="btn-close-modal" onclick="closeModal('addResourceModal')" aria-label="Close modal"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
         <form method="POST" action="{% url 'admin_resource_create' %}">
             {% csrf_token %}
@@ -536,7 +552,7 @@ Learning Resources | SmartLearn AI
                 <label class="form-label-modal">Resource Title *</label>
                 <input type="text" name="title" class="form-control-modal" placeholder="e.g. Linear Algebra Primer Video" required>
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px;">
+            <div class="form-grid-3">
                 <div class="form-group-modal">
                     <label class="form-label-modal">Topic</label>
                     <select name="topic" class="form-select-modal">
@@ -581,13 +597,13 @@ Learning Resources | SmartLearn AI
 
 <!-- MODAL 2: CONFIRM DELETION -->
 {% for resource in resources %}
-<div id="deleteModal_{{ resource.id }}" class="custom-modal-overlay">
-    <div class="custom-modal-card" style="max-width: 450px;">
+<div id="deleteModal_{{ resource.id }}" class="custom-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modalTitleDelete_{{ resource.id }}">
+    <div class="custom-modal-card custom-modal-card-sm">
         <div class="modal-header-box">
-            <h3><i class="fa-solid fa-triangle-exclamation" style="color: #EF4444;"></i> Confirm Removal</h3>
-            <button type="button" class="btn-close-modal" onclick="closeModal('deleteModal_{{ resource.id }}')"><i class="fa-solid fa-xmark"></i></button>
+            <h3 id="modalTitleDelete_{{ resource.id }}"><i class="fa-solid fa-triangle-exclamation modal-icon-danger" aria-hidden="true"></i> Confirm Removal</h3>
+            <button type="button" class="btn-close-modal" onclick="closeModal('deleteModal_{{ resource.id }}')" aria-label="Close modal"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
         </div>
-        <p style="color: var(--text); font-size: 15px; line-height: 1.6; margin-bottom: 20px;">
+        <p class="delete-confirm-text">
             Are you sure you want to remove <strong>"{{ resource.title }}"</strong> from the community library?
         </p>
         <form method="POST" action="{% url 'admin_resource_delete' resource.id %}">

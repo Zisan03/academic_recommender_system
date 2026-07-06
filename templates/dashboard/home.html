@@ -61,6 +61,11 @@
             letter-spacing: -0.3px;
         }
 
+        .brand-ai-highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
         .logo-icon-box {
             width: 42px;
             height: 42px;
@@ -191,6 +196,15 @@
             background: linear-gradient(135deg, #6a33d8, #4a7ae6);
         }
 
+        .btn-primary-lg {
+            padding: 16px 42px;
+            font-size: 1.1rem;
+        }
+
+        .btn-nav-register {
+            font-size: 0.9rem;
+        }
+
         .btn-outline-custom {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.18);
@@ -210,6 +224,10 @@
             background: rgba(255, 255, 255, 0.1);
             border-color: rgba(255, 255, 255, 0.35);
             transform: translateY(-3px);
+        }
+
+        .btn-nav-logout {
+            font-size: 0.85rem;
         }
 
         /* LIVE STATS RIBBON */
@@ -435,56 +453,56 @@
 <body>
 
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg navbar-dark py-3 sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark py-3 sticky-top" role="navigation" aria-label="Main navigation">
         <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-3" href="{% url 'home' %}">
-                <div class="logo-icon-box">
+            <a class="navbar-brand d-flex align-items-center gap-3" href="{% url 'home' %}" aria-label="SmartLearn AI Home">
+                <div class="logo-icon-box" aria-hidden="true">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
-                <span>SmartLearn <span style="color: var(--accent); font-weight: 600;">AI</span></span>
+                <span>SmartLearn <span class="brand-ai-highlight">AI</span></span>
             </a>
 
-            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto align-items-center">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{% url 'home' %}">
-                            <i class="fa-solid fa-house me-1"></i> Home
+                        <a class="nav-link active" href="{% url 'home' %}" aria-current="page">
+                            <i class="fa-solid fa-house me-1" aria-hidden="true"></i> Home
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'recommendations' %}">
-                            <i class="fa-solid fa-wand-magic-sparkles me-1"></i> Recommendations
+                            <i class="fa-solid fa-wand-magic-sparkles me-1" aria-hidden="true"></i> Recommendations
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'resource_list' %}">
-                            <i class="fa-solid fa-book-open me-1"></i> Resources
+                            <i class="fa-solid fa-book-open me-1" aria-hidden="true"></i> Resources
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'activity' %}">
-                            <i class="fa-solid fa-chart-line me-1"></i> Activity
+                            <i class="fa-solid fa-chart-line me-1" aria-hidden="true"></i> Activity
                         </a>
                     </li>
 
                     {% if request.user.is_authenticated %}
                     <li class="nav-item ms-lg-2">
-                        <a class="nav-link" href="{% url 'profile' %}" title="My Profile">
-                            <i class="fa-regular fa-user-circle fs-5"></i>
+                        <a class="nav-link" href="{% url 'profile' %}" title="My Profile" aria-label="My Profile">
+                            <i class="fa-regular fa-user-circle fs-5" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'settings' %}" title="Settings">
-                            <i class="fa-solid fa-gear fs-5"></i>
+                        <a class="nav-link" href="{% url 'settings' %}" title="Settings" aria-label="Settings">
+                            <i class="fa-solid fa-gear fs-5" aria-hidden="true"></i>
                         </a>
                     </li>
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-sm btn-outline-custom py-2 px-3" style="font-size: 0.85rem;" href="{% url 'logout' %}">
-                            <i class="fa-solid fa-right-from-bracket me-1"></i> Logout ({{ request.user.username }})
+                        <a class="btn btn-sm btn-outline-custom btn-nav-logout py-2 px-3" href="{% url 'logout' %}">
+                            <i class="fa-solid fa-right-from-bracket me-1" aria-hidden="true"></i> Logout ({{ request.user.username }})
                         </a>
                     </li>
                     {% else %}
@@ -492,7 +510,7 @@
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
                     </li>
                     <li class="nav-item ms-lg-2">
-                        <a class="btn btn-sm btn-primary-custom py-2 px-4" style="font-size: 0.9rem;" href="{% url 'register' %}">
+                        <a class="btn btn-sm btn-primary-custom btn-nav-register py-2 px-4" href="{% url 'register' %}">
                             Register
                         </a>
                     </li>
@@ -503,11 +521,11 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <section class="hero">
+    <header class="hero" role="banner">
         <div class="container">
             <div class="hero-content text-center">
-                <div class="hero-badge">
-                    <i class="fa-solid fa-sparkles"></i>
+                <div class="hero-badge" role="status">
+                    <i class="fa-solid fa-sparkles" aria-hidden="true"></i>
                     <span>Next-Generation AI Academic Platform</span>
                 </div>
 
@@ -522,18 +540,18 @@
 
                 <div class="d-flex flex-wrap justify-content-center gap-3">
                     <a href="{% url 'recommendations' %}" class="btn-primary-custom">
-                        <i class="fa-solid fa-rocket"></i> Launch System
+                        <i class="fa-solid fa-rocket" aria-hidden="true"></i> Launch System
                     </a>
                     <a href="#features" class="btn-outline-custom">
-                        <i class="fa-solid fa-layer-group"></i> Explore Features
+                        <i class="fa-solid fa-layer-group" aria-hidden="true"></i> Explore Features
                     </a>
                 </div>
             </div>
         </div>
-    </section>
+    </header>
 
     <!-- LIVE STATS RIBBON -->
-    <section class="stats-ribbon">
+    <section class="stats-ribbon" role="region" aria-label="Platform key metrics">
         <div class="container">
             <div class="stats-grid">
                 <div class="row g-3">
@@ -567,7 +585,7 @@
     </section>
 
     <!-- FEATURES SECTION -->
-    <section id="features" class="features-section">
+    <section id="features" class="features-section" role="region" aria-label="Platform features">
         <div class="container">
             <div class="section-header">
                 <h2>Why Choose <span class="gradient-text">SmartLearn AI</span>?</h2>
@@ -576,70 +594,70 @@
 
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
-                    <div class="feature-card">
-                        <div class="icon-box">
+                    <article class="feature-card">
+                        <div class="icon-box" aria-hidden="true">
                             <i class="fa-solid fa-robot"></i>
                         </div>
                         <h3>Hybrid AI Engine</h3>
                         <p>Seamlessly combines collaborative filtering with content-based analysis to recommend high-precision study materials.</p>
-                    </div>
+                    </article>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <div class="feature-card">
-                        <div class="icon-box">
+                    <article class="feature-card">
+                        <div class="icon-box" aria-hidden="true">
                             <i class="fa-solid fa-microchip"></i>
                         </div>
                         <h3>Explainable AI (XAI)</h3>
                         <p>Utilizes SHAP explainability techniques to demystify recommendation decisions, showing students exactly why resources were suggested.</p>
-                    </div>
+                    </article>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <div class="feature-card">
-                        <div class="icon-box">
+                    <article class="feature-card">
+                        <div class="icon-box" aria-hidden="true">
                             <i class="fa-solid fa-bullseye"></i>
                         </div>
                         <h3>Weakness Diagnostics</h3>
                         <p>Dynamically identifies academic weak spots and curates targeted remedial materials to boost exam readiness and topic comprehension.</p>
-                    </div>
+                    </article>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <div class="feature-card">
-                        <div class="icon-box">
+                    <article class="feature-card">
+                        <div class="icon-box" aria-hidden="true">
                             <i class="fa-solid fa-chart-line"></i>
                         </div>
                         <h3>Activity Tracking</h3>
                         <p>Chronologically logs student interaction history, study duration, and resource bookmarks for continuous learning progress monitoring.</p>
-                    </div>
+                    </article>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA BANNER -->
-    <section class="cta-section">
+    <section class="cta-section" role="region" aria-label="Call to action">
         <div class="container">
             <div class="cta-box">
                 <h2>Ready to Supercharge Your Academic Performance?</h2>
                 <p>Join SmartLearn AI today and experience personalized, data-driven academic study recommendations tailored to your goals.</p>
-                <a href="{% url 'recommendations' %}" class="btn-primary-custom" style="padding: 16px 42px; font-size: 1.1rem;">
-                    <i class="fa-solid fa-wand-magic-sparkles me-2"></i> Get Started Now
+                <a href="{% url 'recommendations' %}" class="btn-primary-custom btn-primary-lg">
+                    <i class="fa-solid fa-wand-magic-sparkles me-2" aria-hidden="true"></i> Get Started Now
                 </a>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer>
+    <footer role="contentinfo">
         <div class="container">
             <div class="footer-content">
                 <div>
                     <strong>SmartLearn AI</strong> © 2026. All Rights Reserved.
                 </div>
                 <div class="text-secondary small">
-                    Powered by Hybrid Machine Learning & Explainable AI (SHAP)
+                    Powered by Hybrid Machine Learning &amp; Explainable AI (SHAP)
                 </div>
             </div>
         </div>

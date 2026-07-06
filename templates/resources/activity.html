@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Learning Activity
+Learning Activity | SmartLearn AI
 {% endblock %}
 
 {% block extra_css %}
@@ -49,6 +49,7 @@ Learning Activity
     .stat-card:hover {
         transform: translateY(-4px);
         box-shadow: 0 16px 36px rgba(31, 41, 55, 0.12);
+        border-color: rgba(123, 63, 242, 0.3);
     }
 
     .stat-card::after {
@@ -76,26 +77,17 @@ Learning Activity
         justify-content: center;
         font-size: 24px;
         flex-shrink: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
-    .stat-icon.blue {
-        color: #2563EB;
-        background: #E8F1FF;
-    }
-
-    .stat-icon.green {
-        color: #16A34A;
-        background: #EAFBF3;
-    }
-
-    .stat-icon.purple {
-        color: #9333EA;
-        background: #F3E8FF;
-    }
+    .stat-icon.blue { color: #2563EB; background: #E8F1FF; }
+    .stat-icon.green { color: #16A34A; background: #EAFBF3; }
+    .stat-icon.purple { color: #9333EA; background: #F3E8FF; }
 
     .stat-info {
         display: flex;
         flex-direction: column;
+        min-width: 0;
     }
 
     .stat-value {
@@ -104,6 +96,13 @@ Learning Activity
         color: var(--text);
         line-height: 1.1;
         margin-bottom: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .stat-value-sm {
+        font-size: 22px;
     }
 
     .stat-label {
@@ -194,7 +193,7 @@ Learning Activity
     .timeline-item:hover .timeline-card {
         transform: translateX(6px);
         box-shadow: 0 12px 28px rgba(31, 41, 55, 0.1);
-        border-color: #BFDBFE;
+        border-color: rgba(123, 63, 242, 0.3);
     }
 
     .timeline-content {
@@ -232,20 +231,9 @@ Learning Activity
         font-weight: 700;
     }
 
-    .badge-topic {
-        color: #2563EB;
-        background: #E8F1FF;
-    }
-
-    .badge-difficulty {
-        color: #16A34A;
-        background: #EAFBF3;
-    }
-
-    .badge-type {
-        color: #D97706;
-        background: #FFF5E6;
-    }
+    .badge-topic { color: #2563EB; background: #E8F1FF; }
+    .badge-difficulty { color: #16A34A; background: #EAFBF3; }
+    .badge-type { color: #D97706; background: #FFF5E6; }
 
     .timeline-timestamp {
         font-size: 13px;
@@ -269,6 +257,7 @@ Learning Activity
         white-space: nowrap;
         transition: var(--transition);
         text-decoration: none;
+        box-shadow: 0 4px 12px rgba(123, 63, 242, 0.2);
     }
 
     .btn-reopen:hover {
@@ -328,6 +317,7 @@ Learning Activity
         font-size: 16px;
         transition: var(--transition);
         text-decoration: none;
+        box-shadow: 0 4px 12px rgba(123, 63, 242, 0.2);
     }
 
     .btn-explore:hover {
@@ -336,139 +326,123 @@ Learning Activity
         color: white;
     }
 
-    /* Responsive Breakpoints */
     @media (max-width: 992px) {
-        .stats-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-        }
+        .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 768px) {
-        .stats-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .timeline-card {
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        .btn-reopen {
-            width: 100%;
-        }
-
-        .timeline-list::before {
-            left: 19px;
-        }
-
-        .timeline-dot {
-            width: 40px;
-            height: 40px;
-            font-size: 15px;
-        }
+        .stats-grid { grid-template-columns: 1fr; }
+        .timeline-card { flex-direction: column; align-items: flex-start; }
+        .btn-reopen { width: 100%; }
+        .timeline-list::before { left: 19px; }
+        .timeline-dot { width: 40px; height: 40px; font-size: 15px; }
     }
 </style>
 {% endblock %}
 
 {% block content %}
 
-<section class="activity-header">
-    <h1>Learning Activity</h1>
-    <p>Review your chronological academic study history and track your learning engagement across recommended study materials.</p>
-</section>
+<div class="animate-fade-in">
 
-<!-- Engagement Statistics Header -->
-<section class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-icon blue">
-            <i class="fas fa-layer-group"></i>
-        </div>
-        <div class="stat-info">
-            <span class="stat-value">{{ total_views }}</span>
-            <span class="stat-label">Total Interactions</span>
-        </div>
-    </div>
+    <section class="activity-header" role="region" aria-label="Learning activity overview">
+        <h1>Learning Activity</h1>
+        <p>Review your chronological academic study history and track your learning engagement across recommended study materials.</p>
+    </section>
 
-    <div class="stat-card">
-        <div class="stat-icon purple">
-            <i class="fas fa-bookmark"></i>
-        </div>
-        <div class="stat-info">
-            <span class="stat-value">{{ top_topic }}</span>
-            <span class="stat-label">Top Subject</span>
-        </div>
-    </div>
-
-    <div class="stat-card">
-        <div class="stat-icon green">
-            <i class="fas fa-fire"></i>
-        </div>
-        <div class="stat-info">
-            <span class="stat-value" style="font-size: 22px;">{{ active_status }}</span>
-            <span class="stat-label">Learning Status</span>
-        </div>
-    </div>
-</section>
-
-<!-- Activity Timeline Section -->
-{% if interactions %}
-<section class="timeline-container">
-    <h2 class="timeline-title">
-        <i class="fas fa-clock-rotate-left"></i>
-        Interaction History
-    </h2>
-
-    <div class="timeline-list">
-        {% for interaction in interactions %}
-        <div class="timeline-item">
-            <div class="timeline-dot">
-                {% if interaction.resource.resource_type == "Video" %}
-                <i class="fas fa-play"></i>
-                {% elif interaction.resource.resource_type == "PDF" %}
-                <i class="fas fa-file-pdf"></i>
-                {% else %}
-                <i class="fas fa-pen-to-square"></i>
-                {% endif %}
+    <!-- Engagement Statistics Header -->
+    <section class="stats-grid" role="region" aria-label="Activity engagement statistics">
+        <div class="stat-card">
+            <div class="stat-icon blue" aria-hidden="true">
+                <i class="fas fa-layer-group"></i>
             </div>
+            <div class="stat-info">
+                <span class="stat-value">{{ total_views }}</span>
+                <span class="stat-label">Total Interactions</span>
+            </div>
+        </div>
 
-            <article class="timeline-card">
-                <div class="timeline-content">
-                    <div class="timeline-header">
-                        <h3 class="resource-title">{{ interaction.resource.title }}</h3>
-                        <div class="resource-badges">
-                            <span class="badge badge-topic">{{ interaction.resource.topic }}</span>
-                            <span class="badge badge-difficulty">{{ interaction.resource.difficulty }}</span>
-                            <span class="badge badge-type">{{ interaction.resource.resource_type }}</span>
+        <div class="stat-card">
+            <div class="stat-icon purple" aria-hidden="true">
+                <i class="fas fa-bookmark"></i>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value">{{ top_topic }}</span>
+                <span class="stat-label">Top Subject</span>
+            </div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-icon green" aria-hidden="true">
+                <i class="fas fa-fire"></i>
+            </div>
+            <div class="stat-info">
+                <span class="stat-value stat-value-sm">{{ active_status }}</span>
+                <span class="stat-label">Learning Status</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Activity Timeline Section -->
+    {% if interactions %}
+    <section class="timeline-container" role="region" aria-label="Chronological interaction timeline">
+        <h2 class="timeline-title">
+            <i class="fas fa-clock-rotate-left" aria-hidden="true"></i>
+            <span>Interaction History</span>
+        </h2>
+
+        <div class="timeline-list" role="list">
+            {% for interaction in interactions %}
+            <div class="timeline-item" role="listitem">
+                <div class="timeline-dot" aria-hidden="true">
+                    {% if interaction.resource.resource_type == "Video" %}
+                    <i class="fas fa-play"></i>
+                    {% elif interaction.resource.resource_type == "PDF" %}
+                    <i class="fas fa-file-pdf"></i>
+                    {% else %}
+                    <i class="fas fa-pen-to-square"></i>
+                    {% endif %}
+                </div>
+
+                <article class="timeline-card">
+                    <div class="timeline-content">
+                        <div class="timeline-header">
+                            <h3 class="resource-title">{{ interaction.resource.title }}</h3>
+                            <div class="resource-badges">
+                                <span class="badge badge-topic">{{ interaction.resource.topic }}</span>
+                                <span class="badge badge-difficulty">{{ interaction.resource.difficulty }}</span>
+                                <span class="badge badge-type">{{ interaction.resource.resource_type }}</span>
+                            </div>
+                        </div>
+
+                        <div class="timeline-timestamp">
+                            <i class="far fa-calendar-alt" aria-hidden="true"></i>
+                            <span>{{ interaction.viewed_at|date:"F j, Y - H:i" }}</span>
                         </div>
                     </div>
 
-                    <div class="timeline-timestamp">
-                        <i class="far fa-calendar-alt"></i>
-                        <span>{{ interaction.viewed_at|date:"F j, Y - H:i" }}</span>
-                    </div>
-                </div>
-
-                <a href="{% url 'resource_detail' interaction.resource.id %}" class="btn-reopen">
-                    Re-open Resource &rarr;
-                </a>
-            </article>
+                    <a href="{% url 'resource_detail' interaction.resource.id %}" class="btn-reopen" aria-label="Re-open {{ interaction.resource.title }}">
+                        Re-open Resource &rarr;
+                    </a>
+                </article>
+            </div>
+            {% endfor %}
         </div>
-        {% endfor %}
+    </section>
+    {% else %}
+    <!-- Empty State -->
+    <div class="empty-state-card" role="status">
+        <div class="empty-icon" aria-hidden="true">
+            <i class="fas fa-book-reader"></i>
+        </div>
+        <h3>No Learning Activity Recorded Yet</h3>
+        <p>You haven't interacted with any learning materials yet. Explore your AI recommendations to start building your study streak!</p>
+        <a href="{% url 'recommendations' %}" class="btn-explore">
+            <i class="fas fa-robot" aria-hidden="true"></i>
+            <span>Explore Recommendations &rarr;</span>
+        </a>
     </div>
-</section>
-{% else %}
-<!-- Empty State -->
-<div class="empty-state-card">
-    <div class="empty-icon">
-        <i class="fas fa-book-reader"></i>
-    </div>
-    <h3>No Learning Activity Recorded Yet</h3>
-    <p>You haven't interacted with any learning materials yet. Explore your AI recommendations to start building your study streak!</p>
-    <a href="{% url 'recommendations' %}" class="btn-explore">
-        <i class="fas fa-robot"></i>
-        Explore Recommendations &rarr;
-    </a>
+    {% endif %}
+
 </div>
-{% endif %}
 
 {% endblock %}

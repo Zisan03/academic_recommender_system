@@ -11,332 +11,208 @@ SmartLearn AI Dashboard
 
 {% block content %}
 
-<div class="dashboard-wrapper">
+<div class="dashboard-wrapper animate-fade-in">
 
     <div class="dashboard-main">
 
         <!-- Welcome Card -->
-
-        <div class="welcome-card">
-
+        <div class="welcome-card" role="region" aria-label="Welcome banner">
             <h1>
                 Welcome Back, {{ username }} 👋
             </h1>
-
             <p>
                 Personalized AI-powered academic recommendations generated using Hybrid Machine Learning and Explainable AI.
             </p>
-
         </div>
 
         <!-- Top Overview Statistics -->
-
-        <div class="row g-4">
-
+        <div class="row g-4 mb-4" role="region" aria-label="Academic overview metrics">
             <div class="col-lg-3 col-md-6">
-
                 <div class="stats-card gradient1">
-
-                    <div class="stats-title">
-                        Weak Topic
-                    </div>
-
-                    <div class="stats-value">
-                        {{ recommendations.0.topic }}
-                    </div>
-
+                    <div class="stats-title">Weak Topic</div>
+                    <div class="stats-value">{{ recommendations.0.topic|default:"None" }}</div>
                 </div>
-
             </div>
 
             <div class="col-lg-3 col-md-6">
-
                 <div class="stats-card gradient2">
-
-                    <div class="stats-title">
-                        Resources
-                    </div>
-
-                    <div class="stats-value">
-                        {{ recommendations|length }}
-                    </div>
-
+                    <div class="stats-title">Resources</div>
+                    <div class="stats-value">{{ recommendations|length }}</div>
                 </div>
-
             </div>
 
             <div class="col-lg-3 col-md-6">
-
                 <div class="stats-card gradient3">
-
-                    <div class="stats-title">
-                        AI Confidence
-                    </div>
-
-                    <div class="stats-value">
-                        {{ avg_confidence|default:"92" }}%
-                    </div>
-
+                    <div class="stats-title">AI Confidence</div>
+                    <div class="stats-value">{{ avg_confidence|default:"92" }}%</div>
                 </div>
-
             </div>
 
             <div class="col-lg-3 col-md-6">
-
                 <div class="stats-card gradient4">
-
-                    <div class="stats-title">
-                        Dataset ID
-                    </div>
-
-                    <div class="stats-value">
-                        {{ student.dataset_student_id }}
-                    </div>
-
+                    <div class="stats-title">Dataset ID</div>
+                    <div class="stats-value">{{ student.dataset_student_id }}</div>
                 </div>
-
             </div>
-
         </div>
 
         <!-- AI Insight -->
-
-        <div class="ai-banner">
-
-            <h3>
-                AI Learning Insight
-            </h3>
-
+        <div class="ai-banner" role="region" aria-label="AI learning insight">
+            <h3>AI Learning Insight</h3>
             <p>
                 Based on your academic profile, our Hybrid AI engine analysed your learning behaviour and generated personalized recommendations to improve your academic performance.
             </p>
-
         </div>
 
-        <!-- Sprint 4.2: AI Performance & Global Usage Insights (Consistent with activity.html & profile.html) -->
-        <div style="margin-top: 36px; margin-bottom: 36px;">
-            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
-                <h2 class="section-title" style="margin: 0; display: flex; align-items: center; gap: 12px;">
-                    <i class="fa-solid fa-chart-line" style="color: var(--primary);"></i> AI Performance &amp; Global Analytics
+        <!-- Phase 4: AI Performance & Global Analytics -->
+        <div class="my-4" role="region" aria-label="AI performance and global analytics">
+            <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
+                <h2 class="section-title mb-0 d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-chart-line text-primary" aria-hidden="true"></i>
+                    <span>AI Performance &amp; Global Analytics</span>
                 </h2>
-                <span style="display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #EEF2FF, #E0E7FF); color: var(--primary); border: 1px solid rgba(99, 102, 241, 0.2); padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 700;">
-                    <i class="fa-solid fa-satellite-dish"></i> Phase 4 Live Tracking
+                <span class="badge badge-purple d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-satellite-dish" aria-hidden="true"></i> Phase 4 Live Tracking
                 </span>
             </div>
 
             <div class="row g-4">
                 <div class="col-lg-3 col-md-6">
-                    <div style="background: white; border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px; height: 100%; transition: var(--transition);">
-                        <div style="width: 56px; height: 56px; border-radius: 16px; background: #EAFBF3; color: #16A34A; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
-                            <i class="fa-solid fa-bolt"></i>
+                    <div class="card d-flex align-items-center gap-3 h-100 p-4">
+                        <div class="badge badge-green p-3 rounded-3 fs-xl d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-bolt" aria-hidden="true"></i>
                         </div>
-                        <div style="display: flex; flex-direction: column; min-width: 0;">
-                            <span style="font-size: 24px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 4px;">{{ high_conf_rate|default:"100" }}%</span>
-                            <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">High-Confidence Rate</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-lg-3 col-md-6">
-                    <div style="background: white; border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px; height: 100%; transition: var(--transition);">
-                        <div style="width: 56px; height: 56px; border-radius: 16px; background: #E8F1FF; color: #2563EB; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
-                            <i class="fa-solid fa-users"></i>
-                        </div>
-                        <div style="display: flex; flex-direction: column; min-width: 0;">
-                            <span style="font-size: 24px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 4px;">{{ avg_peer_engagement|default:"120" }}</span>
-                            <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Cohort Engagement</span>
+                        <div class="d-flex flex-column min-width-0">
+                            <span class="fs-xl fw-bold text-dark mb-1">{{ high_conf_rate|default:"100" }}%</span>
+                            <span class="fs-sm fw-semibold text-muted text-truncate">High-Confidence Rate</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <div style="background: white; border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px; height: 100%; transition: var(--transition);">
-                        <div style="width: 56px; height: 56px; border-radius: 16px; background: #FFF5E6; color: #D97706; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
-                            <i class="fa-solid fa-rocket"></i>
+                    <div class="card d-flex align-items-center gap-3 h-100 p-4">
+                        <div class="badge badge-blue p-3 rounded-3 fs-xl d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-users" aria-hidden="true"></i>
                         </div>
-                        <div style="display: flex; flex-direction: column; min-width: 0;">
-                            <span style="font-size: 24px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 4px;">{{ global_total_views|default:"340" }}</span>
-                            <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Platform Activity</span>
+                        <div class="d-flex flex-column min-width-0">
+                            <span class="fs-xl fw-bold text-dark mb-1">{{ avg_peer_engagement|default:"120" }}</span>
+                            <span class="fs-sm fw-semibold text-muted text-truncate">Cohort Engagement</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
-                    <div style="background: white; border: 1px solid var(--border); border-radius: 18px; padding: 22px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 18px; height: 100%; transition: var(--transition);">
-                        <div style="width: 56px; height: 56px; border-radius: 16px; background: #F3E8FF; color: #9333EA; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0;">
-                            <i class="fa-solid fa-fire"></i>
+                    <div class="card d-flex align-items-center gap-3 h-100 p-4">
+                        <div class="badge badge-orange p-3 rounded-3 fs-xl d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-rocket" aria-hidden="true"></i>
                         </div>
-                        <div style="display: flex; flex-direction: column; min-width: 0;">
-                            <span style="font-size: 22px; font-weight: 800; color: var(--text); line-height: 1.1; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ trending_topic|default:"Programming" }}</span>
-                            <span style="font-size: 13px; font-weight: 600; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Trending Discipline</span>
+                        <div class="d-flex flex-column min-width-0">
+                            <span class="fs-xl fw-bold text-dark mb-1">{{ global_total_views|default:"340" }}</span>
+                            <span class="fs-sm fw-semibold text-muted text-truncate">Platform Activity</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-md-6">
+                    <div class="card d-flex align-items-center gap-3 h-100 p-4">
+                        <div class="badge badge-purple p-3 rounded-3 fs-xl d-flex align-items-center justify-content-center">
+                            <i class="fa-solid fa-fire" aria-hidden="true"></i>
+                        </div>
+                        <div class="d-flex flex-column min-width-0">
+                            <span class="fs-lg fw-bold text-dark mb-1 text-truncate">{{ trending_topic|default:"Programming" }}</span>
+                            <span class="fs-sm fw-semibold text-muted text-truncate">Trending Discipline</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <h2 class="section-title">
+        <h2 class="section-title mt-4">
             Recommended Learning Resources
         </h2>
 
-        <div class="row g-4">
-
+        <div class="row g-4" role="list" aria-label="Recommended resources list">
             {% for rec in recommendations %}
+            <div class="col-lg-6" role="listitem">
+                <div class="recommendation-card">
+                    <h3 class="resource-title">{{ rec.title }}</h3>
 
-<div class="col-lg-6">
+                    <div class="mb-3">
+                        <span class="badge badge-blue">{{ rec.topic }}</span>
+                        <span class="badge badge-green">{{ rec.difficulty }}</span>
+                        <span class="badge badge-orange text-dark">{{ rec.type }}</span>
+                    </div>
 
-    <div class="recommendation-card">
+                    <div class="resource-description">
+                        {{ rec.reasoning }}
+                    </div>
 
-        <h3 class="resource-title">
-            {{ rec.title }}
-        </h3>
+                    <div class="shap-factors my-3">
+                        {% for factor in rec.shap_factors %}
+                        <span class="badge {% if factor.type == 'topic' %}badge-blue{% else %}badge-orange text-dark{% endif %} shadow-sm me-1 mb-1" title="{{ factor.tooltip }}">
+                            ⚡ {{ factor.label }}: <strong class="fw-bold">{{ factor.impact }}</strong>
+                        </span>
+                        {% endfor %}
+                    </div>
 
-        <div class="mb-3">
+                    <div class="score d-flex align-items-center justify-content-between pt-3 border-top mt-auto">
+                        <span class="fs-md">AI Confidence: <strong class="text-success">{{ rec.confidence }}</strong></span>
+                        <span class="fs-sm text-muted">AI Score: {{ rec.score }}</span>
+                    </div>
 
-            <span class="badge bg-primary">
-                {{ rec.topic }}
-            </span>
-
-            <span class="badge bg-success">
-                {{ rec.difficulty }}
-            </span>
-
-            <span class="badge bg-warning text-dark">
-                {{ rec.type }}
-            </span>
-
-        </div>
-
-        <div class="resource-description">
-            {{ rec.reasoning }}
-        </div>
-
-        <div class="shap-factors mb-3 mt-3">
-            {% for factor in rec.shap_factors %}
-            <span class="badge {% if factor.type == 'topic' %}bg-primary-subtle text-primary border-primary{% else %}bg-light text-dark border{% endif %} shadow-sm me-1 mb-1" title="{{ factor.tooltip }}" style="font-size: 0.8rem; padding: 0.45em 0.7em; cursor: help; font-weight: 500;">
-                ⚡ {{ factor.label }}: <strong style="font-weight: 700;">{{ factor.impact }}</strong>
-            </span>
+                    <div class="mt-3">
+                        <a href="{% url 'resource_detail' rec.resource_id %}" class="resource-btn w-100" aria-label="View details for {{ rec.title }}">
+                            View Resource →
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="alert alert-info" role="alert">
+                    No recommendations available at this time. Please complete more learning interactions.
+                </div>
+            </div>
             {% endfor %}
         </div>
-
-        <div class="score d-flex align-items-center justify-content-between pt-2 border-top">
-            <span style="font-size: 0.95rem;">AI Confidence: <strong class="text-success">{{ rec.confidence }}</strong></span>
-            <span style="font-size: 0.9rem; color: #6c757d;">AI Score: {{ rec.score }}</span>
-        </div>
-
-        <br>
-
-        <a href="{% url 'resource_detail' rec.resource_id %}"
-           class="resource-btn">
-
-            View Resource →
-
-        </a>
-
-    </div>
-
-</div>
-
-{% empty %}
-
-<div class="col-12">
-
-    <div class="alert alert-info">
-
-        No recommendations available.
-
-    </div>
-
-</div>
-
-{% endfor %}
-
-</div>
 
     </div>
 
     <!-- RIGHT PROFILE PANEL -->
-
     <div class="dashboard-profile">
-
-        <div class="profile-card">
-
+        <div class="profile-card" role="region" aria-label="Student profile summary">
             <h4>Student Profile</h4>
 
             <div class="profile-item">
-
-                <div class="profile-label">
-                    Username
-                </div>
-
-                <div class="profile-value">
-                    {{ username }}
-                </div>
-
+                <div class="profile-label">Username</div>
+                <div class="profile-value">{{ username }}</div>
             </div>
 
             <div class="profile-item">
-
-                <div class="profile-label">
-                    Department
-                </div>
-
-                <div class="profile-value">
-                    {{ student.department|default:"Computer Science" }}
-                </div>
-
+                <div class="profile-label">Department</div>
+                <div class="profile-value">{{ student.department|default:"Computer Science" }}</div>
             </div>
 
             <div class="profile-item">
-
-                <div class="profile-label">
-                    Level
-                </div>
-
-                <div class="profile-value">
-                    {{ student.level|default:"400 Level" }}
-                </div>
-
+                <div class="profile-label">Level</div>
+                <div class="profile-value">{{ student.level|default:"400 Level" }}</div>
             </div>
 
             <div class="profile-item">
-
-                <div class="profile-label">
-                    Dataset ID
-                </div>
-
-                <div class="profile-value">
-                    {{ student.dataset_student_id }}
-                </div>
-
+                <div class="profile-label">Dataset ID</div>
+                <div class="profile-value">{{ student.dataset_student_id }}</div>
             </div>
 
             <div class="profile-item">
-
-                <div class="profile-label">
-                    Peer Group Match
-                </div>
-
-                <div class="profile-value">
-                    {{ peer_group_match|default:"5 Similar Profiles Tracked" }}
-                </div>
-
+                <div class="profile-label">Peer Group Match</div>
+                <div class="profile-value">{{ peer_group_match|default:"5 Similar Profiles Tracked" }}</div>
             </div>
 
             <div class="profile-item">
-
-                <div class="profile-label">
-                    AI Recommendation Model
-                </div>
-
-                <div class="profile-value">
-                    Hybrid ML + Explainable AI
-                </div>
-
+                <div class="profile-label">AI Recommendation Model</div>
+                <div class="profile-value">Hybrid ML + Explainable AI</div>
             </div>
-
         </div>
-
     </div>
 
 </div>
